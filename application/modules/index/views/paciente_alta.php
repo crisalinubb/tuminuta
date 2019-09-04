@@ -1,3 +1,7 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+</ol>
+
 <div class="page-header">
   <h1>Dar Alta Paciente Hospitalizado</h1>
 </div>

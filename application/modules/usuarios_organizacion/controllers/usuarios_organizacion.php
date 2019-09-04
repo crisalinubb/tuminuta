@@ -50,10 +50,16 @@ class Usuarios_organizacion extends CI_Controller {
 		$config['first_url'] = base_url() . '/usuarios'.$url;
 
 		$this->pagination->initialize($config);
+		if($this->session->userdata("usuario")->id_perfil == 1){
+			$contenido['usuarios'] = $this->objUsuario->listar(array("id_perfil" =>2 ));
 
-		$contenido['usuarios'] = $this->objUsuario->listar(array("id_perfil" =>2 ));
+			$contenido['datos'] = $this->objUsuario->listar(array("id_perfil" =>2 ), $pagina, $config['per_page']);
+		}else if ($this->session->userdata("usuario")->id_perfil == 2) {
+			$contenido['usuarios'] = $this->objUsuario->listar(array("id_perfil" =>2 , "id_unidad" => $this->session->userdata("usuario")->id_unidad));
 
-		$contenido['datos'] = $this->objUsuario->listar(array("id_perfil" =>2 ), $pagina, $config['per_page']);
+			$contenido['datos'] = $this->objUsuario->listar(array("id_perfil" =>2, "id_unidad" => $this->session->userdata("usuario")->id_unidad ), $pagina, $config['per_page']);
+		}	
+
 
 		$contenido['pagination'] = $this->pagination->create_links();
 

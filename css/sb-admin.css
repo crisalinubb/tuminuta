@@ -93,7 +93,7 @@ table.tablesorter thead tr th:hover {
   }
 
   #page-wrapper {
-	padding: 15px 25px;
+	padding: 1px 15px;
   }
 
   /* Side Nav */
@@ -107,7 +107,7 @@ table.tablesorter thead tr th:hover {
 	height: 100%;
 	border-radius: 0;
 	border: none;
-	background-color: #f8f8f8;
+	background-color: #0C1555;
 	overflow-y: auto;
 	padding: 10px 0 0;
   }
@@ -128,15 +128,15 @@ table.tablesorter thead tr th:hover {
 
   .side-nav>li.dropdown>ul.dropdown-menu>li>a {
 	padding: 6px 15px 6px 35px;
-	background:#e7e7e7 url(/imagenes/template/menu.png) 18px  12px no-repeat;
+	background:#0C1555 url(/imagenes/template/menu.png) 18px  12px no-repeat;
 	border-bottom:1px solid #f8f8f8;
   }
 
   .side-nav>li.dropdown>ul.dropdown-menu>li>a:hover,
   .side-nav>li.dropdown>ul.dropdown-menu>li>a.active,
   .side-nav>li.dropdown>ul.dropdown-menu>li>a:focus {
-	color: #fff;
-	background: #dbac3b url(/imagenes/template/menu-hover.png) 18px 12px no-repeat;
+	color: #FFFFFF;
+	background: #428bca url(/imagenes/template/menu-hover.png) 18px 12px no-repeat;
   }
 
   .side-nav>li>a {
@@ -145,7 +145,7 @@ table.tablesorter thead tr th:hover {
 
   .navbar-inverse .navbar-nav>li>a:hover,
   .navbar-inverse .navbar-nav>li>a:focus {
-	background-color: #345834;
+	background-color: #0C1555;
   }
 
   /* Nav Messages */

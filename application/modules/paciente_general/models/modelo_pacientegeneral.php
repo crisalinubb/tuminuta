@@ -89,10 +89,54 @@ class Modelo_Pacientegeneral extends CI_Model {
 		return $result;
     }
 
-     public function obtenerPaciente($rut){
+     public function obtenerPaciente($rut, $codigo_paciente, $nombre_pac, $apellido_pat, $apellido_mat){
     	$this->db->select('*');
     	$this->db->from($this->tabla);
     	$this->db->like('rut',$rut);
+    	$this->db->like('codigo_paciente',$codigo_paciente);
+    	$this->db->like('nombre',$nombre_pac);
+    	$this->db->like('apellido_paterno',$apellido_pat);
+    	$this->db->like('apellido_materno',$apellido_mat);
+    	$result = $this->db->get();
+
+		return $result->result();
+    }
+
+    public function desactivar_paciente($id_paciente, $id_unidad, $id_usuario){
+		$fecha = date('Y-m-d H:i:s');
+		$this->db->set('activo', 1);
+		$this->db->set('id_unidad', $id_unidad);
+		$this->db->set('id_usuario', $id_usuario);
+		$this->db->set('fecha_desactivacion', $fecha);
+		$this->db->where('id_paciente', $id_paciente);
+		$this->db->update($this->tabla); 
+	}
+
+	public function activar_paciente($id_paciente, $id_unidad, $id_usuario){
+		$fecha = date('Y-m-d H:i:s');
+		$this->db->set('activo', 0);
+		$this->db->set('id_unidad', $id_unidad);
+		$this->db->set('id_usuario', $id_usuario);
+		$this->db->set('fecha_desactivacion', $fecha);
+		$this->db->where('id_paciente', $id_paciente);
+		$this->db->update($this->tabla); 
+	}
+
+	public function eliminarHospitalizacion($id_paciente){
+		$this->db->where('codigo_paciente', $id_paciente);
+		$this->db->delete('paciente_sistal');
+	}
+
+	public function obtener_paciente_sin_hospitalizacion($rut, $codigo_paciente, $nombre_pac, $apellido_pat, $apellido_mat){
+    	$this->db->select('*');
+    	$this->db->from($this->tabla);
+    	$this->db->like('rut',$rut);
+    	$this->db->like('codigo_paciente',$codigo_paciente);
+    	$this->db->like('nombre',$nombre_pac);
+    	$this->db->like('apellido_paterno',$apellido_pat);
+    	$this->db->like('apellido_materno',$apellido_mat);
+    	$this->db->where('estado', 0);
+    	$this->db->where('activo', 0);
     	$result = $this->db->get();
 
 		return $result->result();

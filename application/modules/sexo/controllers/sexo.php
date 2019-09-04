@@ -218,4 +218,18 @@ class Sexo extends CI_Controller {
 
 	}
 
+  	public function prueba(){
+  		$this->layout->view('prueba');
+  	}
+
+  	public function prueba_td(){
+  		$sexo = $this->objSexo->obtener(array('id_sexo' => 1));
+  		//print_r("aaaaaaa");die();
+  		$arr = array();
+  		$arr['msg1'] = $sexo->id_sexo;
+  		$arr['msg2'] = $sexo->sexo_nombre; 		
+  		
+		echo json_encode($arr);
+  	}
+
 }

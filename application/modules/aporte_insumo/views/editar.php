@@ -1,3 +1,10 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li><a href="<?php echo base_url(); ?>insumos/">Insumos</a></li>
+  <li><a href="<?php echo base_url(); ?>aporte_insumo/index/<?php echo $aportes_insumos->id_insumo; ?>">Aportes por Insumos</a></li>
+  <li class="active">Agregar Aporte a Insumo</li>
+</ol>
+
 <div class="page-header">
   <h1>Editar Aporte por Insumo</h1>
 </div>

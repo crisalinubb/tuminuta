@@ -128,4 +128,32 @@ class Modelo_Usuario extends CI_Model {
 		return $result->result();
     }
 
+    public function Obtenerlistado($id_unidad){
+    	$this->db->select('*');
+    	$this->db->distinct();
+    	$this->db->from($this->tabla);
+    	$this->db->where('id_unidad',$id_unidad);
+    	$this->db->where('id_perfil',2);
+    	$this->db->or_where('id_perfil',3);
+    	$result = $this->db->get();
+    	//die($this->db->last_query());
+		return $result->result();
+    }
+
+    public function Obtenerlistado_2($id_unidad){
+    	$this->db->select('*');
+    	$this->db->from($this->tabla);
+    	$this->db->where('id_unidad',$id_unidad);
+    	$this->db->where('id_perfil',2);
+    	$this->db->or_where('id_perfil',3);
+    	$result = $this->db->get();
+    	//die($this->db->last_query());
+		return $result->result();
+    }
+
+    public function cambiar_clave($contraseña, $id_usuario){
+    	$this->db->set('clave', $contraseña);
+		$this->db->where('id_usuario', $id_usuario);
+		$this->db->update('usuario');
+    }
 }

@@ -1,3 +1,9 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li><a href="<?php echo base_url(); ?>planificacion/">Planificacion</a></li>
+  <li class="active">Editar Receta</li>
+</ol>
+
 <div class="page-header">
   <h1>Editar Receta</h1>
 </div>

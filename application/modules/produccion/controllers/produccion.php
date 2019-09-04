@@ -8,6 +8,7 @@ class Produccion extends CI_Controller {
 		$this->load->model("modelo_produccion", "objProduccion");
 		$this->load->model("regimen/modelo_regimen", "objRegimen");
 		$this->load->model("recetas/modelo_recetas", "objRecetas");
+		$this->load->model("insumo_receta/modelo_insumoreceta", "objInsumoreceta");
 		#current
 		$this->layout->current = 1;
 	}
@@ -88,7 +89,7 @@ class Produccion extends CI_Controller {
 		$contenido['fecha'] = $fecha;
 		$contenido['fecha_busqueda'] = $fecha_busqueda;
 
-		$this->layout->view('Produccion_almuerzo', $contenido);
+		$this->layout->view('produccion_almuerzo', $contenido);
 	}
 
 	public function vista_produccion_once(){
@@ -322,7 +323,7 @@ class Produccion extends CI_Controller {
 
 		$contenido['datos_solicitud_enterales'] = $this->objProduccion->consulta_solicitudes_enterales($this->session->userdata("usuario")->id_unidad, $fecha_busqueda);
 
-		$this->layout->view('Produccion_formulas_enterales', $contenido);
+		$this->layout->view('produccion_formulas_enterales', $contenido);
 	}
 
 }

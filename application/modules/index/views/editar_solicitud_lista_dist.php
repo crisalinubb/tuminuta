@@ -1,3 +1,9 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li><a href="<?php echo base_url(); ?>index/listaDistribucion">Listado de Distribucion</a></li>
+  <li class="active">Editar Solicitud</li>
+</ol>
+
 <div class="page-header">
   <h1>Editar Solicitud</h1>
 </div>

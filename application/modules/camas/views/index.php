@@ -1,3 +1,8 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li class="active">Camas</li>
+</ol>
+
 <div class="page-header">
   <div class="row">
     <h1 class="col-md-7">Camas</h1>
@@ -70,7 +75,9 @@
 				<tr>
            <?php $servicio = $this->objServicioclinico->obtener(array("id_servicio" => $camas->codigo_servicio)); ?>
           <td><?php echo $servicio->nombre_servicio;?></td>
-          <?php $sala = $this->objSalas->obtener(array("CODSALA" => $camas->codigo_sala)); ?>
+          <!-- 
+          <?php $sala = $this->objSalas->obtener(array("CODSALA" => $camas->codigo_sala)); ?>-->
+          <?php $sala = $this->objSalas->obtener(array("id_sala" => $camas->codigo_sala)); ?>
           <td><?php echo $sala->NOMSALA;?></td>
 					<td><?php echo $camas->cama;?></td>
           <?php $institucion = $this->objHospital->obtener(array('id_hospital' => $camas->id_unidad)); ?>

@@ -109,9 +109,10 @@ class Modelo_Servicioclinico extends CI_Model {
 		$this->db->update('salas'); 
     }
 
-    public function obtenerServicioClinico($nombre_servicio){
+    public function obtenerServicioClinico($nombre_servicio, $id_unidad){
     	$this->db->select('*');
     	$this->db->from($this->tabla);
+    	$this->db->where('id_unidad', $id_unidad);
     	$this->db->like('nombre_servicio',$nombre_servicio);
     	$result = $this->db->get();
 

@@ -1,5 +1,12 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li><a href="<?php echo base_url(); ?>insumos/">Insumos</a></li>
+  <li><a href="<?php echo base_url(); ?>aporte_insumo/index/<?php echo $insumo; ?>">Aportes por Insumos</a></li>
+  <li class="active">Agregar Aporte a Insumo</li>
+</ol>
+
 <div class="page-header">
-  <h1>Agregar Aporte por Insumo</h1>
+  <h1>Agregar Aporte a Insumo</h1>
 </div>
 <form id="form-agregar" name="form-agregar" method="post" class="form-horizontal">
   <fieldset>

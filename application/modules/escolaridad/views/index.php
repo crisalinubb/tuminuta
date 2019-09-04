@@ -1,6 +1,11 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li class="active">Nivel de Educacion</li>
+</ol>
+
 <div class="page-header">
   <div class="row">
-    <h1 class="col-md-7">Escolaridades</h1>
+    <h1 class="col-md-7">Nivel de Educacion</h1>
     
     <div class="col-md-3" style="margin-top:24px;">
       <form class="form-inline" method="get" action="<?php echo base_url(); ?>escolaridad/busqueda">
@@ -38,7 +43,7 @@
   <table border="0" cellspacing="0" cellpadding="0" class="table" style="margin-bottom:0;">
     <thead>
       <tr>
-        <th scope="col" style="width:100px;">Escolaridad</th>
+        <th scope="col" style="width:100px;">Nivel de Educacion</th>
         <th scope="col" style="width:90px;">&nbsp;</th>
       </tr>
     </thead>

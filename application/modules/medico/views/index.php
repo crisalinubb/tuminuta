@@ -1,3 +1,8 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li class="active">Medicos</li>
+</ol>
+
 <div class="page-header">
   <div class="row">
     <h1 class="col-md-7">Medicos</h1>

@@ -8,6 +8,7 @@ class Servicio_clinico extends CI_Controller {
 		$this->load->model("modelo_servicioclinico", "objServicioClinico");
 		$this->load->model("modelo_destino", "objDestino");
 		$this->load->model("hospital/modelo_hospital", "objHospital");
+		$this->load->model("paciente/modelo_paciente","objPaciente");
 		#current
 		$this->layout->current = 1;
 	}
@@ -75,6 +76,11 @@ class Servicio_clinico extends CI_Controller {
 				echo json_encode(array("result"=>false,"msg"=>validation_errors()));
 				exit;
 			}
+
+			if($this->objServicioClinico->obtener(array("codigo_servicio" => $this->input->post('codigo'), "nombre_servicio" => $this->input->post('nombre'), "id_unidad" => $this->session->userdata("usuario")->id_unidad))){
+				echo json_encode(array("result"=>false,"msg"=>"Codigo y Servicio Clinico ya resgitrado en su unidad"));
+				exit;
+			}
 			
 			$datos = array(
 				'id_servicio' => null,
@@ -127,6 +133,7 @@ class Servicio_clinico extends CI_Controller {
 			}
 
 			$datos = array(
+				'id_servicio' => $this->input->post('codigo'),
 				'codigo_servicio' => $this->input->post('codigo_servicio'),
 				'nombre_servicio' => $this->input->post('nombre'),
 				'id_unidad' => $this->session->userdata("usuario")->id_unidad
@@ -167,6 +174,43 @@ class Servicio_clinico extends CI_Controller {
 	public function eliminar($codigo = false){
 		if(!$codigo) redirect(base_url() . "servicio_clinico/");
 
+			if($this->objPaciente->obtener(array('codigo_servicio' => $codigo))){
+				//buscando datos de elemento eliminado
+			$servicioclinico = $this->objServicioClinico->obtener(array('id_servicio' => $codigo));
+
+			$url = explode('?',$_SERVER['REQUEST_URI']);
+			if(isset($url[1]))
+				$contenido['url'] = $url = '/?'.$url[1];
+			else
+				$contenido['url'] = $url = '/';
+
+			#paginacion
+			$config['base_url'] = base_url() . 'servicio_clinico/';
+			$config['total_rows'] = count($this->objServicioClinico->listar($where));
+			$config['per_page'] = 15;
+			$config['suffix'] = $url;
+			$config['first_url'] = base_url() . '/servicio_clinico'.$url;
+
+			$this->pagination->initialize($config);
+
+			#JS - Multiple select boxes
+			$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
+			$this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
+
+			#JS - Ajax multi select
+			$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
+			$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
+
+			$contenido['datos'] = $this->objServicioClinico->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ), $pagina, $config['per_page']);
+
+			$contenido['mesagge'] = $servicioclinico->nombre_servicio." servicio no se puede eliminar ya que hay pacientes hospitalizados";
+
+			$contenido['pagination'] = $this->pagination->create_links();
+			$contenido['servicios_clinicos'] = $this->objServicioClinico->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+
+			$this->layout->view('index', $contenido);
+
+			}else{
 			//buscando datos de elemento eliminado
 			$servicioclinico_eliminado = $this->objServicioClinico->obtener(array('id_servicio' => $codigo));
 
@@ -204,6 +248,7 @@ class Servicio_clinico extends CI_Controller {
 			$contenido['servicios_clinicos'] = $this->objServicioClinico->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
 
 			$this->layout->view('index', $contenido);
+		}
 	}
 
 	//actualizar datos de las camas
@@ -245,7 +290,7 @@ class Servicio_clinico extends CI_Controller {
 		$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
 		$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
 
-		$contenido['datos'] = $this->objServicioClinico->obtenerServicioClinico($query);
+		$contenido['datos'] = $this->objServicioClinico->obtenerServicioClinico($query,$this->session->userdata("usuario")->id_unidad);
 
 		$contenido['servicios_clinicos'] = $this->objServicioClinico->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
 

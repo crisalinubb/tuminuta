@@ -16,8 +16,8 @@
       <div class="col-sm-4">
         <select id="tipo" name="tipo" class="form-control" data-live-search="true">
            <option >Seleccione</option>
-           <option value="<?php echo $regimenes->tipo; ?>" <?php if($regimenes->tipo == 0) echo "selected"; ?>>No Planificable</option>
-           <option value="<?php echo $regimenes->tipo; ?>" <?php if($regimenes->tipo == 1) echo "selected"; ?>>Planificable</option>
+           <option value="0" <?php if($regimenes->tipo == 0) echo "selected"; ?>>No Planificable</option>
+           <option value="1" <?php if($regimenes->tipo == 1) echo "selected"; ?>>Planificable</option>
         </select>
       </div>
     </div>

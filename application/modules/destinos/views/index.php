@@ -1,3 +1,8 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li class="active">Insumos</li>
+</ol>
+
 <div class="page-header">
   <div class="row">
     <h1 class="col-md-7">Destinos</h1>
@@ -52,7 +57,9 @@
 							<button title="Editar" type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
 						</a>
 
+            <?php if($this->session->userdata("usuario")->id_perfil == 1){ ?>
             <a href="<?php echo base_url(); ?>destinos/eliminar/<?php echo $dest->id_destino; ?>" onclick="return confirm('Esta seguro que desea eliminar este registro?');"><button title="Eliminar" type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></a>
+            <?php } ?>
 					</td>
 				</tr>
 			<?php endforeach;?>

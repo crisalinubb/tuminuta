@@ -82,10 +82,14 @@ class Modelo_insumoreceta extends CI_Model {
     }
 
     public function obtener_InsumoReceta($id_receta){
-    	$this->db->select('*');
-		$this->db->from($this->tabla);
-		$this->db->where('id_receta',$id_receta);
-		$resultado = $this->db->get();
+    	$resultado= $this->db->query('SELECT * FROM insumos_por_receta RIGHT JOIN insumos ON insumos_por_receta.id_insumo = insumos.id_insumo WHERE insumos_por_receta.id_receta = '.$id_receta.'');
+    	//die($this->db->last_query());
+		return $resultado->result();
+    }
+
+    public function busquedaPorRubro($id_receta, $id_rubro){
+    	$resultado= $this->db->query('SELECT * FROM insumos_por_receta RIGHT JOIN insumos ON insumos_por_receta.id_insumo = insumos.id_insumo WHERE insumos_por_receta.id_receta = '.$id_receta.' AND insumos.id_rubro = '.$id_rubro.'');
+    	//die($this->db->last_query());
 		return $resultado->result();
     }
 

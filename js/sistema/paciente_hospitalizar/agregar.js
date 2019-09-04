@@ -31,7 +31,7 @@ $(function(){
                            killer: true
                        });
 			
-                      window.location.href = window.location.pathname.replace("/agregar_hospitalizacion/"+$("#codigo").val()+"/"+$("#codigo_cama").val(), "/ver_camas?sala="+$("#codigo_sala").val());
+                      window.location.href = window.location.pathname.replace("/agregar_hospitalizacion/"+$("#codigo").val()+"/"+$("#codigo_cama").val(), "/ver_camas/"+$("#codigo_sala").val());
                    }
                    else
                    {

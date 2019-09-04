@@ -1,3 +1,8 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li class="active">Editar Perfil</li>
+</ol>
+
 <div class="page-header">
   <h1>Editar Perfil</h1>
 </div>
@@ -45,14 +50,14 @@
      <div class="form-group">
       <label for="login" class="col-sm-2 control-label">Login</label>
       <div class="col-sm-10">
-        <input type="text" id="login" name="login" class="form-control validate[required]" value="<?php echo $usuarios->login; ?>">
+        <input type="text" id="login" name="login" class="form-control" value="<?php echo $usuarios->login; ?>" required>
       </div>
     </div>
 
     <div class="form-group">
       <label for="password" class="col-sm-2 control-label">Password</label>
       <div class="col-sm-10">
-        <input type="password" id="password" name="password" class="form-control validate[required]" />
+        <input type="password" id="password" name="password" class="form-control" required />
       </div>
     </div>
 

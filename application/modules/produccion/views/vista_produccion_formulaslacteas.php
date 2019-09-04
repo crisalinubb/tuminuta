@@ -1,3 +1,8 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li class="active">Produccion Formulas Lacteas</li>
+</ol>
+
 <div class="page-header">
   <div class="row">
     <h1 class="col-md-7">Produccion Formulas Lacteas </h1>

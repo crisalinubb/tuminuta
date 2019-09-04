@@ -128,4 +128,10 @@ class Modelo_Camas extends CI_Model {
 		return $result->result();
     }
 
+    public function cambiar_codigo_sala($id_cama, $id_sala){
+        $this->db->set('codigo_sala',$id_sala);
+        $this->db->where('id_cama', $id_cama);
+        $this->db->update('camas'); 
+    } 
+
 }

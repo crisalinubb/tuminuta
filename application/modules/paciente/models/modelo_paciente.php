@@ -102,6 +102,12 @@ class Modelo_Paciente extends CI_Model {
 		$this->db->update('paciente_general'); 
     }
 
+    public function cambiar_estado_por_idpaciente($idpaciente){
+    	$this->db->set('estado', 0);
+		$this->db->where('id_paciente', $idpaciente);
+		$this->db->update('paciente_general'); 
+    }
+
     public function obtenerPacienteHospitalizado($id_hospitalizado, $id_unidad){
     	$this->db->select('*');
     	$this->db->from($this->tabla);

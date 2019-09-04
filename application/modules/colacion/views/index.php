@@ -1,3 +1,8 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li class="active">Colaciones</li>
+</ol>
+
 <div class="page-header">
   <div class="row">
     <h1 class="col-md-7">Colaciones</h1>
@@ -39,7 +44,8 @@
     <thead>
       <tr>
         <th scope="col" style="width:50px;">Receta</th>
-        <th scope="col" style="width:50px;">Regimen</th>     
+        <th scope="col" style="width:50px;">Regimen</th>
+        <th scope="col" style="width:20px;">Estado</th>      
         <th scope="col" style="width:20px;">&nbsp;</th>
       </tr>
     </thead>
@@ -50,6 +56,11 @@
 					<td><?php echo $col->receta_nombre;?></td>
           <?php $regimen = $this->objRegimen->obtener(array('id_regimen' => $col->regimen)); ?>
           <td><?php echo $regimen->nombre;?></td>
+          <?php if($col->estado == 0){ ?>
+            <td><?php echo 'ACTIVO';?></td>
+          <?php  }else{?>
+            <td><?php echo 'INACTIVO';?></td>
+          <?php  }?>
 					<td class="editar">
             <!--
 						<a href="<?php echo base_url(); ?>col_10/editar/<?php echo $col10->id_col10 ?>">
@@ -57,6 +68,19 @@
 						</a>-->
 
             <a href="<?php echo base_url(); ?>colacion/eliminar/<?php echo $col->id_colacion; ?>" onclick="return confirm('Esta seguro que desea eliminar este registro?');"><button title="Eliminar" type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></a>
+
+            <?php if($col->estado == 0){ ?>
+           
+               <a href="<?php echo base_url(); ?>colacion/desactivar/<?php echo $col->id_colacion; ?>">
+              <button title="Editar" type="button" class="btn btn-success btn-sm">DESACTIVAR</button> 
+
+            <?php  }else{?>
+
+              <a href="<?php echo base_url(); ?>colacion/activar/<?php echo $col->id_colacion; ?>">
+              <button title="Editar" type="button" class="btn btn-success btn-sm">ACTIVAR</button>
+
+            <?php  }?>
+
 					</td>
 				</tr>
 			<?php endforeach;?>

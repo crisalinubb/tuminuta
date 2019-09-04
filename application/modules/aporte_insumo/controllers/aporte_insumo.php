@@ -12,8 +12,8 @@ class Aporte_insumo extends CI_Controller {
 		$this->layout->current = 1;
 	}
 
-	public function index($pagina = 1){
-		$insumo= $this->input->get('insumo',TRUE);
+	public function index($insumo = false){
+		//$insumo= $this->input->get('insumo',TRUE);
 		#Title
 		$this->layout->title('Aportes por Insumos');
 
@@ -59,7 +59,7 @@ class Aporte_insumo extends CI_Controller {
 		$this->layout->view('index', $contenido);
 	}
 
-	public function agregar(){
+	public function agregar($insumo = false){
 
 		if($this->input->post()){
 
@@ -122,6 +122,9 @@ class Aporte_insumo extends CI_Controller {
 
 		//$contenido['datos'] = $this->objAportesInsumo->listar($where, $pagina, $config['per_page']);
 
+		#nav
+		$this->layout->nav(array("Insumos "=> "insumos", "Aportes por Insumo" =>"/"));
+
 		$contenido['datos'] = $this->objAportesInsumo->obtener_AporteInsumo($insumo);
 
 		$contenido['id_insumo'] = $insumo;
@@ -157,7 +160,7 @@ class Aporte_insumo extends CI_Controller {
 			#nav
 			//$this->layout->nav(array("Aportes por Insumos "=> "aporte_insumo", "Agregar Aporte por Insumo" =>"/"));
 
-			$insumo = $this->input->get('insumo',true);
+			//$insumo = $this->input->get('insumo',true);
 
 			$contenido['insumo'] = $insumo; 
 			$contenido["insumos"]= $this->objInsumo->listar();
@@ -225,6 +228,9 @@ class Aporte_insumo extends CI_Controller {
 				$this->pagination->initialize($config);
 
 				//$contenido['datos'] = $this->objAportesInsumo->listar($where, $pagina, $config['per_page']);
+				
+				#nav
+				$this->layout->nav(array("Insumos "=> "insumos", "Aportes por Insumo" =>"/"));
 
 				$contenido['datos'] = $this->objAportesInsumo->obtener_AporteInsumo($insumo);
 
@@ -313,6 +319,9 @@ class Aporte_insumo extends CI_Controller {
 			$this->pagination->initialize($config);
 
 			//$contenido['datos'] = $this->objAportesInsumo->listar($where, $pagina, $config['per_page']);
+
+			#nav
+			$this->layout->nav(array("Insumos "=> "insumos", "Aportes por Insumo" =>"/"));
 
 			$contenido['datos'] = $this->objAportesInsumo->obtener_AporteInsumo($insumo->id_insumo);
 

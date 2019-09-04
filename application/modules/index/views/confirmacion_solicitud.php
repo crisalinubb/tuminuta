@@ -1,3 +1,7 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+</ol>
+
  <h1 class="col-md-7">Solicitud Clinica</h1>
  <br>
 <div class="page-header">

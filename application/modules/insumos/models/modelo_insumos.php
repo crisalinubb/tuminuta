@@ -89,4 +89,30 @@ class Modelo_Insumos extends CI_Model {
 
 		return $result->result();
     }
+
+    public function agregar_unidad_compra($id_insumo, $unidad_compra){
+		$this->db->set('unidad_compra', $unidad_compra);
+		$this->db->where('id_insumo', $id_insumo);
+		$this->db->update($this->tabla); 
+	}
+
+	public function desactivar_insumos($id_insumo, $id_unidad, $id_usuario){
+		$fecha = date('Y-m-d');
+		$this->db->set('estado', 1);
+		$this->db->set('id_unidad', $id_unidad);
+		$this->db->set('id_usuario', $id_usuario);
+		$this->db->set('fecha_desactivacion', $fecha);
+		$this->db->where('id_insumo', $id_insumo);
+		$this->db->update($this->tabla); 
+	}
+
+	public function activar_insumos($id_insumo, $id_unidad, $id_usuario){
+		$fecha = date('Y-m-d');
+		$this->db->set('estado', 0);
+		$this->db->set('id_unidad', $id_unidad);
+		$this->db->set('id_usuario', $id_usuario);
+		$this->db->set('fecha_desactivacion', $fecha);
+		$this->db->where('id_insumo', $id_insumo);
+		$this->db->update($this->tabla); 
+	}
 }

@@ -312,9 +312,10 @@ class Paciente_general extends CI_Controller {
 			$paciente_eliminado = $this->objPacGeneral->obtener(array('id_paciente' => $codigo));
 
 			//borrando el registro
-			$this->objPacGeneral->eliminar($codigo);
+			//$this->objPacGeneral->eliminar($codigo);
+			$this->objPacGeneral->desactivar_paciente($codigo, $this->session->userdata("usuario")->id_unidad, $this->session->userdata("usuario")->id_usuario);
 
-			$contenido['datos'] = $this->objPacGeneral->listar($where, $pagina, $config['per_page']);
+			$this->objPacGeneral->eliminarHospitalizacion($codigo);
 
 			$url = explode('?',$_SERVER['REQUEST_URI']);
 			if(isset($url[1]))
@@ -341,7 +342,51 @@ class Paciente_general extends CI_Controller {
 
 			$contenido['datos'] = $this->objPacGeneral->listar($where, $pagina, $config['per_page']);
 
-			$contenido['mesagge'] = $paciente_eliminado->nombre." ".$paciente_eliminado->apellido." registro eliminado";
+			$contenido['mesagge'] = $paciente_eliminado->nombre." ".$paciente_eliminado->apellido." registro desactivado";
+
+			$contenido['pagination'] = $this->pagination->create_links();
+			$contenido['pacientes'] = $this->objPacGeneral->listar();
+
+			$this->layout->view('index', $contenido);
+	}
+
+	public function activar($codigo = false){
+		if(!$codigo) redirect(base_url() . "paciente_general/");
+
+			//buscando datos de elemento eliminado
+			$paciente_eliminado = $this->objPacGeneral->obtener(array('id_paciente' => $codigo));
+
+			//borrando el registro
+			//$this->objPacGeneral->eliminar($codigo);
+			$this->objPacGeneral->activar_paciente($codigo, $this->session->userdata("usuario")->id_unidad, $this->session->userdata("usuario")->id_usuario);
+
+
+			$url = explode('?',$_SERVER['REQUEST_URI']);
+			if(isset($url[1]))
+				$contenido['url'] = $url = '/?'.$url[1];
+			else
+				$contenido['url'] = $url = '/';
+
+			#paginacion
+			$config['base_url'] = base_url() . 'paciente_general/';
+			$config['total_rows'] = count($this->objPacGeneral->listar($where));
+			$config['per_page'] = 15;
+			$config['suffix'] = $url;
+			$config['first_url'] = base_url() . '/paciente_general'.$url;
+
+			$this->pagination->initialize($config);
+
+			#JS - Multiple select boxes
+			$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
+			$this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
+
+			#JS - Ajax multi select
+			$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
+			$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
+
+			$contenido['datos'] = $this->objPacGeneral->listar($where, $pagina, $config['per_page']);
+
+			$contenido['mesagge'] = $paciente_eliminado->nombre." ".$paciente_eliminado->apellido." registro activado";
 
 			$contenido['pagination'] = $this->pagination->create_links();
 			$contenido['pacientes'] = $this->objPacGeneral->listar();
@@ -350,7 +395,11 @@ class Paciente_general extends CI_Controller {
 	}
 
 	public function busqueda(){
-		$query = $this->input->get('pacientes',true);
+		$rut = $this->input->post('rut');
+		$codpac = $this->input->post('codpac');
+		$nombre_pac = $this->input->post('nombre_pac');
+		$apellido_pat = $this->input->post('apellido_pat');
+		$apellido_mat = $this->input->post('apellido_mat');
 
 		#Title
 		$this->layout->title('Pacientes');
@@ -368,7 +417,7 @@ class Paciente_general extends CI_Controller {
 		$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
 		$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
 
-		$contenido['datos'] = $this->objPacGeneral->obtenerPaciente($query);
+		$contenido['datos'] = $this->objPacGeneral->obtenerPaciente($rut, $codpac, $nombre_pac, $apellido_pac, $apellido_mat);
 
 		$contenido['pacientes'] = $this->objPacGeneral->listar();
 

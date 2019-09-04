@@ -7,6 +7,7 @@ class Usuarios extends CI_Controller {
 		if(!$this->session->userdata("usuario")) redirect(base_url());
 		$this->load->model("modelo_usuario", "objUsuario");
 		$this->load->model("hospital/modelo_hospital", "objHospital");
+		$this->load->model("modelo_perfil", "objPerfil");
 		#current
 		$this->layout->current = 2;
 	}
@@ -51,9 +52,17 @@ class Usuarios extends CI_Controller {
 
 		$this->pagination->initialize($config);
 
-		$contenido['usuarios'] = $this->objUsuario->listar(array("id_perfil" =>1 ));
+		//$contenido['usuarios'] = $this->objUsuario->listar(array("id_perfil" =>1 ));
 
-		$contenido['datos'] = $this->objUsuario->listar(array("id_perfil" =>1 ), $pagina, $config['per_page']);
+		if($this->session->userdata("usuario")->id_perfil == 1){
+			$contenido['usuarios'] = $this->objUsuario->listar();
+			$contenido['datos'] = $this->objUsuario->listar($where, $pagina, $config['per_page']);
+		}else if($this->session->userdata("usuario")->id_perfil == 2){
+			$contenido['usuarios'] = $this->objUsuario->Obtenerlistado($this->session->userdata("usuario")->id_unidad );
+			$contenido['datos'] = $this->objUsuario->Obtenerlistado_2($this->session->userdata("usuario")->id_unidad );
+		}
+
+		//$contenido['datos'] = $this->objUsuario->listar(array("id_perfil" =>1 ), $pagina, $config['per_page']);
 
 		$contenido['pagination'] = $this->pagination->create_links();
 
@@ -61,12 +70,12 @@ class Usuarios extends CI_Controller {
 	}
 
 	public function agregar($codigo = false){
-		if (($this->objUsuario->buscar_usuario_rut($this->input->post('rut'))->num_rows() == 1) || ($this->objUsuario->buscar_usuario_login($this->input->post('login'))->num_rows() == 1)) {
+		//if (($this->objUsuario->buscar_usuario_rut($this->input->post('rut'))->num_rows() == 1) || ($this->objUsuario->buscar_usuario_login($this->input->post('login'))->num_rows() == 1)) {
 			
-			echo json_encode(array("result"=>false,"msg"=>"Usuario ya registrado en el sistema"));
-				exit;
+		//	echo json_encode(array("result"=>false,"msg"=>"Usuario ya registrado en el sistema"));
+		//		exit;
 			
-		}else{
+		//}else{
 		if($this->input->post()){
 
 			#validaciones
@@ -81,6 +90,12 @@ class Usuarios extends CI_Controller {
 				exit;
 			}
 
+			if($this->objUsuario->obtener(array("login" => $this->input->post('login'),"id_unidad" => $this->input->post('unidad') ))){
+				echo json_encode(array("result"=>false,"msg"=>"Ya existe este login registrado con la misma unidad/org."));
+				exit;
+			}
+
+			if($this->session->userdata("usuario")->id_perfil == 1){
 			$datos = array(
 				'id_usuario' => null,
 				'rut' => $this->input->post('rut'),
@@ -90,9 +105,26 @@ class Usuarios extends CI_Controller {
 				'apellidoMaterno' => $this->input->post('apellidoM'),
 				'login' => $this->input->post('login'),
 				'clave' => md5($this->input->post('password')),
-				'id_perfil' => 1
+				'id_perfil' => $this->input->post('perfil'),
+				'id_unidad' => $this->input->post('unidad')
 
 			);
+
+			}else{
+				$datos = array(
+				'id_usuario' => null,
+				'rut' => $this->input->post('rut'),
+				'dv' => $this->input->post('dv'),
+				'nombre' => $this->input->post('nombre'),
+				'apellidoPaterno' => $this->input->post('apellidoP'),
+				'apellidoMaterno' => $this->input->post('apellidoM'),
+				'login' => $this->input->post('login'),
+				'clave' => md5($this->input->post('password')),
+				'id_perfil' => $this->input->post('perfil'),
+				'id_unidad' => $this->session->userdata("usuario")->id_unidad
+
+			);
+			}
 
 			if($this->objUsuario->insertar($datos)){
 				echo json_encode(array("result"=>true));
@@ -116,9 +148,18 @@ class Usuarios extends CI_Controller {
 			#nav
 			$this->layout->nav(array("Usuarios "=> "usuarios", "Agregar Usuarios" =>"/"));
 
+			if($this->session->userdata("usuario")->id_perfil == 1){
+				$contenido['unidades'] = $this->objHospital->listar();
+				$contenido['perfiles'] = $this->objPerfil->listar();
+
+			}else{
+				$contenido['unidades'] = $this->objHospital->listar();
+				$contenido['perfiles'] = $this->objPerfil->obtener_perfiles2y3();
+			}
+
 			$this->layout->view('agregar', $contenido);
 		}
-	}
+	//}
 	}
 
 	public function editar($codigo = false){
@@ -136,7 +177,9 @@ class Usuarios extends CI_Controller {
 				exit;
 			}
 
+			if($this->session->userdata("usuario")->id_perfil == 1){
 			$datos = array(
+				'id_usuario' => $this->input->post('codigo'),
 				'rut' => $this->input->post('rut'),
 				'dv' => $this->input->post('dv'),
 				'nombre' => $this->input->post('nombre'),
@@ -144,8 +187,26 @@ class Usuarios extends CI_Controller {
 				'apellidoMaterno' => $this->input->post('apellidoM'),
 				'login' => $this->input->post('login'),
 				'clave' => md5($this->input->post('password')),
-				'id_perfil' => 1
+				'id_perfil' => $this->input->post('perfil'),
+				'id_unidad' => $this->input->post('unidad')
+
 			);
+
+			}else{
+				$datos = array(
+				'id_usuario' => $this->input->post('codigo'),
+				'rut' => $this->input->post('rut'),
+				'dv' => $this->input->post('dv'),
+				'nombre' => $this->input->post('nombre'),
+				'apellidoPaterno' => $this->input->post('apellidoP'),
+				'apellidoMaterno' => $this->input->post('apellidoM'),
+				'login' => $this->input->post('login'),
+				'clave' => md5($this->input->post('password')),
+				'id_perfil' => $this->input->post('perfil'),
+				'id_unidad' => $this->session->userdata("usuario")->id_unidad
+
+			);
+			}
 
 			if($this->objUsuario->actualizar($datos,array("id_usuario"=>$this->input->post('codigo')))){
 				echo json_encode(array("result"=>true));
@@ -171,6 +232,16 @@ class Usuarios extends CI_Controller {
 			#contenido
 			if($contenido['usuarios'] = $this->objUsuario->obtener(array("id_usuario" => $codigo)));
 			else show_error('');
+
+			if($this->session->userdata("usuario")->id_perfil == 1){
+				$contenido['unidades'] = $this->objHospital->listar();
+				$contenido['perfiles'] = $this->objPerfil->listar();
+
+			}else{
+				$contenido['unidades'] = $this->objHospital->listar();
+				$contenido['perfiles'] = $this->objPerfil->obtener_perfiles2y3();
+			}
+			
 
 			#nav
 			$this->layout->nav(array("Usuarios "=>"usuarios", "Editar Usuarios" =>"/"));
@@ -316,6 +387,85 @@ class Usuarios extends CI_Controller {
 		$this->layout->setMeta('keywords','Usuarios');
 
 		$this->layout->view('vista_usuarios');
+	}
+
+	public function cambiar_clave($codigo = false){
+			#title
+			$this->layout->title('Cambiar Contraseña');
+
+			#metas
+			$this->layout->setMeta('title','Cambiar Contraseña');
+			$this->layout->setMeta('description','Cambiar Contraseña');
+			$this->layout->setMeta('keywords','Cambiar Contraseña');
+
+			$contenido['codigo_usuario'] = $codigo;
+
+			#nav
+			$this->layout->nav(array("Usuarios "=>"usuarios", "Cambiar Contraseña" =>"/"));
+			$this->layout->view('cambiar_clave', $contenido);
+
+	}
+
+	public function cambiar_password(){
+
+		$this->objUsuario->cambiar_clave(md5($this->input->post('password')),$this->input->post('id_usuario'));
+
+		$contenido['mesagge'] ='Contraseña cambiada exitosamente';	
+
+		#Title
+		$this->layout->title('Usuarios');
+
+		#Metas
+		$this->layout->setMeta('title','Usuarios');
+		$this->layout->setMeta('description','Usuarios');
+		$this->layout->setMeta('keywords','Usuarios');
+
+		#JS - Multiple select boxes
+		$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
+		$this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
+
+		#JS - Ajax multi select
+		$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
+		$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
+
+		#filtros
+		$where = $contenido['q_f'] = '';
+		if($this->input->get('q')){
+			$contenido['q_f'] = $q = $this->input->get('q');
+			$where = "nombre like '%$q%'";
+		}
+
+		#url
+		$url = explode('?',$_SERVER['REQUEST_URI']);
+		if(isset($url[1]))
+			$contenido['url'] = $url = '/?'.$url[1];
+		else
+			$contenido['url'] = $url = '/';
+
+		#paginacion
+		$config['base_url'] = base_url() . 'usuarios/';
+		$config['total_rows'] = count($this->objUsuario->listar($where));
+		$config['per_page'] = 15;
+		$config['suffix'] = $url;
+		$config['first_url'] = base_url() . '/usuarios'.$url;
+
+		$this->pagination->initialize($config);
+
+		//$contenido['usuarios'] = $this->objUsuario->listar(array("id_perfil" =>1 ));
+
+		if($this->session->userdata("usuario")->id_perfil == 1){
+			$contenido['usuarios'] = $this->objUsuario->listar();
+			$contenido['datos'] = $this->objUsuario->listar($where, $pagina, $config['per_page']);
+		}else if($this->session->userdata("usuario")->id_perfil == 2){
+			$contenido['usuarios'] = $this->objUsuario->Obtenerlistado($this->session->userdata("usuario")->id_unidad );
+			$contenido['datos'] = $this->objUsuario->Obtenerlistado_2($this->session->userdata("usuario")->id_unidad );
+		}
+
+		//$contenido['datos'] = $this->objUsuario->listar(array("id_perfil" =>1 ), $pagina, $config['per_page']);
+
+		$contenido['pagination'] = $this->pagination->create_links();
+		$this->layout->view('index', $contenido);
+				
 	}
 
 }

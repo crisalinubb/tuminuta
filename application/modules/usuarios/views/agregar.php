@@ -52,6 +52,36 @@
       </div>
     </div>
 
+    <?php if($this->session->userdata("usuario")->id_perfil == 1){?>
+    <div class="form-group">
+      <label for="unidad" class="col-sm-2 control-label">Unidad/Organizacion</label>
+      <div class="col-sm-4">
+        <select id="unidad" name="unidad" class="form-control validate[required]" data-live-search="true">
+           <option disabled selected>Seleccione</option>
+           <?php if($unidades){ ?>
+           <?php foreach($unidades as $unidad){ ?>
+              <option value="<?php echo $unidad->id_hospital; ?>"><?php echo $unidad->hos_nombre; ?></option>
+           <?php } ?>
+           <?php } ?>
+        </select>
+      </div>
+    </div>
+    <?php } ?>
+
+    <div class="form-group">
+      <label for="perfil" class="col-sm-2 control-label">Perfiles</label>
+      <div class="col-sm-4">
+        <select id="perfil" name="perfil" class="form-control validate[required]" data-live-search="true">
+           <option disabled selected>Seleccione</option>
+           <?php if($perfiles){ ?>
+           <?php foreach($perfiles as $perfil){ ?>
+              <option value="<?php echo $perfil->id_perfil; ?>"><?php echo $perfil->perfil_nombre; ?></option>
+           <?php } ?>
+           <?php } ?>
+        </select>
+      </div>
+    </div>
+
     <div class="text-box">
       <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
     </div>

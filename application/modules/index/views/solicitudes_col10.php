@@ -1,3 +1,8 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li class="active">Solicitudes Col-10</li>
+</ol>
+
 <div class="page-header">
   <div class="row">
     <h1 class="col-md-7">Solicitudes Col-10</h1>
@@ -9,6 +14,8 @@
 <div align="center">
     <button title="Asignar servicios" type="button" class="btn btn-danger btn-sm" onclick="myFunction()"> Imprimir</button>
 </div>
+
+<?php $total_col10 = 0; ?>
 
 <?php foreach ($colaciones as $recet) : ?>
   <?php $colaciones_array = $this->objIndex->solicitud_col10($recet->id_receta); ?>
@@ -37,11 +44,16 @@
       <td><strong>Total</strong></td>
       <td><?php echo $total; ?></td>
     </tr>
+    <?php $total_col10 = $total_col10+$total; ?>
   </tfoot>
   </table>
 </div>
   <?php } ?>
   <?php endforeach;?>
+
+<div>
+  <p><h3><strong>Cantidad de Solicitudes: <?php echo $total_col10; ?></strong></h3></p>
+</div>
 
 <script>
 function myFunction() {

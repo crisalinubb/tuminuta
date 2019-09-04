@@ -349,4 +349,106 @@ class Colacion extends CI_Controller {
 
 	}
 
+	public function activar($id_colacion = false){
+		$this->objColacion->activar($id_colacion);
+		
+		#Title
+		$this->layout->title('Colaciones');
+
+		#Metas
+		$this->layout->setMeta('title','Colaciones');
+		$this->layout->setMeta('description','Colaciones');
+		$this->layout->setMeta('keywords','Colaciones');
+
+		#JS - Multiple select boxes
+		$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
+		$this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
+
+		#JS - Ajax multi select
+		$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
+		$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
+
+		#filtros
+		$where = $contenido['q_f'] = '';
+		if($this->input->get('q')){
+			$contenido['q_f'] = $q = $this->input->get('q');
+			$where = "nombre like '%$q%'";
+		}
+
+		#url
+		$url = explode('?',$_SERVER['REQUEST_URI']);
+		if(isset($url[1]))
+			$contenido['url'] = $url = '/?'.$url[1];
+		else
+			$contenido['url'] = $url = '/';
+
+		#paginacion
+		$config['base_url'] = base_url() . 'colacion/';
+		$config['total_rows'] = count($this->objColacion->listar($where));
+		$config['per_page'] = 15;
+		$config['suffix'] = $url;
+		$config['first_url'] = base_url() . '/colacion'.$url;
+
+		$this->pagination->initialize($config);
+
+		$contenido['datos'] = $this->objColacion->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ), $pagina, $config['per_page']);
+
+		$contenido['pagination'] = $this->pagination->create_links();
+
+		$contenido['colacion'] = $this->objColacion->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+
+		$this->layout->view('index', $contenido);
+	}
+
+	public function desactivar($id_colacion = false){
+		$this->objColacion->desactivar($id_colacion);
+
+		#Title
+		$this->layout->title('Colaciones');
+
+		#Metas
+		$this->layout->setMeta('title','Colaciones');
+		$this->layout->setMeta('description','Colaciones');
+		$this->layout->setMeta('keywords','Colaciones');
+
+		#JS - Multiple select boxes
+		$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
+		$this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
+
+		#JS - Ajax multi select
+		$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
+		$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
+
+		#filtros
+		$where = $contenido['q_f'] = '';
+		if($this->input->get('q')){
+			$contenido['q_f'] = $q = $this->input->get('q');
+			$where = "nombre like '%$q%'";
+		}
+
+		#url
+		$url = explode('?',$_SERVER['REQUEST_URI']);
+		if(isset($url[1]))
+			$contenido['url'] = $url = '/?'.$url[1];
+		else
+			$contenido['url'] = $url = '/';
+
+		#paginacion
+		$config['base_url'] = base_url() . 'colacion/';
+		$config['total_rows'] = count($this->objColacion->listar($where));
+		$config['per_page'] = 15;
+		$config['suffix'] = $url;
+		$config['first_url'] = base_url() . '/colacion'.$url;
+
+		$this->pagination->initialize($config);
+
+		$contenido['datos'] = $this->objColacion->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ), $pagina, $config['per_page']);
+
+		$contenido['pagination'] = $this->pagination->create_links();
+
+		$contenido['colacion'] = $this->objColacion->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+
+		$this->layout->view('index', $contenido);
+	}
+
 }

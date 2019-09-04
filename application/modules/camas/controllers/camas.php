@@ -73,12 +73,13 @@ class Camas extends CI_Controller {
 				exit;
 			}
 
-			$codigo_sala = $this->objSalas->obtener(array('id_sala' => $this->input->post('codigo_sala')));
+			//$codigo_sala = $this->objSalas->obtener(array('id_sala' => $this->input->post('codigo_sala')));
 			
 			$datos = array(
 				'id_cama' => null,
 				'cama' => $this->input->post('cama'),
-				'codigo_sala' => $codigo_sala->CODSALA,
+				//'codigo_sala' => $codigo_sala->CODSALA,
+				'codigo_sala' => $this->input->post('codigo_sala'),
 				'codigo_servicio' => $this->input->post('codigo_servicio'),
 				'id_unidad' => $this->session->userdata("usuario")->id_unidad
 			);
@@ -127,11 +128,12 @@ class Camas extends CI_Controller {
 				exit;
 			}
 
-			$codigo_sala = $this->objSalas->obtener(array('id_sala' => $this->input->post('codigo_sala')));
+			//$codigo_sala = $this->objSalas->obtener(array('id_sala' => $this->input->post('codigo_sala')));
 			
 			$datos = array(
 				'cama' => $this->input->post('cama'),
-				'codigo_sala' => $codigo_sala->CODSALA,
+				//'codigo_sala' => $codigo_sala->CODSALA,
+				'codigo_sala' => $this->input->post('codigo_sala'),
 				'codigo_servicio' => $this->input->post('codigo_servicio'),
 				'id_unidad' => $this->session->userdata("usuario")->id_unidad
 			);
@@ -233,10 +235,11 @@ class Camas extends CI_Controller {
 
     public function buscarCamas() {
         $id_sala = $this->input->post('idSala');
-        $codigo_sala = $this->objSalas->obtener(array('id_sala' => $id_sala));
+        //$codigo_sala = $this->objSalas->obtener(array('id_sala' => $id_sala));
         //print_r("entro".$id_servicio);die();
         if($id_sala){
-            $camas = $this->objCamas->buscar_cama_por_sala($codigo_sala->CODSALA);
+            //$camas = $this->objCamas->buscar_cama_por_sala($codigo_sala->CODSALA);
+            $camas = $this->objCamas->buscar_cama_por_sala($id_sala);
             //echo '<option value="0">Camas</option>';
             foreach($camas->result() as $cama){
                 echo '<option value="'. $cama->id_cama .'">'. $cama->cama .'</option>';
@@ -265,10 +268,12 @@ class Camas extends CI_Controller {
 			$contenido['datos'] = $this->objCamas->obtener_cama_servicio($servicio);
 			//print_r("aaaaa");die();
 		}else if (($cama ==  0 || !$cama)) {
-			$contenido['datos'] = $this->objCamas->obtener_cama_servicio_sala($servicio, $codigo_sala->CODSALA);
+			//$contenido['datos'] = $this->objCamas->obtener_cama_servicio_sala($servicio, $codigo_sala->CODSALA);
+			$contenido['datos'] = $this->objCamas->obtener_cama_servicio_sala($servicio, $sala);
 			//print_r("bbbbb");die();
 		}else{
-			$contenido['datos'] = $this->objCamas->obtenerCama($servicio, $codigo_sala->CODSALA, $cama);
+			//$contenido['datos'] = $this->objCamas->obtenerCama($servicio, $codigo_sala->CODSALA, $cama);
+			$contenido['datos'] = $this->objCamas->obtenerCama($servicio, $sala, $cama);
 			//print_r("ccccc");die();
 		}
 
@@ -278,6 +283,16 @@ class Camas extends CI_Controller {
 
 		$this->layout->view('index', $contenido);
 
+	}
+
+	public function cambiarcodigosala(){
+		$camas = $this->objCamas->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+
+		foreach ($camas as $key) {
+			$sala = $this->objSalas->obtener(array('CODSERV' => $key->codigo_servicio,'CODSALA' => $key->codigo_sala));
+
+			$this->objCamas->cambiar_codigo_sala($key->id_cama, $sala->id_sala);
+		}
 	}
 
 }

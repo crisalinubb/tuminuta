@@ -47,6 +47,20 @@
     </div>
 
     <div class="form-group">
+      <label for="codigo_unidadcompra" class="col-sm-2 control-label">Unidad de Compra</label>
+      <div class="col-sm-4">
+        <select id="codigo_unidadcompra" name="codigo_unidadcompra" class="selectpicker validate[required]" data-live-search="true">
+           <option disabled selected>Seleccione</option>
+           <?php if($unidades_medidas){ ?>
+           <?php foreach($unidades_medidas as $unidades_medida){ ?>
+              <option value="<?php echo $unidades_medida->id_unidad_medidad; ?>"><?php echo $unidades_medida->nombre; ?></option>
+           <?php } ?>
+           <?php } ?>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
       <label for="perecible" class="col-sm-2 control-label">Perecible</label>
       <div class="col-sm-4">
         <select id="perecible" name="perecible" class="selectpicker validate[required]" data-live-search="true">

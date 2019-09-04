@@ -348,4 +348,106 @@ class Once extends CI_Controller {
 
 	}
 
+	public function activar($id_once = false){
+		$this->objOnce->activar($id_once);
+		
+		#Title
+		$this->layout->title('Onces');
+
+		#Metas
+		$this->layout->setMeta('title','Onces');
+		$this->layout->setMeta('description','Onces');
+		$this->layout->setMeta('keywords','Onces');
+
+		#JS - Multiple select boxes
+		$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
+		$this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
+
+		#JS - Ajax multi select
+		$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
+		$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
+
+		#filtros
+		$where = $contenido['q_f'] = '';
+		if($this->input->get('q')){
+			$contenido['q_f'] = $q = $this->input->get('q');
+			$where = "nombre like '%$q%'";
+		}
+
+		#url
+		$url = explode('?',$_SERVER['REQUEST_URI']);
+		if(isset($url[1]))
+			$contenido['url'] = $url = '/?'.$url[1];
+		else
+			$contenido['url'] = $url = '/';
+
+		#paginacion
+		$config['base_url'] = base_url() . 'once/';
+		$config['total_rows'] = count($this->objOnce->listar($where));
+		$config['per_page'] = 15;
+		$config['suffix'] = $url;
+		$config['first_url'] = base_url() . '/once'.$url;
+
+		$this->pagination->initialize($config);
+
+		$contenido['datos'] = $this->objOnce->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ), $pagina, $config['per_page']);
+
+		$contenido['pagination'] = $this->pagination->create_links();
+
+		$contenido['onces'] = $this->objOnce->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+
+		$this->layout->view('index', $contenido);
+	}
+
+	public function desactivar($id_once = false){
+		$this->objOnce->desactivar($id_once);
+
+		#Title
+		$this->layout->title('Onces');
+
+		#Metas
+		$this->layout->setMeta('title','Onces');
+		$this->layout->setMeta('description','Onces');
+		$this->layout->setMeta('keywords','Onces');
+
+		#JS - Multiple select boxes
+		$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
+		$this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
+
+		#JS - Ajax multi select
+		$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
+		$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
+
+		#filtros
+		$where = $contenido['q_f'] = '';
+		if($this->input->get('q')){
+			$contenido['q_f'] = $q = $this->input->get('q');
+			$where = "nombre like '%$q%'";
+		}
+
+		#url
+		$url = explode('?',$_SERVER['REQUEST_URI']);
+		if(isset($url[1]))
+			$contenido['url'] = $url = '/?'.$url[1];
+		else
+			$contenido['url'] = $url = '/';
+
+		#paginacion
+		$config['base_url'] = base_url() . 'once/';
+		$config['total_rows'] = count($this->objOnce->listar($where));
+		$config['per_page'] = 15;
+		$config['suffix'] = $url;
+		$config['first_url'] = base_url() . '/once'.$url;
+
+		$this->pagination->initialize($config);
+
+		$contenido['datos'] = $this->objOnce->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ), $pagina, $config['per_page']);
+
+		$contenido['pagination'] = $this->pagination->create_links();
+
+		$contenido['onces'] = $this->objOnce->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+
+		$this->layout->view('index', $contenido);
+	}
+
 }

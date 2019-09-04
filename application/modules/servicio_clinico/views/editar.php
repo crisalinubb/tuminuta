@@ -7,7 +7,7 @@
       <label for="nombre" class="col-sm-2 control-label">Codigo</label>
       <div class="col-sm-10">
          <input type="text" id="codigo_servicio" name="codigo_servicio" class="form-control validate[required]" value="<?php echo $servicio_clinico->codigo_servicio; ?>" />
-         <input type="hidden" id="codigo" name="codigo" class="form-control validate[required]" value="<?php echo $servicio_clinico->codigo_servicio; ?>" />
+         <input type="hidden" id="codigo" name="codigo" class="form-control validate[required]" value="<?php echo $servicio_clinico->id_servicio; ?>" />
       </div>
     </div>
 

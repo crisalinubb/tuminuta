@@ -1,0 +1,9 @@
+
+.icon-list-add { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe800;&nbsp;'); }
+.icon-trash-empty { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe801;&nbsp;'); }
+.icon-calendar { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe802;&nbsp;'); }
+.icon-user-pair { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe803;&nbsp;'); }
+.icon-users { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe804;&nbsp;'); }
+.icon-exchange { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf0ec;&nbsp;'); }
+.icon-hospital { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf0f8;&nbsp;'); }
+.icon-bed { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf236;&nbsp;'); }

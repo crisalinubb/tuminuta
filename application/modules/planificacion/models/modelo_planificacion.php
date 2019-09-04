@@ -189,8 +189,18 @@ class Modelo_Planificacion extends CI_Model {
     }	
 
     public function obtener_insumos_planificacion($volumen, $id_receta){
-    	$result= $this->db->query('SELECT insumos.nombre AS Insumo, insumos_por_receta.cantidad * '.$volumen.' AS Total, insumos.id_unidad_medida AS Um FROM insumos_por_receta INNER JOIN insumos ON insumos_por_receta.id_insumo = insumos.id_insumo WHERE (insumos_por_receta.id_receta = '.$id_receta.')');
+    	$result= $this->db->query('SELECT insumos.nombre AS Insumo, insumos_por_receta.cantidad * '.$volumen.' AS Total, insumos.id_unidad_medida AS Um, insumos.unidad_compra AS unidad_compra FROM insumos_por_receta INNER JOIN insumos ON insumos_por_receta.id_insumo = insumos.id_insumo WHERE (insumos_por_receta.id_receta = '.$id_receta.')');
     	//die($this->db->last_query());
     	return $result->result();
+    }
+
+    public function eliminar_planificacion($fecha, $id_servicio_alimentacion, $id_destino, $id_unidad){
+    	$fecha_inicio = date("Y-m-d 00:00:00", strtotime($fecha));
+		$fecha_fin = date("Y-m-d 23:59:59", strtotime($fecha));	
+    	$this->db->where('id_destino',$id_destino);
+		$this->db->where('id_servicio_alimentacion',$id_servicio_alimentacion);
+		$this->db->where('id_unidad',$id_unidad);
+		$this->db->where('fecha BETWEEN "'. $fecha_inicio. '" and "'. $fecha_fin.'"');
+		$this->db->delete('planificacion');
     }
 }

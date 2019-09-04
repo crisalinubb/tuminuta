@@ -83,6 +83,7 @@ class Insumos extends CI_Controller {
 				'nombre' => $this->input->post('nombre'),
 				'id_rubro' => $this->input->post('codigo_rubro'),
 				'id_unidad_medida' => $this->input->post('codigo_unidadmedida'),
+				'unidad_compra' => $this->input->post('codigo_unidadcompra'),
 				'perecible' => $this->input->post('perecible'),
 				'factor_pedido' => $this->input->post('factor_pedido'),
 				'costo' => $this->input->post('costo'),
@@ -148,6 +149,7 @@ class Insumos extends CI_Controller {
 				'nombre' => $this->input->post('nombre'),
 				'id_rubro' => $this->input->post('codigo_rubro'),
 				'id_unidad_medida' => $this->input->post('codigo_unidadmedida'),
+				'unidad_compra' => $this->input->post('codigo_unidadcompra'),
 				'perecible' => $this->input->post('perecible'),
 				'factor_pedido' => $this->input->post('factor_pedido'),
 				'costo' => $this->input->post('costo'),
@@ -206,7 +208,8 @@ class Insumos extends CI_Controller {
 			$insumo_eliminado = $this->objInsumo->obtener(array('id_insumo' => $codigo));
 
 			//borrando el registro
-			$this->objInsumo->eliminar($codigo);
+			//$this->objInsumo->eliminar($codigo);
+			$this->objInsumo->desactivar_insumos($codigo, $this->session->userdata("usuario")->id_unidad, $this->session->userdata("usuario")->id_usuario);
 
 			$url = explode('?',$_SERVER['REQUEST_URI']);
 			if(isset($url[1]))
@@ -233,7 +236,50 @@ class Insumos extends CI_Controller {
 
 			$contenido['datos'] = $this->objInsumo->listar($where, $pagina, $config['per_page']);
 
-			$contenido['mesagge'] = $insumo_eliminado->nombre." registro eliminado";
+			$contenido['mesagge'] = $insumo_eliminado->nombre." registro desactivado";
+
+			$contenido['pagination'] = $this->pagination->create_links();
+			$contenido['insumos'] = $this->objInsumo->listar();
+
+			$this->layout->view('index', $contenido);
+	}
+
+	public function activar($codigo = false){
+		if(!$codigo) redirect(base_url() . "insumos/");
+
+			//buscando datos de elemento eliminado
+			$insumo_eliminado = $this->objInsumo->obtener(array('id_insumo' => $codigo));
+
+			//borrando el registro
+			//$this->objInsumo->eliminar($codigo);
+			$this->objInsumo->activar_insumos($codigo, $this->session->userdata("usuario")->id_unidad, $this->session->userdata("usuario")->id_usuario);
+
+			$url = explode('?',$_SERVER['REQUEST_URI']);
+			if(isset($url[1]))
+				$contenido['url'] = $url = '/?'.$url[1];
+			else
+				$contenido['url'] = $url = '/';
+
+			#paginacion
+			$config['base_url'] = base_url() . 'insumos/';
+			$config['total_rows'] = count($this->objInsumo->listar($where));
+			$config['per_page'] = 15;
+			$config['suffix'] = $url;
+			$config['first_url'] = base_url() . '/insumos'.$url;
+
+			$this->pagination->initialize($config);
+
+			#JS - Multiple select boxes
+			$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
+			$this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
+
+			#JS - Ajax multi select
+			$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
+			$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
+
+			$contenido['datos'] = $this->objInsumo->listar($where, $pagina, $config['per_page']);
+
+			$contenido['mesagge'] = $insumo_eliminado->nombre." registro activado";
 
 			$contenido['pagination'] = $this->pagination->create_links();
 			$contenido['insumos'] = $this->objInsumo->listar();
@@ -265,6 +311,23 @@ class Insumos extends CI_Controller {
 		$contenido['insumos'] = $this->objInsumo->listar();
 
 		$this->layout->view('index', $contenido);
+	}
+
+	public function agregar_unidad_compra(){
+		$insumos = $this->objInsumo->listar();
+
+		foreach ($insumos as $key) {
+			$unidad_compra = '';
+			if($key->id_unidad_medida == 'GR' || $key->id_unidad_medida == 'CC'){
+				if ($key->id_unidad_medida == 'GR') {
+					$unidad_compra = 'KG';
+					$this->objInsumo->agregar_unidad_compra($key->id_insumo, $unidad_compra);
+				}else if($key->id_unidad_medida == 'CC'){
+					$unidad_compra = 'LT';
+					$this->objInsumo->agregar_unidad_compra($key->id_insumo, $unidad_compra);
+				}
+			}
+		}
 	}
 
 }

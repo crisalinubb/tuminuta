@@ -4,9 +4,9 @@
     <div class="col-md-3" style="margin-top:24px;">
     </div>
     <div class="col-md-2" style=" margin:24px 0 10px;">
-      <form class="form-inline" method="post" action='<?= base_url() ?>insumo_receta/agregar?receta=<?php echo $id_receta; ?>'>
+      <form class="form-inline" method="post" action='<?= base_url() ?>insumo_receta/agregar/<?php echo $id_receta; ?>'>
         <div class="text-center new">
-        <button type="submit" class="btn btn-primary col-md-12">Agregar</button>
+        <button type="submit" class="btn btn-primary col-md-12">Agregar Insumos</button>
       </div>
       </form>
     </div>
@@ -22,12 +22,33 @@
   <div><h2><strong><?php echo $receta->nombre; ?></strong></h2></div>
 </div>
 
+<div class="col-md-3" style="margin-top:24px;">
+       <form class="form-inline" method="post" action="<?php echo base_url(); ?>insumo_receta/busquedaPorRubro">
+      <div class="input-group">
+        <input type="hidden" id="receta" name="receta" class="form-control validate[required]" value="<?php echo $id_receta; ?>" />
+      <div class="col-sm-20">
+        <select id="rubros" name="rubros" class="selectpicker validate[required]" data-live-search="true">
+           <option disabled selected>Seleccione Rubro</option>
+           <?php if($rubros){ ?>
+           <?php foreach($rubros as $rubro){ ?>
+              <option value="<?php echo $rubro->id_rubro; ?>"><?php echo $rubro->nombre; ?></option>
+           <?php } ?>
+           <?php } ?>
+        </select>
+      </div>
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-default">Buscar</button>
+        </span></div>
+    </form>
+</div>
+
 <div class="thumbnail table-responsive all-responsive" id="multiselectForm">
   <table border="0" cellspacing="0" cellpadding="0" class="table" style="margin-bottom:0;">
     <thead>
       <tr>
         <th scope="col" style="width:100px;">Insumo</th> 
         <th scope="col" style="width:100px;">Cantidad</th>
+        <th scope="col" style="width:30px;">Unidad de Medida</th>
         <th scope="col" style="width:90px;">&nbsp;</th>
       </tr>
     </thead>
@@ -38,6 +59,7 @@
           <?php $insumo = $this->objInsumo->obtener(array("id_insumo" => $insumos_recetas->id_insumo)); ?>
           <td><?php echo $insumo->nombre;?></td>
           <td><?php echo $insumos_recetas->cantidad; ?></td>
+          <td><?php echo $insumos_recetas->id_unidad_medida; ?></td>
 					<td class="editar">
 						<a href="<?php echo base_url(); ?>insumo_receta/editar/<?php echo $insumos_recetas->id_insumo_receta; ?>">
 							<button title="Editar" type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>

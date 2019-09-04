@@ -120,7 +120,7 @@
 .bootstrap-select.btn-group .dropdown-menu li:not(.disabled) a:focus small,
 .bootstrap-select.btn-group .dropdown-menu li.active:not(.disabled) a small {
   color: #64b1d8;
-  color: rgba(100, 177, 216, 0.4);
+  color: #FFFFFF;
 }
 .bootstrap-select.btn-group .dropdown-menu li.disabled a {
   cursor: not-allowed;

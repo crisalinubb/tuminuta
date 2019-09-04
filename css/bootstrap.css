@@ -3668,7 +3668,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
-  background-color: #f8f8f8;
+  background-color: #74a5b7;
   border-color: #e7e7e7;
 }
 .navbar-default .navbar-brand {
@@ -3683,7 +3683,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   color: #777777;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #777777;
+  color: white;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
@@ -4722,7 +4722,7 @@ button.close {
   margin: 2px 0 0;
   list-style: none;
   font-size: 14px;
-  background-color: #ffffff;
+  background-color: #0C1555;
   border: 1px solid #cccccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
@@ -4746,7 +4746,7 @@ button.close {
   clear: both;
   font-weight: normal;
   line-height: 1.428571429;
-  color: #555555;
+  color: white;
   white-space: nowrap;
 }
 .dropdown-menu > li > a:hover,

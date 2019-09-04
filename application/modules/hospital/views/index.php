@@ -1,6 +1,11 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li class="active">Instituciones</li>
+</ol>
+
 <div class="page-header">
   <div class="row">
-    <h1 class="col-md-7">Hospitales</h1>
+    <h1 class="col-md-7">Instituciones</h1>
     
     <div class="col-md-3" style="margin-top:24px;">
       <form class="form-inline" method="get" action="<?php echo base_url(); ?>hospital/busqueda">

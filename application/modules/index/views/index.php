@@ -6,7 +6,7 @@
   		<?php echo "Nombre Usuario: ".$this->session->userdata("usuario")->nombre." ".$this->session->userdata("usuario")->apellidoPaterno." ".$this->session->userdata("usuario")->apellidoMaterno; ?>
   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   		<?php $hospital = $this->objHospital->obtener(array('id_hospital' => $this->session->userdata("usuario")->id_unidad)); ?>
-  		<?php echo "Unidad/Organizacion: ".$hospital->hos_nombre; ?>
+  		<?php echo "Institucion: ".$hospital->hos_nombre; ?>
   	</div>
     <div>
     	<div class="jumbotron">

@@ -16,7 +16,7 @@
 | environments.
 |
 */
-$config['base_url'] = 'http://localhost/sistal/';
+$config['base_url'] = 'http://localhost/sistal';
 
 /*
 |--------------------------------------------------------------------------

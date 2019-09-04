@@ -43,9 +43,12 @@ class Destinos extends CI_Controller {
 
 		$this->pagination->initialize($config);
 
-		$contenido['datos'] = $this->objDestinos->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ), $pagina, $config['per_page']);
+		//$contenido['datos'] = $this->objDestinos->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ), $pagina, $config['per_page']);
 
-		$contenido['destinos'] = $this->objDestinos->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+		//$contenido['destinos'] = $this->objDestinos->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+
+		$contenido['destinos'] = $this->objDestinos->listar();
+		$contenido['datos'] = $this->objDestinos->listar($where, $pagina, $config['per_page']);
 
 		$contenido['pagination'] = $this->pagination->create_links();
 
@@ -223,7 +226,8 @@ class Destinos extends CI_Controller {
 
 		$contenido['datos'] = $this->objDestinos->obtenerDestino($query);
 
-		$contenido['destinos'] = $this->objDestinos->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+		//$contenido['destinos'] = $this->objDestinos->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+		$contenido['destinos'] = $this->objDestinos->listar();
 
 		$this->layout->view('index', $contenido);
 

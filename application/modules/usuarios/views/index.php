@@ -1,3 +1,8 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li class="active">Usuarios</li>
+</ol>
+
 <div class="page-header">
   <div class="row">
     <h1 class="col-md-7">Usuarios</h1>
@@ -10,7 +15,7 @@
            <option disabled selected>Seleccione</option>
            <?php if($usuarios){ ?>
            <?php foreach($usuarios as $usuario){ ?>
-              <option value="<?php echo $usuario->rut; ?>"><?php echo $usuario->nombre." ".$usuario->apellidoPaterno." ".$usuario->apellidoMaterno; ?></option>
+              <option value="<?php echo $usuario->rut; ?>" data-subtext="<?php echo $usuario->rut; ?>"><?php echo $usuario->nombre." ".$usuario->apellidoPaterno." ".$usuario->apellidoMaterno; ?></option>
            <?php } ?>
            <?php } ?>
         </select>
@@ -40,7 +45,8 @@
         <th scope="col" style="width:90px;">Rut</th>
         <th scope="col" style="width:80px;">Nombre Completo</th>
         <th scope="col" style="width:100px;">Login</th>
-        <th scope="col" style="width:80px;">Organizacion/Hospital</th>            
+        <th scope="col" style="width:80px;">Organizacion/Hospital</th>  
+        <th scope="col" style="width:80px;">Perfil</th>         
         <th scope="col" style="width:90px;">&nbsp;</th>
       </tr>
     </thead>
@@ -53,12 +59,18 @@
           <td><?php echo $usuarios->login; ?></td>
           <?php $hospital = $this->objHospital->obtener(array('id_hospital' => $usuarios->id_unidad)); ?>
           <td><?php echo $hospital->hos_nombre; ?></td>
+          <?php $perfil = $this->objPerfil->obtener(array('id_perfil' => $usuarios->id_perfil)); ?>
+          <td><?php echo $perfil->perfil_nombre; ?></td>
 					<td class="editar">
 						<a href="<?php echo base_url(); ?>usuarios/editar/<?php echo $usuarios->id_usuario; ?>">
 							<button title="Editar" type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
 						</a>
 
             <a href="<?php echo base_url(); ?>usuarios/eliminar/<?php echo $usuarios->id_usuario; ?>" onclick="return confirm('Esta seguro que desea eliminar este registro?');"><button title="Eliminar" type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></a>
+
+            <a href="<?php echo base_url(); ?>usuarios/cambiar_clave/<?php echo $usuarios->id_usuario; ?>">
+              <button title="Cambiar Contraseña" type="button" class="btn btn-success btn-sm">Cambiar Contraseña</button>
+            </a>
 					</td>
 				</tr>
 			<?php endforeach;?>

@@ -1,3 +1,11 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+</ol>
+
+<?php if ($mesagge) { ?>
+<div class="alert alert-danger" role="alert"><?php echo $mesagge; ?></div>
+<?php } ?>
+
 <div class="page-header">
   <h1>Solicitud</h1>
 </div>
@@ -130,8 +138,8 @@
           <td>
             <select id="codigo_desayuno" name="codigo_desayuno" class="selectpicker validate" data-dropup-auto="false" data-live-search="true">
            <option disabled selected>Seleccione</option>
-           <?php if($desayunos){ ?>
            <option value="0" selected>Sin Solicitar</option>
+           <?php if($desayunos){ ?>
            <?php foreach($desayunos as $desayuno){ ?>
               <option value="<?php echo $desayuno->id_receta; ?>" <?php if($codigos['desayuno_codigo'] == $desayuno->id_receta) echo "selected"; ?>><?php echo $desayuno->receta_nombre; ?></option>
 
@@ -170,8 +178,8 @@
           <td>
             <select id="codigo_once" name="codigo_once" class="selectpicker validate" data-dropup-auto="false" data-live-search="true">
            <option disabled selected>Seleccione</option>
-           <?php if($onces){ ?>
            <option value="0" selected>Sin Solicitar</option>
+           <?php if($onces){ ?>
            <?php foreach($onces as $once){ ?>
               <option value="<?php echo $once->id_receta; ?>" <?php if($codigos['once_codigo'] == $once->id_receta) echo "selected"; ?>><?php echo $once->receta_nombre; ?></option>
            <?php } ?>
@@ -187,7 +195,7 @@
         <tr>
           <td><p><strong>Cena:</strong></p></td>
          <td>
-           <select id="codigo_cena" name="codigo_cena" class="selectpicker validate" data-dropup-auto="false" data-live-search="true">
+           <select id="codigo_cena" name="codigo_cena" class="form-control" data-dropup-auto="false" data-live-search="true">
            <option disabled selected>Seleccione</option>
            <?php if($regimenes){ ?>
            <option value="0" selected>Sin Solicitar</option>
@@ -208,8 +216,8 @@
           <td>
             <select id="codigo_col10" name="codigo_col10" class="selectpicker validate" data-dropup-auto="false" data-live-search="true">
            <option disabled selected>Seleccione</option>
-           <?php if($colaciones){ ?>
            <option value="0" selected>Sin Solicitar</option>
+           <?php if($colaciones){ ?>
            <?php foreach($colaciones as $col){ ?>
               <option value="<?php echo $col->id_receta; ?>" <?php if($codigos['col10_codigo'] == $col->id_receta) echo "selected"; ?>><?php echo $col->receta_nombre; ?></option>
            <?php } ?>
@@ -227,8 +235,8 @@
           <td>
             <select id="codigo_col20" name="codigo_col20" class="selectpicker validate" data-dropup-auto="false" data-live-search="true">
            <option disabled selected>Seleccione</option>
-           <?php if($colaciones){ ?>
            <option value="0" selected>Sin Solicitar</option>
+           <?php if($colaciones){ ?>
            <?php foreach($colaciones as $col){ ?>
               <option value="<?php echo $col->id_receta; ?>" <?php if($codigos['col20_codigo'] == $col->id_receta) echo "selected"; ?>><?php echo $col->receta_nombre; ?></option>
            <?php } ?>
@@ -270,6 +278,7 @@
         <select id="formula" name="formula" class="selectpicker validate[required]" data-live-search="true">
            <option disabled selected>Seleccione</option>
            <?php if($formulas){ ?>
+           <option value="0" selected>Sin Solicitar</option>
            <?php foreach($formulas as $formula){ ?>
               <option value="<?php echo $formula->id_receta; ?>" <?php if($codigos['formula_codigo'] == $formula->id_receta) echo "selected"; ?>><?php echo $formula->nombre; ?></option>
            <?php } ?>
@@ -287,6 +296,7 @@
         <select id="compl1" name="compl1" class="selectpicker validate[required]" data-live-search="true">
            <option disabled selected>Seleccione</option>
            <?php if($complementos){ ?>
+           <option value="0" selected>Sin Solicitar</option>
            <?php foreach($complementos as $complemento){ ?>
               <option value="<?php echo $complemento->id_receta; ?>" <?php if($codigos['c1_codigo'] == $complemento->id_receta) echo "selected"; ?>><?php echo $complemento->nombre; ?></option>
            <?php } ?>
@@ -298,6 +308,7 @@
         <select id="compl2" name="compl2" class="selectpicker validate[required]" data-live-search="true">
            <option disabled selected>Seleccione</option>
            <?php if($complementos){ ?>
+           <option value="0" selected>Sin Solicitar</option>
            <?php foreach($complementos as $complemento){ ?>
               <option value="<?php echo $complemento->id_receta; ?>" <?php if($codigos['c2_codigo'] == $complemento->id_receta) echo "selected"; ?>><?php echo $complemento->nombre; ?></option>
            <?php } ?>
@@ -309,6 +320,7 @@
         <select id="compl3" name="compl3" class="selectpicker validate[required]" data-live-search="true">
            <option disabled selected>Seleccione</option>
            <?php if($complementos){ ?>
+           <option value="0" selected>Sin Solicitar</option>
            <?php foreach($complementos as $complemento){ ?>
               <option value="<?php echo $complemento->id_receta; ?>" <?php if($codigos['c3_codigo'] == $complemento->id_receta) echo "selected"; ?>><?php echo $complemento->nombre; ?></option>
            <?php } ?>
@@ -321,12 +333,12 @@
     <div class="form-group">
       <label for="volumen" class="col-sm-2 control-label">Volumen</label>
       <div class="col-sm-2">
-        <input type="text" id="volumen" name="volumen" class="form-control validate[required]" value="<?php echo $codigos['volumen']; ?>" placeholder="medida en cc" />
+        <input type="text" id="volumen" name="volumen" class="form-control validate[required]" value="<?php if($codigos['volumen']){echo $codigos['volumen'];}else{ echo 0;} ?>" placeholder="medida en cc" />
       </div>
     
       <label for="frecuencia" class="col-sm-2 control-label">Frecuencia</label>
       <div class="col-sm-2">
-        <input type="text" id="frecuencia" name="frecuencia" class="form-control validate[required]" value="<?php echo $codigos['frecuencia']; ?>" placeholder="veces al dia" />
+        <input type="text" id="frecuencia" name="frecuencia" class="form-control validate[required]" value="<?php if($codigos['frecuencia']){echo $codigos['frecuencia'];}else{ echo 0;} ?>" placeholder="veces al dia" />
       </div>
     </div>
 
@@ -364,14 +376,166 @@
     </div>
     </div>
     </div>
+    <div>
+      <table border="1" cellspacing="0" cellpadding="0" class="table" style="margin-bottom:0;">
+        <thead>
+          <tr>
+            <th scope="col" style="width:20px;"></th>
+            <th scope="col" style="width:30px;">Kcal</th> 
+            <th scope="col" style="width:30px;">Prot</th>
+            <th scope="col" style="width:30px;">Lip</th>
+            <th scope="col" style="width:30px;">Cho</th>
+          </tr>
+        </thead>
+        <tbody class="table-hover">
+          <tr>
+              <td><strong>Total Formula:</strong></td>
+              <td><label id="total_kcal_formula"></label></td>
+              <td><label id="total_prot_formula"></label></td>
+              <td><label id="total_lip_formula"></label></td>
+              <td><label id="total_cho_formula"></label></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-   
+   <br>
+  <br>
+  <div>
+      <table border="1" cellspacing="0" cellpadding="0" class="table" style="margin-bottom:0;">
+        <thead>
+          <tr>
+            <th scope="col" style="width:20px;"></th>
+            <th scope="col" style="width:30px;">Kcal</th> 
+            <th scope="col" style="width:30px;">Prot</th>
+            <th scope="col" style="width:30px;">Lip</th>
+            <th scope="col" style="width:30px;">Cho</th>
+          </tr>
+        </thead>
+        <tbody class="table-hover">
+          <tr>
+              <td><strong>Total:</strong></td>
+              <td><label id="total_kcal_sum"></label></td>
+              <td><label id="total_prot_sum"></label></td>
+              <td><label id="total_lip_sum"></label></td>
+              <td><label id="total_cho_sum"></label></td>
+          </tr>
+        </tbody>
+        <tr>
+              <td><strong>Aportes por KG:</strong></td>
+              <td><label id="aporte_kg_kcal"></label></td>
+              <td><label id="aporte_kg_prot"></label></td>
+              <td><label id="aporte_kg_lip"></label></td>
+              <td><label id="aporte_kg_cho"></label></td>
+          </tr>
+      </table>
+    </div>
+
     <div class="text-box">
       <input type="submit" name="boton1" class="btn btn-success btn-lg" value="Editar Solicitud">
     </div>
 </form>
 
 <script>
+
+  $(document).ready(function() {
+    //$('#codigo_almuerzo').change(function(){ // when one changes
+      //console.log($('#codigo_cena').val());
+      //$('#codigo_cena').val( $(this).val() ) // they all change
+    //});
+    $("#codigo_almuerzo").on("change", function() {
+    $("#codigo_cena").val($("#codigo_almuerzo").val());
+      //calculo del columna de cena(receta)
+        var request = $.ajax({
+        url: "<?php echo base_url(); ?>index/inf_nutri_recetas_almcena",
+        type: "POST",          
+        dataType: "json",
+        data: { id_receta: $('#codigo_cena').val(), id_tipo_aporte: 4 },
+        });
+
+        request.done(function(data) {
+
+          $("#cena_kcal").html(data.msg1);           
+          $("#cena_prot").html(data.msg2);
+          $("#cena_lip").html(data.msg3);
+          $("#cena_cho").html(data.msg4);                 
+        });
+
+        request.fail(function(jqXHR, textStatus) {
+           alert( "Peticion Fallida: " + textStatus );
+        });
+        
+      //calculo del total de recetas
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/calculo_inf_nutri_recetas",
+      type: "POST",          
+      dataType: "json",
+      data: { id_desayuno: $('#codigo_desayuno').val(), id_once: $('#codigo_once').val(), id_col10: $('#codigo_col10').val(), id_col20: $('#codigo_col20').val(), id_almuerzo: $('#codigo_almuerzo').val(),id_cena: $('#codigo_cena').val()},
+      });
+
+      request.done(function(data) {
+
+        $("#total_kcal").html(data.msg1);           
+        $("#total_prot").html(data.msg2);
+        $("#total_lip").html(data.msg3);
+        $("#total_cho").html(data.msg4);                 
+      });
+
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
+      });
+  })
+  });
+ 
+  function Obtener_planificacion_desayuno() {
+    $("#tbody").each(function() {
+        $.post("<?php echo base_url(); ?>index/obtener_planificacion_desayuno", {
+
+        }, function(data) {
+          $("#tbody").html(data);
+        });
+    });
+  }
+
+  function Obtener_planificacion_alm() {
+    $("#tbody").each(function() {
+        $.post("<?php echo base_url(); ?>index/obtener_planificacion_alm", {
+
+        }, function(data) {
+          $("#tbody").html(data);
+        });
+    });
+  }
+
+  function Obtener_planificacion_once() {
+    $("#tbody").each(function() {
+        $.post("<?php echo base_url(); ?>index/obtener_planificacion_once", {
+
+        }, function(data) {
+          $("#tbody").html(data);
+        });
+    });
+  }
+
+  function Obtener_planificacion_cena() {
+    $("#tbody").each(function() {
+        $.post("<?php echo base_url(); ?>index/obtener_planificacion_cena", {
+
+        }, function(data) {
+          $("#tbody").html(data);
+        });
+    });
+  }
+
+  function Obtener_planificacion_col() {
+    $("#tbody").each(function() {
+        $.post("<?php echo base_url(); ?>index/obtener_planificacion_col", {
+
+        }, function(data) {
+          $("#tbody").html(data);
+        });
+    });
+  }
 
   $(document).ready(function() {                       
                 $("#datos_menu").click(function() {
@@ -393,1177 +557,615 @@ function onlyOne(checkbox) {
 
 //cuando los select cambien
 $(document).ready(function() {                       
+  //calculo de inf. nutricional desayuno
   $("#codigo_desayuno").change(function() {
-
-    $("#codigo_desayuno").each(function() {
-      idDesayuno = $('#codigo_desayuno').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_kcal", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#desayuno_kcal").html(data);
-        });
+    //calculo del columna de desayuno(receta)
+    var request = $.ajax({
+    url: "<?php echo base_url(); ?>index/inf_nutri_recetas",
+    type: "POST",          
+    dataType: "json",
+    data: { id_receta: $('#codigo_desayuno').val() },
     });
 
-    $("#codigo_desayuno").each(function() {
-      idDesayuno = $('#codigo_desayuno').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_prot", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#desayuno_prot").html(data);
-        });
+    request.done(function(data) {
+
+      $("#desayuno_kcal").html(data.msg1);           
+      $("#desayuno_prot").html(data.msg2);
+      $("#desayuno_lip").html(data.msg3);
+      $("#desayuno_cho").html(data.msg4);                 
     });
 
-    $("#codigo_desayuno").each(function() {
-      idDesayuno = $('#codigo_desayuno').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_lip", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#desayuno_lip").html(data);
-        });
+    request.fail(function(jqXHR, textStatus) {
+       alert( "Peticion Fallida: " + textStatus );
     });
 
-    $("#codigo_desayuno").each(function() {
-      idDesayuno = $('#codigo_desayuno').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_cho", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#desayuno_cho").html(data);
-        });
-    });
-
-      kcalDesayuno = $('#codigo_desayuno').val();
-      kcalOnce = $('#codigo_once').val();
-      kcalCol10 = $('#codigo_col10').val();
-      kcalCol20 = $('#codigo_col20').val();
-      kcalAlmuerzo = $('#codigo_almuerzo').val();
-      kcalCena = $('#codigo_cena').val();
-      $("#total_kcal").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_kcal", {
-            kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_kcal").html(data);
-        });
+      //calculo del total de recetas
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/calculo_inf_nutri_recetas",
+      type: "POST",          
+      dataType: "json",
+      data: { id_desayuno: $('#codigo_desayuno').val(), id_once: $('#codigo_once').val(), id_col10: $('#codigo_col10').val(), id_col20: $('#codigo_col20').val(), id_almuerzo: $('#codigo_almuerzo').val(),id_cena: $('#codigo_cena').val()},
       });
 
-       $("#total_prot").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_prot", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_prot").html(data);
-        });
+      request.done(function(data) {
+
+        $("#total_kcal").html(data.msg1);           
+        $("#total_prot").html(data.msg2);
+        $("#total_lip").html(data.msg3);
+        $("#total_cho").html(data.msg4);                 
       });
 
-       $("#total_lip").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_lip", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_lip").html(data);
-        });
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
       });
-
-       $("#total_cho").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_cho", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_cho").html(data);
-        });
-      });
-
+      
   });
 
-                 
+  //calculo de inf. nutricional once               
   $("#codigo_once").change(function() {
-
-    $("#codigo_once").each(function() {
-      idDesayuno = $('#codigo_once').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_kcal", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#once_kcal").html(data);
-        });
-    });
-
-    $("#codigo_once").each(function() {
-      idDesayuno = $('#codigo_once').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_prot", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#once_prot").html(data);
-        });
-    });
-
-    $("#codigo_once").each(function() {
-      idDesayuno = $('#codigo_once').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_lip", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#once_lip").html(data);
-        });
-    });
-
-    $("#codigo_once").each(function() {
-      idDesayuno = $('#codigo_once').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_cho", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#once_cho").html(data);
-        });
-    });
-
-      kcalDesayuno = $('#codigo_desayuno').val();
-      kcalOnce = $('#codigo_once').val();
-      kcalCol10 = $('#codigo_col10').val();
-      kcalCol20 = $('#codigo_col20').val();
-      kcalAlmuerzo = $('#codigo_almuerzo').val();
-      kcalCena = $('#codigo_cena').val();
-      $("#total_kcal").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_kcal", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_kcal").html(data);
-        });
+      //calculo del columna de once(receta)
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/inf_nutri_recetas",
+      type: "POST",          
+      dataType: "json",
+      data: { id_receta: $('#codigo_once').val() },
       });
 
-      $("#total_prot").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_prot", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_prot").html(data);
-        });
+      request.done(function(data) {
+
+        $("#once_kcal").html(data.msg1);           
+        $("#once_prot").html(data.msg2);
+        $("#once_lip").html(data.msg3);
+        $("#once_cho").html(data.msg4);                 
       });
 
-      $("#total_lip").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_lip", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_lip").html(data);
-        });
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
       });
 
-      $("#total_cho").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_cho", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_cho").html(data);
-        });
+      //calculo del total de recetas
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/calculo_inf_nutri_recetas",
+      type: "POST",          
+      dataType: "json",
+      data: { id_desayuno: $('#codigo_desayuno').val(), id_once: $('#codigo_once').val(), id_col10: $('#codigo_col10').val(), id_col20: $('#codigo_col20').val(), id_almuerzo: $('#codigo_almuerzo').val(),id_cena: $('#codigo_cena').val()},
+      });
+
+      request.done(function(data) {
+
+        $("#total_kcal").html(data.msg1);           
+        $("#total_prot").html(data.msg2);
+        $("#total_lip").html(data.msg3);
+        $("#total_cho").html(data.msg4);                 
+      });
+
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
       });
 
   });
 });
 
 $(document).ready(function() {                       
+    //calculo de inf. nutricional colacion de las 10
   $("#codigo_col10").change(function() {
-
-    $("#codigo_col10").each(function() {
-      idDesayuno = $('#codigo_col10').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_kcal", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#col10_kcal").html(data);
-        });
-    });
-
-    $("#codigo_col10").each(function() {
-      idDesayuno = $('#codigo_col10').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_prot", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#col10_prot").html(data);
-        });
-    });
-
-    $("#codigo_col10").each(function() {
-      idDesayuno = $('#codigo_col10').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_lip", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#col10_lip").html(data);
-        });
-    });
-
-    $("#codigo_col10").each(function() {
-      idDesayuno = $('#codigo_col10').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_cho", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#col10_cho").html(data);
-        });
-    });
-
-      kcalDesayuno = $('#codigo_desayuno').val();
-      kcalOnce = $('#codigo_once').val();
-      kcalCol10 = $('#codigo_col10').val();
-      kcalCol20 = $('#codigo_col20').val();
-      kcalAlmuerzo = $('#codigo_almuerzo').val();
-      kcalCena = $('#codigo_cena').val();
-      $("#total_kcal").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_kcal", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_kcal").html(data);
-        });
+      //calculo del columna de colacion de las 10(receta)
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/inf_nutri_recetas",
+      type: "POST",          
+      dataType: "json",
+      data: { id_receta: $('#codigo_col10').val() },
       });
 
-      $("#total_prot").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_prot", {
-            kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_prot").html(data);
-        });
+      request.done(function(data) {
+
+        $("#col10_kcal").html(data.msg1);           
+        $("#col10_prot").html(data.msg2);
+        $("#col10_lip").html(data.msg3);
+        $("#col10_cho").html(data.msg4);                 
       });
 
-      $("#total_lip").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_lip", {
-            kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_lip").html(data);
-        });
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
+      });
+      
+      //calculo del total de recetas
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/calculo_inf_nutri_recetas",
+      type: "POST",          
+      dataType: "json",
+      data: { id_desayuno: $('#codigo_desayuno').val(), id_once: $('#codigo_once').val(), id_col10: $('#codigo_col10').val(), id_col20: $('#codigo_col20').val(), id_almuerzo: $('#codigo_almuerzo').val(),id_cena: $('#codigo_cena').val()},
       });
 
-      $("#total_cho").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_cho", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_cho").html(data);
-        });
+      request.done(function(data) {
+
+        $("#total_kcal").html(data.msg1);           
+        $("#total_prot").html(data.msg2);
+        $("#total_lip").html(data.msg3);
+        $("#total_cho").html(data.msg4);                 
       });
 
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
+      });
   });
 });
 
-$(document).ready(function() {                       
+$(document).ready(function() {      
+//calculo de inf. nutricional colacion de las 20                 
   $("#codigo_col20").change(function() {
-
-    $("#codigo_col20").each(function() {
-      idDesayuno = $('#codigo_col20').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_kcal", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#col20_kcal").html(data);
-        });
+    //calculo del columna de colacion de las 20(receta)
+    var request = $.ajax({
+    url: "<?php echo base_url(); ?>index/inf_nutri_recetas",
+    type: "POST",          
+    dataType: "json",
+    data: { id_receta: $('#codigo_col20').val() },
     });
 
-    $("#codigo_col20").each(function() {
-      idDesayuno = $('#codigo_col20').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_prot", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#col20_prot").html(data);
-        });
+    request.done(function(data) {
+
+      $("#col20_kcal").html(data.msg1);           
+      $("#col20_prot").html(data.msg2);
+      $("#col20_lip").html(data.msg3);
+      $("#col20_cho").html(data.msg4);                 
     });
 
-    $("#codigo_col20").each(function() {
-      idDesayuno = $('#codigo_col20').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_lip", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#col20_lip").html(data);
-        });
+    request.fail(function(jqXHR, textStatus) {
+       alert( "Peticion Fallida: " + textStatus );
     });
 
-    $("#codigo_col20").each(function() {
-      idDesayuno = $('#codigo_col20').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_cho", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#col20_cho").html(data);
-        });
-    });
-
-      kcalDesayuno = $('#codigo_desayuno').val();
-      kcalOnce = $('#codigo_once').val();
-      kcalCol10 = $('#codigo_col10').val();
-      kcalCol20 = $('#codigo_col20').val();
-      kcalAlmuerzo = $('#codigo_almuerzo').val();
-      kcalCena = $('#codigo_cena').val();
-      $("#total_kcal").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_kcal", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_kcal").html(data);
-        });
+    //calculo del total de recetas
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/calculo_inf_nutri_recetas",
+      type: "POST",          
+      dataType: "json",
+      data: { id_desayuno: $('#codigo_desayuno').val(), id_once: $('#codigo_once').val(), id_col10: $('#codigo_col10').val(), id_col20: $('#codigo_col20').val(), id_almuerzo: $('#codigo_almuerzo').val(),id_cena: $('#codigo_cena').val()},
       });
 
-      $("#total_prot").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_prot", {
-            kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_prot").html(data);
-        });
-      });
+      request.done(function(data) {
 
-     $("#total_lip").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_lip", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_lip").html(data);
-        });
-      }); 
-
-     $("#total_cho").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_cho", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_cho").html(data);
-        });
+        $("#total_kcal").html(data.msg1);           
+        $("#total_prot").html(data.msg2);
+        $("#total_lip").html(data.msg3);
+        $("#total_cho").html(data.msg4);                 
       });
 
   });
-
 });
 
 $(document).ready(function() {                       
+    //calculo de inf. nutricional almuerzo
   $("#codigo_almuerzo").change(function() {
-
-    $("#codigo_almuerzo").each(function() {
-      idAlmuerzo = $('#codigo_almuerzo').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_kcal_alm", {
-          idAlmuerzo : idAlmuerzo
-        }, function(data) {
-          $("#alm_kcal").html(data);
-        });
-    });
-
-     $("#codigo_almuerzo").each(function() {
-      idAlmuerzo = $('#codigo_almuerzo').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_prot_alm", {
-          idAlmuerzo : idAlmuerzo
-        }, function(data) {
-          $("#alm_prot").html(data);
-        });
-    });
-
-    $("#codigo_almuerzo").each(function() {
-      idAlmuerzo = $('#codigo_almuerzo').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_lip_alm", {
-          idAlmuerzo : idAlmuerzo
-        }, function(data) {
-          $("#alm_lip").html(data);
-        });
-    });
-
-   $("#codigo_almuerzo").each(function() {
-      idAlmuerzo = $('#codigo_almuerzo').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_cho_alm", {
-          idAlmuerzo : idAlmuerzo
-        }, function(data) {
-          $("#alm_cho").html(data);
-        });
-    });
-
-    kcalDesayuno = $('#codigo_desayuno').val();
-      kcalOnce = $('#codigo_once').val();
-      kcalCol10 = $('#codigo_col10').val();
-      kcalCol20 = $('#codigo_col20').val();
-      kcalAlmuerzo = $('#codigo_almuerzo').val();
-      kcalCena = $('#codigo_cena').val();
-      $("#total_kcal").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_kcal", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_kcal").html(data);
-        });
+      //calculo del columna de almuerzo(receta)
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/inf_nutri_recetas_almcena",
+      type: "POST",          
+      dataType: "json",
+      data: { id_receta: $('#codigo_almuerzo').val(), id_tipo_aporte: 2 },
       });
 
-      $("#total_prot").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_prot", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_prot").html(data);
-        });
+      request.done(function(data) {
+
+        $("#alm_kcal").html(data.msg1);           
+        $("#alm_prot").html(data.msg2);
+        $("#alm_lip").html(data.msg3);
+        $("#alm_cho").html(data.msg4);                 
       });
 
-     $("#total_lip").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_lip", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_lip").html(data);
-        });
-      }); 
-
-     $("#total_cho").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_cho", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_cho").html(data);
-        });
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
       });
 
+      //calculo del total de recetas
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/calculo_inf_nutri_recetas",
+      type: "POST",          
+      dataType: "json",
+      data: { id_desayuno: $('#codigo_desayuno').val(), id_once: $('#codigo_once').val(), id_col10: $('#codigo_col10').val(), id_col20: $('#codigo_col20').val(), id_almuerzo: $('#codigo_almuerzo').val(),id_cena: $('#codigo_cena').val()},
+      });
+
+      request.done(function(data) {
+
+        $("#total_kcal").html(data.msg1);           
+        $("#total_prot").html(data.msg2);
+        $("#total_lip").html(data.msg3);
+        $("#total_cho").html(data.msg4);                 
+      });
+
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
+      });  
   });
 
 });
 
 $(document).ready(function() {                       
+    //calculo de inf. nutricional cena
   $("#codigo_cena").change(function() {
-
-    $("#codigo_cena").each(function() {
-      idCena = $('#codigo_cena').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_kcal_cena", {
-          idCena : idCena
-        }, function(data) {
-          $("#cena_kcal").html(data);
+        //calculo del columna de cena(receta)
+        var request = $.ajax({
+        url: "<?php echo base_url(); ?>index/inf_nutri_recetas_almcena",
+        type: "POST",          
+        dataType: "json",
+        data: { id_receta: $('#codigo_cena').val(), id_tipo_aporte: 4 },
         });
-    });
 
-     $("#codigo_cena").each(function() {
-      idCena = $('#codigo_cena').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_prot_cena", {
-          idCena : idCena
-        }, function(data) {
-          $("#cena_prot").html(data);
-        });
-    });
+        request.done(function(data) {
 
-    $("#codigo_cena").each(function() {
-      idCena = $('#codigo_cena').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_lip_cena", {
-          idCena : idCena
-        }, function(data) {
-          $("#cena_lip").html(data);
+          $("#cena_kcal").html(data.msg1);           
+          $("#cena_prot").html(data.msg2);
+          $("#cena_lip").html(data.msg3);
+          $("#cena_cho").html(data.msg4);                 
         });
-    });
 
-   $("#codigo_cena").each(function() {
-      idCena = $('#codigo_cena').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_cho_cena", {
-          idCena : idCena
-        }, function(data) {
-          $("#cena_cho").html(data);
+        request.fail(function(jqXHR, textStatus) {
+           alert( "Peticion Fallida: " + textStatus );
         });
-    });
-
-    kcalDesayuno = $('#codigo_desayuno').val();
-      kcalOnce = $('#codigo_once').val();
-      kcalCol10 = $('#codigo_col10').val();
-      kcalCol20 = $('#codigo_col20').val();
-      kcalAlmuerzo = $('#codigo_almuerzo').val();
-      kcalCena = $('#codigo_cena').val();
-      $("#total_kcal").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_kcal", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_kcal").html(data);
-        });
+        
+      //calculo del total de recetas
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/calculo_inf_nutri_recetas",
+      type: "POST",          
+      dataType: "json",
+      data: { id_desayuno: $('#codigo_desayuno').val(), id_once: $('#codigo_once').val(), id_col10: $('#codigo_col10').val(), id_col20: $('#codigo_col20').val(), id_almuerzo: $('#codigo_almuerzo').val(),id_cena: $('#codigo_cena').val()},
       });
 
-      $("#total_prot").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_prot", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_prot").html(data);
-        });
+      request.done(function(data) {
+
+        $("#total_kcal").html(data.msg1);           
+        $("#total_prot").html(data.msg2);
+        $("#total_lip").html(data.msg3);
+        $("#total_cho").html(data.msg4);                 
       });
 
-     $("#total_lip").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_lip", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_lip").html(data);
-        });
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
+      });
+  });
+  });
+
+$(document).ready(function() {
+  //calculo de inf. nutricional de las formulas
+$("#formula, #compl1, #compl2, #compl3").change(function() {  
+
+  //calculo del total de formulas
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/inf_nutri_recetas_formula",
+      type: "POST",          
+      dataType: "json",
+      data: { formula: $('#formula').val(), comp1: $('#compl1').val(), comp2: $('#compl2').val(), comp3: $('#compl3').val(), frecuencia: $('#frecuencia').val(),volumen: $('#volumen').val()},
+      });
+
+      request.done(function(data) {
+
+        $("#total_kcal_formula").html(data.msg1);           
+        $("#total_prot_formula").html(data.msg2);
+        $("#total_lip_formula").html(data.msg3);
+        $("#total_cho_formula").html(data.msg4);                 
+      });
+
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
       }); 
 
-     $("#total_cho").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_cho", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_cho").html(data);
-        });
+  });
+});
+
+$(document).ready(function() {
+//suma total de informacion nutricional (recetas+formulas)
+$("#codigo_desayuno, #codigo_once, #codigo_col10, #codigo_col20, #codigo_almuerzo, #codigo_cena, #formula, #compl1, #compl2, #compl3").change(function() {   
+  
+  //calculo del total de recetas
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/suma_total_solicitud",
+      type: "POST",          
+      dataType: "json",
+      data: { id_desayuno: $('#codigo_desayuno').val(), id_once: $('#codigo_once').val(), id_col10: $('#codigo_col10').val(), id_col20: $('#codigo_col20').val(), id_almuerzo: $('#codigo_almuerzo').val(),id_cena: $('#codigo_cena').val(),formula: $('#formula').val(), comp1: $('#compl1').val(), comp2: $('#compl2').val(), comp3: $('#compl3').val(), frecuencia: $('#frecuencia').val(),volumen: $('#volumen').val()},
       });
 
-  });
-  });
+      request.done(function(data) {
 
+        $("#total_kcal_sum").html(data.msg1);           
+        $("#total_prot_sum").html(data.msg2);
+        $("#total_lip_sum").html(data.msg3);
+        $("#total_cho_sum").html(data.msg4);                 
+      });
+
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
+      });   
+
+  //aporte por kg
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/aporte_kg",
+      type: "POST",          
+      dataType: "json",
+      data: { id_desayuno: $('#codigo_desayuno').val(), id_once: $('#codigo_once').val(), id_col10: $('#codigo_col10').val(), id_col20: $('#codigo_col20').val(), id_almuerzo: $('#codigo_almuerzo').val(),id_cena: $('#codigo_cena').val(),formula: $('#formula').val(), comp1: $('#compl1').val(), comp2: $('#compl2').val(), comp3: $('#compl3').val(), frecuencia: $('#frecuencia').val(),volumen: $('#volumen').val(), id_paciente: $('#id_paciente').val()},
+      });
+
+      request.done(function(data) {
+
+        $("#aporte_kg_kcal").html(data.msg1);           
+        $("#aporte_kg_prot").html(data.msg2);
+        $("#aporte_kg_lip").html(data.msg3);
+        $("#aporte_kg_cho").html(data.msg4);                 
+      });
+
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
+      });
+  });
+  
+  $(document).ready(function() {
+$("#frecuencia, #volumen").change(function() {   
+   //calculo del total de recetas
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/suma_total_solicitud",
+      type: "POST",          
+      dataType: "json",
+      data: { id_desayuno: $('#codigo_desayuno').val(), id_once: $('#codigo_once').val(), id_col10: $('#codigo_col10').val(), id_col20: $('#codigo_col20').val(), id_almuerzo: $('#codigo_almuerzo').val(),id_cena: $('#codigo_cena').val(),formula: $('#formula').val(), comp1: $('#compl1').val(), comp2: $('#compl2').val(), comp3: $('#compl3').val(), frecuencia: $('#frecuencia').val(),volumen: $('#volumen').val()},
+      });
+
+      request.done(function(data) {
+
+        $("#total_kcal_sum").html(data.msg1);           
+        $("#total_prot_sum").html(data.msg2);
+        $("#total_lip_sum").html(data.msg3);
+        $("#total_cho_sum").html(data.msg4);                 
+      });
+
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
+      });   
+
+  //aporte por kg
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/aporte_kg",
+      type: "POST",          
+      dataType: "json",
+      data: { id_desayuno: $('#codigo_desayuno').val(), id_once: $('#codigo_once').val(), id_col10: $('#codigo_col10').val(), id_col20: $('#codigo_col20').val(), id_almuerzo: $('#codigo_almuerzo').val(),id_cena: $('#codigo_cena').val(),formula: $('#formula').val(), comp1: $('#compl1').val(), comp2: $('#compl2').val(), comp3: $('#compl3').val(), frecuencia: $('#frecuencia').val(),volumen: $('#volumen').val(), id_paciente: $('#id_paciente').val()},
+      });
+
+      request.done(function(data) {
+
+        $("#aporte_kg_kcal").html(data.msg1);           
+        $("#aporte_kg_prot").html(data.msg2);
+        $("#aporte_kg_lip").html(data.msg3);
+        $("#aporte_kg_cho").html(data.msg4);                 
+      });
+
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
+      });
+  
+      //calculo del total de formulas
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/inf_nutri_recetas_formula",
+      type: "POST",          
+      dataType: "json",
+      data: { formula: $('#formula').val(), comp1: $('#compl1').val(), comp2: $('#compl2').val(), comp3: $('#compl3').val(), frecuencia: $('#frecuencia').val(),volumen: $('#volumen').val()},
+      });
+
+      request.done(function(data) {
+
+        $("#total_kcal_formula").html(data.msg1);           
+        $("#total_prot_formula").html(data.msg2);
+        $("#total_lip_formula").html(data.msg3);
+        $("#total_cho_formula").html(data.msg4);                 
+      });
+
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
+      }); 
+
+  });
+});
+
+});
 
 //cuando carge la pagina
 window.onload = function() {
-
-    $("#codigo_desayuno").each(function() {
-      idDesayuno = $('#codigo_desayuno').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_kcal", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#desayuno_kcal").html(data);
-        });
+    //calculo del columna de desayuno(receta)
+    var request = $.ajax({
+    url: "<?php echo base_url(); ?>index/inf_nutri_recetas",
+    type: "POST",          
+    dataType: "json",
+    data: { id_receta: $('#codigo_desayuno').val() },
     });
 
-    $("#codigo_desayuno").each(function() {
-      idDesayuno = $('#codigo_desayuno').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_prot", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#desayuno_prot").html(data);
-        });
+    request.done(function(data) {
+
+      $("#desayuno_kcal").html(data.msg1);           
+      $("#desayuno_prot").html(data.msg2);
+      $("#desayuno_lip").html(data.msg3);
+      $("#desayuno_cho").html(data.msg4);                 
     });
 
-    $("#codigo_desayuno").each(function() {
-      idDesayuno = $('#codigo_desayuno').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_lip", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#desayuno_lip").html(data);
-        });
+    request.fail(function(jqXHR, textStatus) {
+       alert( "Peticion Fallida: " + textStatus );
     });
 
-    $("#codigo_desayuno").each(function() {
-      idDesayuno = $('#codigo_desayuno').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_cho", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#desayuno_cho").html(data);
-        });
-    });
-
-       kcalDesayuno = $('#codigo_desayuno').val();
-      kcalOnce = $('#codigo_once').val();
-      kcalCol10 = $('#codigo_col10').val();
-      kcalCol20 = $('#codigo_col20').val();
-      kcalAlmuerzo = $('#codigo_almuerzo').val();
-      kcalCena = $('#codigo_cena').val();
-      $("#total_kcal").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_kcal", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_kcal").html(data);
-        });
+    //calculo del columna de once(receta)
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/inf_nutri_recetas",
+      type: "POST",          
+      dataType: "json",
+      data: { id_receta: $('#codigo_once').val() },
       });
 
-       $("#total_prot").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_prot", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_prot").html(data);
-        });
+      request.done(function(data) {
+
+        $("#once_kcal").html(data.msg1);           
+        $("#once_prot").html(data.msg2);
+        $("#once_lip").html(data.msg3);
+        $("#once_cho").html(data.msg4);                 
       });
 
-       $("#total_lip").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_lip", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_lip").html(data);
-        });
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
       });
 
-       $("#total_cho").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_cho", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_cho").html(data);
-        });
+     //calculo del columna de colacion de las 10(receta)
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/inf_nutri_recetas",
+      type: "POST",          
+      dataType: "json",
+      data: { id_receta: $('#codigo_col10').val() },
       });
 
+      request.done(function(data) {
 
-       $("#codigo_once").each(function() {
-      idDesayuno = $('#codigo_once').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_kcal", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#once_kcal").html(data);
-        });
-    });
-
-    $("#codigo_once").each(function() {
-      idDesayuno = $('#codigo_once').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_prot", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#once_prot").html(data);
-        });
-    });
-
-    $("#codigo_once").each(function() {
-      idDesayuno = $('#codigo_once').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_lip", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#once_lip").html(data);
-        });
-    });
-
-    $("#codigo_once").each(function() {
-      idDesayuno = $('#codigo_once').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_cho", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#once_cho").html(data);
-        });
-    });
-
-      kcalDesayuno = $('#codigo_desayuno').val();
-      kcalOnce = $('#codigo_once').val();
-      kcalCol10 = $('#codigo_col10').val();
-      kcalCol20 = $('#codigo_col20').val();
-      kcalAlmuerzo = $('#codigo_almuerzo').val();
-      kcalCena = $('#codigo_cena').val();
-      $("#total_kcal").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_kcal", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_kcal").html(data);
-        });
+        $("#col10_kcal").html(data.msg1);           
+        $("#col10_prot").html(data.msg2);
+        $("#col10_lip").html(data.msg3);
+        $("#col10_cho").html(data.msg4);                 
       });
 
-      $("#total_prot").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_prot", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_prot").html(data);
-        });
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
       });
 
-      $("#total_lip").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_lip", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_lip").html(data);
-        });
+      //calculo del columna de colacion de las 20(receta)
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/inf_nutri_recetas",
+      type: "POST",          
+      dataType: "json",
+      data: { id_receta: $('#codigo_col20').val() },
       });
 
-      $("#total_cho").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_cho", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_cho").html(data);
-        });
+      request.done(function(data) {
+
+        $("#col20_kcal").html(data.msg1);           
+        $("#col20_prot").html(data.msg2);
+        $("#col20_lip").html(data.msg3);
+        $("#col20_cho").html(data.msg4);                 
       });
 
-
-      $("#codigo_col10").each(function() {
-      idDesayuno = $('#codigo_col10').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_kcal", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#col10_kcal").html(data);
-        });
-    });
-
-    $("#codigo_col10").each(function() {
-      idDesayuno = $('#codigo_col10').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_prot", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#col10_prot").html(data);
-        });
-    });
-
-    $("#codigo_col10").each(function() {
-      idDesayuno = $('#codigo_col10').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_lip", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#col10_lip").html(data);
-        });
-    });
-
-    $("#codigo_col10").each(function() {
-      idDesayuno = $('#codigo_col10').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_cho", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#col10_cho").html(data);
-        });
-    });
-
-      kcalDesayuno = $('#codigo_desayuno').val();
-      kcalOnce = $('#codigo_once').val();
-      kcalCol10 = $('#codigo_col10').val();
-      kcalCol20 = $('#codigo_col20').val();
-      kcalAlmuerzo = $('#codigo_almuerzo').val();
-      kcalCena = $('#codigo_cena').val();
-      $("#total_kcal").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_kcal", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_kcal").html(data);
-        });
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
       });
 
-      $("#total_prot").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_prot", {
-            kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_prot").html(data);
-        });
+       //calculo del columna de almuerzo(receta)
+      var request = $.ajax({
+      url: "<?php echo base_url(); ?>index/inf_nutri_recetas_almcena",
+      type: "POST",          
+      dataType: "json",
+      data: { id_receta: $('#codigo_almuerzo').val(), id_tipo_aporte: 2 },
       });
 
-      $("#total_lip").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_lip", {
-            kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_lip").html(data);
-        });
+      request.done(function(data) {
+
+        $("#alm_kcal").html(data.msg1);           
+        $("#alm_prot").html(data.msg2);
+        $("#alm_lip").html(data.msg3);
+        $("#alm_cho").html(data.msg4);                 
       });
 
-      $("#total_cho").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_cho", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_cho").html(data);
-        });
+      request.fail(function(jqXHR, textStatus) {
+         alert( "Peticion Fallida: " + textStatus );
       });
 
-
-      $("#codigo_col20").each(function() {
-      idDesayuno = $('#codigo_col20').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_kcal", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#col20_kcal").html(data);
+      //calculo del columna de cena(receta)
+        var request = $.ajax({
+        url: "<?php echo base_url(); ?>index/inf_nutri_recetas_almcena",
+        type: "POST",          
+        dataType: "json",
+        data: { id_receta: $('#codigo_cena').val(), id_tipo_aporte: 4 },
         });
-    });
 
-    $("#codigo_col20").each(function() {
-      idDesayuno = $('#codigo_col20').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_prot", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#col20_prot").html(data);
-        });
-    });
+        request.done(function(data) {
 
-    $("#codigo_col20").each(function() {
-      idDesayuno = $('#codigo_col20').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_lip", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#col20_lip").html(data);
+          $("#cena_kcal").html(data.msg1);           
+          $("#cena_prot").html(data.msg2);
+          $("#cena_lip").html(data.msg3);
+          $("#cena_cho").html(data.msg4);                 
         });
-    });
 
-    $("#codigo_col20").each(function() {
-      idDesayuno = $('#codigo_col20').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_cho", {
-          idDesayuno : idDesayuno
-        }, function(data) {
-          $("#col20_cho").html(data);
+        request.fail(function(jqXHR, textStatus) {
+           alert( "Peticion Fallida: " + textStatus );
         });
-    });
 
-      kcalDesayuno = $('#codigo_desayuno').val();
-      kcalOnce = $('#codigo_once').val();
-      kcalCol10 = $('#codigo_col10').val();
-      kcalCol20 = $('#codigo_col20').val();
-      kcalAlmuerzo = $('#codigo_almuerzo').val();
-      kcalCena = $('#codigo_cena').val();
-      $("#total_kcal").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_kcal", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_kcal").html(data);
+         //calculo del total de recetas
+        var request = $.ajax({
+        url: "<?php echo base_url(); ?>index/calculo_inf_nutri_recetas",
+        type: "POST",          
+        dataType: "json",
+        data: { id_desayuno: $('#codigo_desayuno').val(), id_once: $('#codigo_once').val(), id_col10: $('#codigo_col10').val(), id_col20: $('#codigo_col20').val(), id_almuerzo: $('#codigo_almuerzo').val(),id_cena: $('#codigo_cena').val()},
         });
-      });
 
-      $("#total_prot").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_prot", {
-            kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_prot").html(data);
-        });
-      });
+        request.done(function(data) {
 
-     $("#total_lip").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_lip", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_lip").html(data);
+          $("#total_kcal").html(data.msg1);           
+          $("#total_prot").html(data.msg2);
+          $("#total_lip").html(data.msg3);
+          $("#total_cho").html(data.msg4);                 
         });
-      }); 
 
-     $("#total_cho").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_cho", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_cho").html(data);
+        request.fail(function(jqXHR, textStatus) {
+           alert( "Peticion Fallida: " + textStatus );
         });
-      });
 
-     $("#codigo_almuerzo").each(function() {
-      idAlmuerzo = $('#codigo_almuerzo').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_kcal_alm", {
-          idAlmuerzo : idAlmuerzo
-        }, function(data) {
-          $("#alm_kcal").html(data);
+        //calculo del total de formulas
+        var request = $.ajax({
+        url: "<?php echo base_url(); ?>index/inf_nutri_recetas_formula",
+        type: "POST",          
+        dataType: "json",
+        data: { formula: $('#formula').val(), comp1: $('#compl1').val(), comp2: $('#compl2').val(), comp3: $('#compl3').val(), frecuencia: $('#frecuencia').val(),volumen: $('#volumen').val()},
         });
-    });
 
-     $("#codigo_almuerzo").each(function() {
-      idAlmuerzo = $('#codigo_almuerzo').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_prot_alm", {
-          idAlmuerzo : idAlmuerzo
-        }, function(data) {
-          $("#alm_prot").html(data);
-        });
-    });
+        request.done(function(data) {
 
-    $("#codigo_almuerzo").each(function() {
-      idAlmuerzo = $('#codigo_almuerzo').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_lip_alm", {
-          idAlmuerzo : idAlmuerzo
-        }, function(data) {
-          $("#alm_lip").html(data);
+          $("#total_kcal_formula").html(data.msg1);           
+          $("#total_prot_formula").html(data.msg2);
+          $("#total_lip_formula").html(data.msg3);
+          $("#total_cho_formula").html(data.msg4);                 
         });
-    });
 
-   $("#codigo_almuerzo").each(function() {
-      idAlmuerzo = $('#codigo_almuerzo').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_cho_alm", {
-          idAlmuerzo : idAlmuerzo
-        }, function(data) {
-          $("#alm_cho").html(data);
+        request.fail(function(jqXHR, textStatus) {
+           alert( "Peticion Fallida: " + textStatus );
         });
-    });
 
-    kcalDesayuno = $('#codigo_desayuno').val();
-      kcalOnce = $('#codigo_once').val();
-      kcalCol10 = $('#codigo_col10').val();
-      kcalCol20 = $('#codigo_col20').val();
-      kcalAlmuerzo = $('#codigo_almuerzo').val();
-      kcalCena = $('#codigo_cena').val();
-      $("#total_kcal").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_kcal", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_kcal").html(data);
+        //calculo del total de recetas
+        var request = $.ajax({
+        url: "<?php echo base_url(); ?>index/suma_total_solicitud",
+        type: "POST",          
+        dataType: "json",
+        data: { id_desayuno: $('#codigo_desayuno').val(), id_once: $('#codigo_once').val(), id_col10: $('#codigo_col10').val(), id_col20: $('#codigo_col20').val(), id_almuerzo: $('#codigo_almuerzo').val(),id_cena: $('#codigo_cena').val(),formula: $('#formula').val(), comp1: $('#compl1').val(), comp2: $('#compl2').val(), comp3: $('#compl3').val(), frecuencia: $('#frecuencia').val(),volumen: $('#volumen').val()},
         });
-      });
 
-      $("#total_prot").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_prot", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_prot").html(data);
-        });
-      });
+        request.done(function(data) {
 
-     $("#total_lip").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_lip", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_lip").html(data);
+          $("#total_kcal_sum").html(data.msg1);           
+          $("#total_prot_sum").html(data.msg2);
+          $("#total_lip_sum").html(data.msg3);
+          $("#total_cho_sum").html(data.msg4);                 
         });
-      }); 
 
-     $("#total_cho").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_cho", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_cho").html(data);
-        });
-      });
+        request.fail(function(jqXHR, textStatus) {
+           alert( "Peticion Fallida: " + textStatus );
+        }); 
 
-     $("#codigo_cena").each(function() {
-      idCena = $('#codigo_cena').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_kcal_cena", {
-          idCena : idCena
-        }, function(data) {
-          $("#cena_kcal").html(data);
+        //aporte por kg
+        var request = $.ajax({
+        url: "<?php echo base_url(); ?>index/aporte_kg",
+        type: "POST",          
+        dataType: "json",
+        data: { id_desayuno: $('#codigo_desayuno').val(), id_once: $('#codigo_once').val(), id_col10: $('#codigo_col10').val(), id_col20: $('#codigo_col20').val(), id_almuerzo: $('#codigo_almuerzo').val(),id_cena: $('#codigo_cena').val(),formula: $('#formula').val(), comp1: $('#compl1').val(), comp2: $('#compl2').val(), comp3: $('#compl3').val(), frecuencia: $('#frecuencia').val(),volumen: $('#volumen').val(), id_paciente: $('#id_paciente').val()},
         });
-    });
 
-     $("#codigo_cena").each(function() {
-      idCena = $('#codigo_cena').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_prot_cena", {
-          idCena : idCena
-        }, function(data) {
-          $("#cena_prot").html(data);
-        });
-    });
+        request.done(function(data) {
 
-    $("#codigo_cena").each(function() {
-      idCena = $('#codigo_cena').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_lip_cena", {
-          idCena : idCena
-        }, function(data) {
-          $("#cena_lip").html(data);
+          $("#aporte_kg_kcal").html(data.msg1);           
+          $("#aporte_kg_prot").html(data.msg2);
+          $("#aporte_kg_lip").html(data.msg3);
+          $("#aporte_kg_cho").html(data.msg4);                 
         });
-    });
 
-   $("#codigo_cena").each(function() {
-      idCena = $('#codigo_cena').val();
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_cho_cena", {
-          idCena : idCena
-        }, function(data) {
-          $("#cena_cho").html(data);
+        request.fail(function(jqXHR, textStatus) {
+           alert( "Peticion Fallida: " + textStatus );
         });
-    });
-
-    kcalDesayuno = $('#codigo_desayuno').val();
-      kcalOnce = $('#codigo_once').val();
-      kcalCol10 = $('#codigo_col10').val();
-      kcalCol20 = $('#codigo_col20').val();
-      kcalAlmuerzo = $('#codigo_almuerzo').val();
-      kcalCena = $('#codigo_cena').val();
-      $("#total_kcal").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_kcal", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_kcal").html(data);
-        });
-      });
-
-      $("#total_prot").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_prot", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_prot").html(data);
-        });
-      });
-
-     $("#total_lip").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_lip", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_lip").html(data);
-        });
-      }); 
-
-     $("#total_cho").each(function() {
-        $.post("<?php echo base_url(); ?>index/Informacion_nutricional_Total_cho", {
-             kcalDesayuno : kcalDesayuno,
-            kcalOnce : kcalOnce,
-            kcalCol10 : kcalCol10,
-            kcalCol20 : kcalCol20,
-            kcalAlmuerzo : kcalAlmuerzo,
-            kcalCena : kcalCena
-        }, function(data) {
-          $("#total_cho").html(data);
-        });
-      });
 
   };
 
 </script>
+

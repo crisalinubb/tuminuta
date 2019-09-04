@@ -1,3 +1,9 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li><a href="<?php echo base_url(); ?>produccion/vista_produccion_almuerzo">Produccion Almuerzo</a></li>
+  <li class="active">Informe Produccion Almuerzo</li>
+</ol>
+
 <div class="page-header">
   <div class="row">
     <h1 class="col-md-7">Informe Produccion Almuerzo</h1>
@@ -43,8 +49,21 @@
       <?php foreach($insumos as $datos_insumos): ?>
         <tr>
           <td><?php echo $datos_insumos->nombre; ?></td>
-          <td><?php echo $datos_insumos->Total; ?></td>
+          <?php if($datos_insumos->id_unidad_medida == 'GR' || $datos_insumos->id_unidad_medida == 'CC' ){ ?>
+          <?php $cant_unidad_compra= 0;
+                $cant_unidad_compra = $datos_insumos->Total / 1000;
+           ?>
+           <?php if($cant_unidad_compra > 1){ ?>
+                <td><?php echo number_format($cant_unidad_compra, 2, ',', ''); ?></td>
+                <td><?php echo $datos_insumos->unidad_compra; ?></td>
+           <?php }else{ ?>
+                <td><?php echo number_format($datos_insumos->Total, 2, ',', ''); ?></td>
+                <td><?php echo $datos_insumos->id_unidad_medida; ?></td>
+           <?php } ?>
+          <?php }else{ ?>
+          <td><?php echo number_format($datos_insumos->Total, 2, ',', ''); ?></td>
           <td><?php echo $datos_insumos->id_unidad_medida; ?></td>
+          <?php } ?>
         </tr>
       <?php endforeach;?>
     <?php } else{ ?>

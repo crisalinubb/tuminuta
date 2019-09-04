@@ -4,7 +4,7 @@
     <div class="col-md-3" style="margin-top:24px;">
     </div>
     <div class="col-md-2" style=" margin:24px 0 10px;">
-      <form class="form-inline" method="post" action='<?= base_url() ?>aporte_insumo/agregar?insumo=<?php echo $id_insumo; ?>'>
+      <form class="form-inline" method="post" action='<?= base_url() ?>aporte_insumo/agregar/<?php echo $id_insumo; ?>'>
         <div class="text-center new">
         <button type="submit" class="btn btn-primary col-md-12">Agregar</button>
       </div>

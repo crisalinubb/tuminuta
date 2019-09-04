@@ -40,6 +40,7 @@
                     <li><a href="<?php echo base_url(); ?>planificacion/"><span class="fa fa-clipboard" aria-hidden="true"></span>&nbsp;&nbsp;Planificar</a></li>
                     <li><a href="<?php echo base_url(); ?>planificacion/repetirPlanificacion"><span class="fa fa-copy" aria-hidden="true"></span>&nbsp;&nbsp;Repeticion Planificacion</a></li>
                     <li><a href="<?php echo base_url(); ?>planificacion/InformePlanificacion"><span class="fa fa-bar-chart" aria-hidden="true"></span>&nbsp;&nbsp;Informe de Planificacion</a></li>
+                    <li><a href="<?php echo base_url(); ?>planificacion/borrarPlanificacion"><span class="fa fa-eraser" aria-hidden="true"></span>&nbsp;&nbsp;Eliminar Planificacion</a></li>
                 </ul>
             </li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"></span>Distribucion <span class="caret"></a>
@@ -84,7 +85,7 @@
             </li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Mantenedores <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="<?php echo base_url(); ?>usuarios/vista_usuarios"><span class="glyphicon glyphicon-user"></span>Usuarios</a></li>
+                    <li><a href="<?php echo base_url(); ?>usuarios/usuarios"><span class="glyphicon glyphicon-user"></span>Usuarios</a></li>
                     <li><a href="<?php echo base_url(); ?>hospital/"><i class="fa fa-h-square"></i>&nbsp;&nbsp;Hospitales</a></li>
                     <!--
                     <li><a href="<?php echo base_url(); ?>detalle_codigo/"><span class="glyphicon glyphicon-barcode"></span>Detalle Codigo</a></li>-->
@@ -111,6 +112,28 @@
                     <li><a href="<?php echo base_url(); ?>medico/"><i class="fa fa-user-md"></i>&nbsp;&nbsp;Medicos</a></li>
                     <li><a href="<?php echo base_url(); ?>producto/"><span class="glyphicon glyphicon-collapse-up"></span>Producto</a></li>
                     <li><a href="<?php echo base_url(); ?>destinos/"><span class="glyphicon glyphicon-flag"></span>Destinos</a></li>
+                </ul>
+            </li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"></span>Informes <span class="caret"></a>
+                <ul class="dropdown-menu">
+                    <li><a href="<?php echo base_url(); ?>index/vista_informe_almuerzo"><span class="fa fa-file-pdf-o" aria-hidden="true"></span>&nbsp;&nbsp;Informe Solicitudes <br> Almuerzo</a></li>
+                    <li><a href="<?php echo base_url(); ?>index/vista_informe_cena"><span class="fa fa-file-pdf-o" aria-hidden="true"></span>&nbsp;&nbsp;Informe Solicitudes <br> Cena</a></li>
+                    <li><a href="<?php echo base_url(); ?>index/listado_ingesta_real"><span class="fa fa-file-pdf-o" aria-hidden="true"></span>&nbsp;&nbsp;Informe Ingesta Real</a></li>
+                    <li><a href="<?php echo base_url(); ?>index/paciente_egresados"><span class="fa fa-file-pdf-o" aria-hidden="true"></span>&nbsp;&nbsp;Informe Pacientes <br>Egresados</a></li>
+                    <li><a href="<?php echo base_url(); ?>index/vistaInformeProducto"><span class="fa fa-file-pdf-o" aria-hidden="true"></span>&nbsp;&nbsp;Informe Productos <br>Solicitados</a></li>
+                </ul>
+            </li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"></span>Casino<span class="caret"></a>
+                <ul class="dropdown-menu">
+                    <li><a href="<?php echo base_url(); ?>control_casino/solicitud_por_servicio"><span class="fa fa-address-book" aria-hidden="true"></span>&nbsp;&nbsp;Solicitud por Servicio</a></li>
+                    <li><a href="<?php echo base_url(); ?>control_casino/"><span class="fa fa-address-book" aria-hidden="true"></span>&nbsp;&nbsp;Control Casino</a></li>
+                    <li><a href="<?php echo base_url(); ?>funcionario/"><span class="fa fa-address-book" aria-hidden="true"></span>&nbsp;&nbsp;Funcionarios</a></li>
+                </ul>
+            </li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"></span>Configuraciones<span class="caret"></a>
+                <ul class="dropdown-menu">
+                    <li><a href="<?php echo base_url(); ?>index/migracion_datos"><span class="fa fa-refresh" aria-hidden="true"></span>&nbsp;&nbsp;Migración de Datos</a></li>
+                    <li><a href="<?php echo base_url(); ?>index/liberar_clinica"><span class="fa fa-hourglass-o" aria-hidden="true"></span>&nbsp;&nbsp;Liberar Clinica</a></li>
                 </ul>
             </li>
         </ul>

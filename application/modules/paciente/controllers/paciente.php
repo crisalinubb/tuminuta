@@ -315,7 +315,8 @@ class Paciente extends CI_Controller {
 
 			$contenido["salas"]= $this->objSalas->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad, "CODSERV" => $datos_pacientes->codigo_servicio));
 
-			$contenido["camas"]= $this->objCamas->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad, "codigo_sala" => $codigo_sala_datos->CODSALA));
+			//$contenido["camas"]= $this->objCamas->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad, "codigo_sala" => $codigo_sala_datos->CODSALA));
+			$contenido["camas"]= $this->objCamas->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad, "codigo_sala" => $codigo_sala_datos->id_sala));
 
 			$contenido["diagnosticos"] = $this->objDiagnostico->listar();
 			$contenido["medicos"] = $this->objMedico->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
@@ -387,10 +388,11 @@ class Paciente extends CI_Controller {
 
     public function buscarCamas() {
         $id_sala = $this->input->post('idSala');
-        $codigo_sala = $this->objSalas->obtener(array('id_sala' => $id_sala));
+        //$codigo_sala = $this->objSalas->obtener(array('id_sala' => $id_sala));
         //print_r("entro".$id_servicio);die();
         if($id_sala){
-            $camas = $this->objCamas->buscar_cama_por_sala($codigo_sala->CODSALA);
+            //$camas = $this->objCamas->buscar_cama_por_sala($codigo_sala->CODSALA);
+            $camas = $this->objCamas->buscar_cama_por_sala($id_sala);
             echo '<option value="0">Camas</option>';
             foreach($camas->result() as $cama){
                 echo '<option value="'. $cama->id_cama .'">'. $cama->cama .'</option>';

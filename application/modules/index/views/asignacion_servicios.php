@@ -1,3 +1,7 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+</ol>
+
  <h1 class="col-md-7"> Asignar Servicios Clinicos</h1>
  <br>
 <div class="page-header">
@@ -5,7 +9,7 @@
   <table border="0" cellspacing="0" cellpadding="0" class="table" style="margin-bottom:0;">
     <thead>
       <tr>
-        <th scope="col" style="width:50px;">Usuarios</th>
+        <th scope="col" style="width:50px;">Servicios Clinicos</th>
         <th scope="col" style="width:50px;">&nbsp;</th>
       </tr>
     </thead>

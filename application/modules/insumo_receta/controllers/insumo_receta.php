@@ -9,12 +9,13 @@ class Insumo_receta extends CI_Controller {
 		$this->load->model("insumos/modelo_insumos", "objInsumo");
 		$this->load->model("recetas/modelo_recetas", "objRecetas");
 		$this->load->model("aportes_nutricionales/modelo_aportesnutricionales", "objAportesNutricionales");
+		$this->load->model("rubros/modelo_rubro", "objRubro");
 		#current
 		$this->layout->current = 1;
 	}
 
-	public function index($pagina = 1){
-		$receta= $this->input->get('receta',TRUE);
+	public function index($receta = false){
+		//$receta= $this->input->get('receta',TRUE);
 
 		#Title
 		$this->layout->title('Insumo por Recetas');
@@ -23,6 +24,14 @@ class Insumo_receta extends CI_Controller {
 		$this->layout->setMeta('title','Insumo por Recetas');
 		$this->layout->setMeta('description','Insumo por Recetas');
 		$this->layout->setMeta('keywords','Insumo por Recetas');
+
+		#JS - Multiple select boxes
+		$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
+		$this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
+
+		#JS - Ajax multi select
+		$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
+		$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
 
 		#filtros
 		$where = $contenido['q_f'] = '';
@@ -63,10 +72,12 @@ class Insumo_receta extends CI_Controller {
 
 		$contenido['costo_receta'] = $this->objInsumoreceta->costo_receta($receta);
 
+		$contenido['rubros'] = $this->objRubro->listar();
+
 		$this->layout->view('index', $contenido);
 	}
 
-	public function agregar(){
+	public function agregar($receta = false){
 
 		if($this->input->post()){
 
@@ -98,6 +109,14 @@ class Insumo_receta extends CI_Controller {
 				$this->layout->setMeta('title','Insumo por Recetas');
 				$this->layout->setMeta('description','Insumo por Recetas');
 				$this->layout->setMeta('keywords','Insumo por Recetas');
+
+				#JS - Multiple select boxes
+				$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
+				$this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
+
+				#JS - Ajax multi select
+				$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
+				$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
 
 				#filtros
 				$where = $contenido['q_f'] = '';
@@ -132,6 +151,10 @@ class Insumo_receta extends CI_Controller {
 
 				$contenido['insumos_aporte'] = $this->objInsumoreceta->join_insumo_receta($this->input->post('codigo_receta'));
 
+				$contenido['costo_receta'] = $this->objInsumoreceta->costo_receta($id_receta);
+
+				$contenido['rubros'] = $this->objRubro->listar();
+
 				$this->layout->view('index', $contenido);
 
 			}else{
@@ -161,11 +184,11 @@ class Insumo_receta extends CI_Controller {
 			#nav
 			//$this->layout->nav(array("Insumos por Recetas "=> "insumo_receta", "Agregar Insumo por Receta" =>"/"));
 
-			$receta = $this->input->get('receta',true);
+			//$receta = $this->input->get('receta',true);
 
 			$contenido['receta'] = $receta;
 			//$contenido["recetas"]= $this->objRecetas->listar();
-			$contenido["insumos"]= $this->objInsumo->listar();
+			$contenido["insumos"]= $this->objInsumo->listar(array('estado' => 0));
 
 			$this->layout->view('agregar', $contenido);
 		}
@@ -203,6 +226,14 @@ class Insumo_receta extends CI_Controller {
 					$this->layout->setMeta('description','Insumo por Recetas');
 					$this->layout->setMeta('keywords','Insumo por Recetas');
 
+					#JS - Multiple select boxes
+					$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
+					$this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
+
+					#JS - Ajax multi select
+					$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
+					$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
+
 					#filtros
 					$where = $contenido['q_f'] = '';
 					if($this->input->get('q')){
@@ -235,6 +266,10 @@ class Insumo_receta extends CI_Controller {
 					$contenido['insumos_aporte'] = $this->objInsumoreceta->join_insumo_receta($this->input->post('codigo_receta'));
 
 					$contenido['pagination'] = $this->pagination->create_links();
+
+					$contenido['costo_receta'] = $this->objInsumoreceta->costo_receta($receta);
+
+					$contenido['rubros'] = $this->objRubro->listar();
 
 					$this->layout->view('index', $contenido);
 
@@ -269,7 +304,7 @@ class Insumo_receta extends CI_Controller {
 			else show_error('');
 
 			//$contenido["recetas"]= $this->objRecetas->listar();
-			$contenido["insumos"]= $this->objInsumo->listar();
+			$contenido["insumos"]= $this->objInsumo->listar(array('estado' => 0));
 
 			#nav
 			//$this->layout->nav(array("Insumos por recetas "=>"insumo_receta", "Editar Insumo por receta" =>"/"));
@@ -280,6 +315,14 @@ class Insumo_receta extends CI_Controller {
 
 	public function eliminar($codigo = false){
 		if(!$codigo) redirect(base_url() . "insumo_receta/");
+
+			#JS - Multiple select boxes
+			$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
+			$this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
+
+			#JS - Ajax multi select
+			$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
+			$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
 
 			//buscando datos de elemento eliminado
 			$insumoreceta_eliminado = $this->objInsumoreceta->obtener(array('id_insumo_receta' => $codigo));
@@ -319,7 +362,79 @@ class Insumo_receta extends CI_Controller {
 
 			$contenido['pagination'] = $this->pagination->create_links();
 
+			$contenido['costo_receta'] = $this->objInsumoreceta->costo_receta($receta);
+
+			$contenido['rubros'] = $this->objRubro->listar();
+
+			#nav
+			$this->layout->nav(array("Recetas "=> "recetas", "Insumos por Receta" =>"/"));
+
 			$this->layout->view('index', $contenido);
 	}
+
+	public function busquedaPorRubro(){
+
+		$receta= $this->input->post('receta',TRUE);
+		$rubro= $this->input->post('rubros',TRUE);
+
+		#Title
+		$this->layout->title('Insumo por Recetas');
+
+		#Metas
+		$this->layout->setMeta('title','Insumo por Recetas');
+		$this->layout->setMeta('description','Insumo por Recetas');
+		$this->layout->setMeta('keywords','Insumo por Recetas');
+
+		#JS - Multiple select boxes
+		$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
+		$this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
+
+		#JS - Ajax multi select
+		$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
+		$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
+
+		#filtros
+		$where = $contenido['q_f'] = '';
+		if($this->input->get('q')){
+			$contenido['q_f'] = $q = $this->input->get('q');
+			$where = "nombre like '%$q%'";
+		}
+
+		#url
+		$url = explode('?',$_SERVER['REQUEST_URI']);
+		if(isset($url[1]))
+			$contenido['url'] = $url = '/?'.$url[1];
+		else
+			$contenido['url'] = $url = '/';
+
+		#paginacion
+		$config['base_url'] = base_url() . 'insumo_receta/';
+		$config['total_rows'] = count($this->objInsumoreceta->listar($where));
+		$config['per_page'] = 15;
+		$config['suffix'] = $url;
+		$config['first_url'] = base_url() . '/insumo_receta'.$url;
+
+		$this->pagination->initialize($config);
+
+		//$contenido['datos'] = $this->objInsumoreceta->listar($where, $pagina, $config['per_page']);
+
+		#nav
+		$this->layout->nav(array("Recetas "=> "recetas", "Insumos por Receta" =>"/"));
+
+		$contenido['id_receta'] = $receta;
+
+		$contenido['datos'] = $this->objInsumoreceta->busquedaPorRubro($receta, $rubro);
+
+		$contenido['pagination'] = $this->pagination->create_links();
+
+		//buscamos los insumos de esa receta
+		$contenido['insumos_aporte'] = $this->objInsumoreceta->join_insumo_receta($receta);
+
+		$contenido['costo_receta'] = $this->objInsumoreceta->costo_receta($receta);
+
+		$contenido['rubros'] = $this->objRubro->listar();
+
+		$this->layout->view('index', $contenido);
+	}	
 
 }

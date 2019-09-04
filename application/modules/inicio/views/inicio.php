@@ -4,13 +4,15 @@
 .modal-dialog {
 	width: 500px;
 }
-}
+
 </style>
 <div id="page-wrapper">
   <!-- contenido -->
   <div id="login" class="col-sm-4">
     <div class="page-header">
-      <h1>TU MINUTA</h1>
+      <center>
+      <img src="<?php echo base_url() ?>/imagenes/sitio/miminuta.png" width="300" height="200" />
+      </center>
     </div>
     <form id="form-login" name="form-login" method="post" class="form-horizontal form-signin" role="form">
       <div class="form-group">
@@ -38,6 +40,7 @@
     </form>
   </div>
 </div>
+
 <p id="clock" style="text-align: center;">
   <?php echo strftime("%A, %d de %B de %Y, %H:%M:%S", strtotime(date("Y-m-d H:i:s"))); ?>
 </p>

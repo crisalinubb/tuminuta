@@ -1,3 +1,9 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li class="active">Produccion Col-10</li>
+</ol>
+
+
 <div class="page-header">
   <div class="row">
     <h1 class="col-md-7">Produccion Col-10</h1>

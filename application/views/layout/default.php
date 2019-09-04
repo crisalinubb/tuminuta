@@ -18,6 +18,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="author" content="">
 <meta http-equiv="Content-Language" content="es-ES">
+<link rel="icon" href="<?php echo base_url(); ?>imagenes/sitio/logo.png" type="image/gif">
 <!-- Metas -->
 <?php echo $this->layout->headMeta(); ?>
 
@@ -37,7 +38,6 @@
 <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 <script src="/js/sistema/template/index.js"></script>
 <![endif]-->
-<link href="/favicon.ico" rel="shortcut icon" />
 <?php if($this->layout->current){ ?>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -52,7 +52,19 @@ $("#menu > ul > li:nth-child(<?php echo $this->layout->current ?>)").addClass("o
 </head>
 <body>
 <!-- Top --> 
-<?php echo $this->load->view('top'); ?> 
+<?php 
+//MENU ADMINISTRADOR
+if($this->session->userdata("usuario")->id_perfil == 1){
+	echo $this->load->view('top');  
+//MENU ADMINISTRADOR DE ORGANIZACION
+}else if($this->session->userdata("usuario")->id_perfil == 2){
+	echo $this->load->view('top1');  
+//MENU ADMINISTRADOR NUTRICIONISTA
+}else if($this->session->userdata("usuario")->id_perfil == 3){
+	echo $this->load->view('top2');
+}	
+
+ ?>
 
 <!-- Contenido -->
 <?php if(isset($home_indicador)){ ?>

@@ -1,3 +1,8 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li class="active">Desayunos</li>
+</ol>
+
 <div class="page-header">
   <div class="row">
     <h1 class="col-md-7">Desayunos</h1>
@@ -45,7 +50,8 @@
     <thead>
       <tr>
         <th scope="col" style="width:50px;">Receta</th>
-        <th scope="col" style="width:50px;">Regimen</th>     
+        <th scope="col" style="width:50px;">Regimen</th>
+        <th scope="col" style="width:20px;">Estado</th>     
         <th scope="col" style="width:20px;">&nbsp;</th>
       </tr>
     </thead>
@@ -56,6 +62,11 @@
           <td><?php echo $desayuno->receta_nombre;?></td>
           <?php $regimen = $this->objRegimen->obtener(array('id_regimen' => $desayuno->regimen)); ?>
           <td><?php echo $regimen->nombre;?></td>
+          <?php if($desayuno->estado == 0){ ?>
+            <td><?php echo 'ACTIVO';?></td>
+          <?php  }else{?>
+            <td><?php echo 'INACTIVO';?></td>
+          <?php  }?>
 					<td class="editar">
             <!--
 						<a href="<?php echo base_url(); ?>desayuno/editar/<?php echo $desayuno->id_desayuno ?>">
@@ -63,6 +74,19 @@
 						</a>-->
 
             <a href="<?php echo base_url(); ?>desayuno/eliminar/<?php echo $desayuno->id_desayuno; ?>" onclick="return confirm('Esta seguro que desea eliminar este registro?');"><button title="Eliminar" type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></a>
+
+            <?php if($desayuno->estado == 0){ ?>
+           
+               <a href="<?php echo base_url(); ?>desayuno/desactivar/<?php echo $desayuno->id_desayuno ?>">
+              <button title="Editar" type="button" class="btn btn-success btn-sm">DESACTIVAR</button> 
+
+            <?php  }else{?>
+
+              <a href="<?php echo base_url(); ?>desayuno/activar/<?php echo $desayuno->id_desayuno ?>">
+              <button title="Editar" type="button" class="btn btn-success btn-sm">ACTIVAR</button>
+
+            <?php  }?>
+
 					</td>
 				</tr>
 			<?php endforeach;?>

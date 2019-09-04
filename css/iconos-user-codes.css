@@ -1,0 +1,9 @@
+
+.icon-list-add:before { content: '\e800'; } /* '' */
+.icon-trash-empty:before { content: '\e801'; } /* '' */
+.icon-calendar:before { content: '\e802'; } /* '' */
+.icon-user-pair:before { content: '\e803'; } /* '' */
+.icon-users:before { content: '\e804'; } /* '' */
+.icon-exchange:before { content: '\f0ec'; } /* '' */
+.icon-hospital:before { content: '\f0f8'; } /* '' */
+.icon-bed:before { content: '\f236'; } /* '' */

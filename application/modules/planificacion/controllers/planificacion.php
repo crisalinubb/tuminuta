@@ -53,7 +53,7 @@ class Planificacion extends CI_Controller {
 		$this->layout->js('js/jquery/jquery-redirect/jquery.redirect.js');
 
 		$contenido['servicios_alimentacion'] = $this->objServiciosalimentacion->listar();
-		$contenido['destinos'] = $this->objDestinos->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+		$contenido['destinos'] = $this->objDestinos->listar();
 		$contenido['regimenes'] = $this->objRegimen->listar(array('tipo' => 1));
 
 		$this->layout->view('index', $contenido);
@@ -63,7 +63,7 @@ class Planificacion extends CI_Controller {
         $regimen = $this->input->post('idRegimen');
         $servicio = $this->input->post('idServicio');
 
-        	if($servicio == 1){
+        	/*if($servicio == 1){
         		$resultado = $this->objPlanifica->obtener_recetas_desayuno($regimen, $this->session->userdata("usuario")->id_unidad);
         	}else if($servicio == 12){
         		$resultado = $this->objPlanifica->obtener_recetas_colacion($regimen, $this->session->userdata("usuario")->id_unidad);
@@ -72,17 +72,18 @@ class Planificacion extends CI_Controller {
         	}else if($servicio == 16){
         		$resultado = $this->objPlanifica->obtener_recetas_once($regimen, $this->session->userdata("usuario")->id_unidad);
         	}else{
-        		$resultado_regimen = $this->objPlanifica->obtener_recetas_por_regimen($regimen);
         	}
+        		*/
+        	$resultado_regimen = $this->objPlanifica->obtener_recetas_por_regimen($regimen);
 
-        if($resultado || $resultado_regimen){
-
-        	if($resultado){
+        //if($resultado || $resultado_regimen){
+        if($resultado_regimen){
+        	/*if($resultado){
         		//print_r("aaaaaa");die();
         		foreach($resultado as $recetas){
                 	echo '<option value="'. $recetas->id_receta .'">'. $recetas->receta_nombre .'</option>';
             	}
-        	}else if($resultado_regimen){
+        	}else */ if($resultado_regimen){
         		foreach($resultado_regimen as $recetas){
                 	echo '<option value="'. $recetas->id_receta .'">'. $recetas->nombre .'</option>';
             	}
@@ -144,7 +145,7 @@ class Planificacion extends CI_Controller {
 					);
 		$contenido['codigos'] = $recetas;
 
-			if($this->input->post('servicios_alimentacion') == 1){
+			/*if($this->input->post('servicios_alimentacion') == 1){
         		$contenido['resultado'] = $this->objPlanifica->obtener_recetas_desayuno($this->input->post('regimenes'), $this->session->userdata("usuario")->id_unidad);
         	}else if($this->input->post('servicios_alimentacion') == 12){
         		$contenido['resultado'] = $this->objPlanifica->obtener_recetas_colacion($this->input->post('regimenes'), $this->session->userdata("usuario")->id_unidad);
@@ -153,11 +154,12 @@ class Planificacion extends CI_Controller {
         	}else if($this->input->post('servicios_alimentacion') == 16){
         		$contenido['resultado'] = $this->objPlanifica->obtener_recetas_once($this->input->post('regimenes'), $this->session->userdata("usuario")->id_unidad);
         	}else{
-        		$contenido['resultado'] = $this->objPlanifica->obtener_recetas_por_regimen($this->input->post('regimenes'));
         	}
+        	*/
+        	$contenido['resultado'] = $this->objPlanifica->obtener_recetas_por_regimen($this->input->post('regimenes'));
 
 		$contenido['servicios_alimentacion'] = $this->objServiciosalimentacion->listar();
-		$contenido['destinos'] = $this->objDestinos->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+		$contenido['destinos'] = $this->objDestinos->listar();
 		$contenido['regimenes'] = $this->objRegimen->listar(array('tipo' => 1));
 
 		//$contenido['datos'] = $this->objPlanifica->listar();
@@ -229,6 +231,7 @@ class Planificacion extends CI_Controller {
 					);
 		$contenido['codigos'] = $recetas;
 
+		/*
 		if($datos_planificacion->id_servicio_alimentacion== 1){
         		$contenido['resultado'] = $this->objPlanifica->obtener_recetas_desayuno($datos_planificacion->id_regimen, $this->session->userdata("usuario")->id_unidad);
         	}else if($datos_planificacion->id_servicio_alimentacion == 12){
@@ -238,11 +241,11 @@ class Planificacion extends CI_Controller {
         	}else if($datos_planificacion->id_servicio_alimentacion == 16){
         		$contenido['resultado'] = $this->objPlanifica->obtener_recetas_once($datos_planificacion->id_regimen, $this->session->userdata("usuario")->id_unidad);
         	}else{
-        		$contenido['resultado'] = $this->objPlanifica->obtener_recetas_por_regimen($datos_planificacion->id_regimen);
-        	}
+        	}*/
+        $contenido['resultado'] = $this->objPlanifica->obtener_recetas_por_regimen($datos_planificacion->id_regimen);
 
 		$contenido['servicios_alimentacion'] = $this->objServiciosalimentacion->listar();
-		$contenido['destinos'] = $this->objDestinos->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+		$contenido['destinos'] = $this->objDestinos->listar();
 		$contenido['regimenes'] = $this->objRegimen->listar(array('tipo' => 1));
 
 		//$contenido['datos'] = $this->objPlanifica->listar();
@@ -290,6 +293,7 @@ class Planificacion extends CI_Controller {
 					);
 		$contenido['codigos'] = $recetas;
 
+		/*
 		if($datos_planificacion->id_servicio_alimentacion== 1){
         		$contenido['resultado'] = $this->objPlanifica->obtener_recetas_desayuno($datos_planificacion->id_regimen, $this->session->userdata("usuario")->id_unidad);
         	}else if($datos_planificacion->id_servicio_alimentacion == 12){
@@ -299,11 +303,12 @@ class Planificacion extends CI_Controller {
         	}else if($datos_planificacion->id_servicio_alimentacion == 16){
         		$contenido['resultado'] = $this->objPlanifica->obtener_recetas_once($datos_planificacion->id_regimen, $this->session->userdata("usuario")->id_unidad);
         	}else{
-        		$contenido['resultado'] = $this->objPlanifica->obtener_recetas_por_regimen($datos_planificacion->id_regimen);
         	}
+        	*/
+        $contenido['resultado'] = $this->objPlanifica->obtener_recetas_por_regimen($datos_planificacion->id_regimen);
 
 		$contenido['servicios_alimentacion'] = $this->objServiciosalimentacion->listar();
-		$contenido['destinos'] = $this->objDestinos->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+		$contenido['destinos'] = $this->objDestinos->listar();
 		$contenido['regimenes'] = $this->objRegimen->listar(array('tipo' => 1));
 
 		//$contenido['datos'] = $this->objPlanifica->listar();
@@ -342,7 +347,7 @@ class Planificacion extends CI_Controller {
 
 		$contenido['servicios_alimentacion'] = $this->objServiciosalimentacion->listar();
 		
-		$contenido['destinos'] = $this->objDestinos->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+		$contenido['destinos'] = $this->objDestinos->listar();
 
 		$this->layout->view('repetir_planificacion', $contenido);
     }
@@ -384,7 +389,7 @@ class Planificacion extends CI_Controller {
 
 		$contenido['servicios_alimentacion'] = $this->objServiciosalimentacion->listar();
 		
-		$contenido['destinos'] = $this->objDestinos->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+		$contenido['destinos'] = $this->objDestinos->listar();
 
 		$datos_planificacion = $this->objPlanifica->obtener_planificacion($this->input->post('fecha'), $this->input->post('servicios_alimentacion'), $this->input->post('destinos'), $this->session->userdata("usuario")->id_unidad);
 
@@ -440,7 +445,7 @@ class Planificacion extends CI_Controller {
 
 		$contenido['servicios_alimentacion'] = $this->objServiciosalimentacion->listar();
 		
-		$contenido['destinos'] = $this->objDestinos->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+		$contenido['destinos'] = $this->objDestinos->listar();
 
 		$this->layout->view('informe_planificacion', $contenido);
     }
@@ -477,14 +482,15 @@ class Planificacion extends CI_Controller {
 
 		$datos = array(	'fecha'=> $fecha_registro,
 						'servicios_alimentacion'=> $this->input->post('servicios_alimentacion'),
-						'destino'=> $this->input->post('destinos')
+						'destino'=> $this->input->post('destinos'),
+						'fecha_busqueda'=> $this->input->post("fecha")
 							);
 
 		$contenido['codigos'] = $datos;
 
 		$contenido['servicios_alimentacion'] = $this->objServiciosalimentacion->listar();
 		
-		$contenido['destinos'] = $this->objDestinos->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+		$contenido['destinos'] = $this->objDestinos->listar();
 
 		$contenido['regimenes'] = $this->objPlanifica->obtener_regimenes_planificacion();
 
@@ -499,7 +505,7 @@ class Planificacion extends CI_Controller {
 
         $contenido = $this->objPlanifica->obtener_recetas_agregar($fecha_registro, $destino, $servicio, $this->session->userdata("usuario")->id_unidad, $regimen);
 
-
+        if($regimen && $servicio && $destino){
         if($contenido){
            foreach($contenido as $planificacion){ 
                 echo '<tr>';
@@ -518,10 +524,25 @@ class Planificacion extends CI_Controller {
             }
         } else{ 
             echo '<tr>
-       			<td colspan="4" style="text-align:center;"><i>No hay registros</i></td>
+       			<td colspan="4" style="text-align:center;"><i>No se encontro planificacion</i></td>
             </tr>';
          } 
+        }else{
+        	if(!$servicio){
+        		echo '<tr>
+       				<td colspan="4" style="text-align:center;"><i>Por favor,seleccione servicio de alimentacion</i></td>
+            	</tr>';
+        	}elseif (!$regimen) {
+        		echo '<tr>
+       				<td colspan="4" style="text-align:center;"><i>Por favor,seleccione regimen</i></td>
+            	</tr>';
+        	}elseif (!$destino) {
+        		echo '<tr>
+       				<td colspan="4" style="text-align:center;"><i>Por favor,seleccione destino</i></td>
+            	</tr>';
+        	}
 
+        }
            
     }
 
@@ -548,6 +569,91 @@ class Planificacion extends CI_Controller {
             </tr>';
          } 
 
-           
     }
+
+     public function borrarPlanificacion(){
+    	#Title
+		$this->layout->title('Borrar Planificacion');
+
+		#Metas
+		$this->layout->setMeta('title','Borrar Planificacion');
+		$this->layout->setMeta('description','Borrar Planificacion');
+		$this->layout->setMeta('keywords','Borrar Planificacion');
+
+		#JS - Multiple select boxes
+		$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
+		$this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
+
+		#JS - Formulario
+		$this->layout->js('js/jquery/file-input/jquery.nicefileinput.min.js');
+		$this->layout->js('js/jquery/file-input/nicefileinput-init.js');
+
+		#JS - Ajax multi select
+		$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
+		$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
+
+		#JS - Datepicker
+		$this->layout->css('js/jquery/ui/1.10.4/ui-lightness/jquery-ui-1.10.4.custom.min.css');
+		$this->layout->js('js/jquery/ui/1.10.4/jquery-ui-1.10.4.custom.min.js');
+		$this->layout->js('js/jquery/ui/1.10.4/jquery.ui.datepicker-es.js');
+
+		$this->layout->js('js/jquery/jquery-redirect/jquery.redirect.js');
+
+		$contenido['servicios_alimentacion'] = $this->objServiciosalimentacion->listar();
+		
+		$contenido['destinos'] = $this->objDestinos->listar();
+
+		$this->layout->view('eliminar_planificacion', $contenido);
+    }
+
+    public function eliminar_planificacion(){
+    	#Title
+		$this->layout->title('Eliminar Planificacion');
+
+		#Metas
+		$this->layout->setMeta('title','Eliminar Planificacion');
+		$this->layout->setMeta('description','Eliminar Planificacion');
+		$this->layout->setMeta('keywords','Eliminar Planificacion');
+
+		#JS - Multiple select boxes
+		$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
+		$this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
+
+		#JS - Formulario
+		$this->layout->js('js/jquery/file-input/jquery.nicefileinput.min.js');
+		$this->layout->js('js/jquery/file-input/nicefileinput-init.js');
+
+		#JS - Ajax multi select
+		$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
+		$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
+
+		#JS - Datepicker
+		$this->layout->css('js/jquery/ui/1.10.4/ui-lightness/jquery-ui-1.10.4.custom.min.css');
+		$this->layout->js('js/jquery/ui/1.10.4/jquery-ui-1.10.4.custom.min.js');
+		$this->layout->js('js/jquery/ui/1.10.4/jquery.ui.datepicker-es.js');
+
+		$this->layout->js('js/jquery/jquery-redirect/jquery.redirect.js');
+
+		$datos = array('servicio_codigo'=> $this->input->post('servicios_alimentacion'),
+						 'destino_codigo'=> $this->input->post('destinos'),
+						 'fecha' => $this->input->post('fecha')
+					);
+		$contenido['codigos'] = $datos;
+
+		$contenido['servicios_alimentacion'] = $this->objServiciosalimentacion->listar();
+		
+		$contenido['destinos'] = $this->objDestinos->listar();
+
+		$datos_planificacion = $this->objPlanifica->obtener_planificacion($this->input->post('fecha'), $this->input->post('servicios_alimentacion'), $this->input->post('destinos'), $this->session->userdata("usuario")->id_unidad);
+
+		$fecha_registro = date("Y-m-d H:i:s", strtotime(str_replace("/", "-", $this->input->post("fecha1"))));
+
+		//eliminar la planificacion
+		$this->objPlanifica->eliminar_planificacion($this->input->post('fecha'), $this->input->post('servicios_alimentacion'), $this->input->post('destinos'), $this->session->userdata("usuario")->id_unidad);
+
+		$contenido['datos'] = $this->objPlanifica->obtener_recetas_repeticion($this->input->post('fecha'), $this->input->post('destinos'), $this->input->post('servicios_alimentacion'), $this->session->userdata("usuario")->id_unidad);
+
+		$this->layout->view('eliminar_planificacion', $contenido);
+    }
+
 }

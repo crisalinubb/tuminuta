@@ -1,3 +1,10 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li><a href="<?php echo base_url(); ?>recetas/">Recetas</a></li>
+  <li><a href="<?php echo base_url(); ?>insumo_receta/index/<?php echo $receta; ?>">Insumos por Receta</a></li>
+  <li class="active">Agregar Insumos a Receta</li>
+</ol>
+
 <div class="page-header">
   <h1>Agregar Insumo por Receta</h1>
 </div>
@@ -37,7 +44,7 @@
     <div class="form-group">
       <label for="cantidad" class="col-sm-2 control-label">Cantidad</label>
       <div class="col-sm-10">
-        <input type="number" id="cantidad" name="cantidad" class="form-control" required />
+        <input type="number" id="cantidad" name="cantidad" class="form-control" required step="any"/>
       </div>
     </div>
     

@@ -1,3 +1,9 @@
+<ol class="breadcrumb">
+  <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
+  <li class="active">Informe Planificacion</li>
+</ol>
+
+
 <div class="page-header">
   <div class="row">
     <h1 class="col-md-7">Informe Planificacion</h1>
@@ -8,7 +14,11 @@
   <div class="row">
     
     <div class="col-sm-3">
-      <h3><input type="text" id="fecha" name="fecha" value="<?php echo date("Y-m-d"); ?>" readOnly/></h3>
+      <?php if($codigos['fecha_busqueda']){ ?>
+        <h3><input type="text" id="fecha" name="fecha" value="<?php echo $codigos['fecha_busqueda']; ?>" readOnly/></h3>
+      <?php  }else{?>
+          <h3><input type="text" id="fecha" name="fecha" value="<?php echo date("Y-m-d"); ?>" readOnly/></h3>
+      <?php } ?>
       <div id="datetimepicker12"></div>
     </div>
 
@@ -57,6 +67,7 @@
 <?php if($regimenes){ ?>
 
 <div class="thumbnail table-responsive all-responsive" id="multiselectForm">
+  <h4><center><strong><?php echo $codigos['fecha_busqueda']; ?></strong></center></h4>
   <?php foreach ($regimenes as $regimen) : ?>
 
   <?php $recetas = $this->objPlanifica->obtener_receta_planificacion($codigos['fecha'], $codigos['destino'], $codigos['servicios_alimentacion'], $regimen->id_regimen); ?>
@@ -83,8 +94,21 @@
       <?php foreach($insumos as $datos_insumos): ?>
         <tr>
           <td><?php echo $datos_insumos->Insumo; ?></td>
-          <td><?php echo $datos_insumos->Total; ?></td>
+          <?php if($datos_insumos->Um == 'GR' || $datos_insumos->Um == 'CC' ){ ?>
+          <?php $cant_unidad_compra= 0;
+                $cant_unidad_compra = $datos_insumos->Total / 1000;
+           ?>
+           <?php if($cant_unidad_compra > 1){ ?>
+                <td><?php echo number_format($cant_unidad_compra, 2, ',', ''); ?></td>
+                <td><?php echo $datos_insumos->unidad_compra; ?></td>
+           <?php }else{ ?>
+                <td><?php echo number_format($datos_insumos->Total, 2, ',', ''); ?></td>
+                <td><?php echo $datos_insumos->Um; ?></td>
+           <?php } ?>
+          <?php }else{ ?>
+          <td><?php echo number_format($datos_insumos->Total, 2, ',', ''); ?></td>
           <td><?php echo $datos_insumos->Um; ?></td>
+          <?php } ?>
         </tr>
       <?php endforeach;?>
     <?php } else{ ?>

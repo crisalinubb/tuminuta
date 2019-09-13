@@ -30,6 +30,9 @@ class Once extends CI_Controller {
 		$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
 		$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
 
+		#js
+		$this->layout->js('js/sistema/once/index.js');
+
 		#filtros
 		$where = $contenido['q_f'] = '';
 		if($this->input->get('q')){
@@ -448,6 +451,25 @@ class Once extends CI_Controller {
 		$contenido['onces'] = $this->objOnce->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
 
 		$this->layout->view('index', $contenido);
+	}
+
+	public function cambio_estado(){
+		$datos = $this->input->post('datos_estado');
+		$datos_estado = explode("-", $datos);
+		$codigo_once = $datos_estado[0];
+		$estado = $datos_estado[1];
+		
+		//aqui se cambia el estado de la once
+		if($this->objOnce->actualizar(array("estado"=>$estado),array("id_once"=>$codigo_once))){	
+			$msg = "Se cambio correctamente el estado de la once";
+			$result = true;
+		}else{
+			$msg = "No se pudo cambiar el estado de la once";
+			$result = false;
+		}
+
+		echo json_encode(array("result"=>$result,"msg"=>$msg));
+		
 	}
 
 }

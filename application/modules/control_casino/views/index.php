@@ -8,8 +8,24 @@
     <h1 class="col-md-7">Control Acceso</h1>
   </div>
 </div>
+
 <div>
-<center><label><strong>N° Tarjeta</strong></label> <input type="text" id="codigo_tarjeta" name="codigo_tarjeta" autofocus></center>
+    <div class="form-group">
+      <h4>Tipo de Comida</h4>
+      <div class="col-sm-2">
+      <label class="radio-inline">
+        <input type="radio" name="tipo_comida" id="tipo_comida" value="1">Almuerzo
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="tipo_comida" id="tipo_comida" value="2">Desayuno-Almuerzo
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="tipo_comida" id="tipo_comida" value="3">Almuerzo-Once
+      </label>
+    </div>
+    </div>
+
+<!-- <center><label><strong>N° Tarjeta</strong></label>--> <input type="hidden" id="codigo_tarjeta" name="codigo_tarjeta" autofocus></center> 
 
 <br>
 
@@ -25,12 +41,12 @@
 <script>
 $( "#codigo_tarjeta" ).keyup(function() {
   $("#codigo_tarjeta").val($("#codigo_tarjeta").val());
-     
+  $("#tipo_comida").val($("input[name='tipo_comida']:checked").val());
         var request = $.ajax({
         url: "<?php echo base_url(); ?>control_casino/validar_funcionario",
         type: "POST",          
         dataType: "json",
-        data: { codigo_tarjeta: $('#codigo_tarjeta').val()},
+        data: { codigo_tarjeta: $('#codigo_tarjeta').val(), tipo_comida: $("input[name='tipo_comida']:checked").val()},
 
         success: function(json){
                    if(json.result){
@@ -68,11 +84,12 @@ $( "#codigo_tarjeta" ).keyup(function() {
 $(document).ready(function(){
   $("#ingresar").click(function(){
     $("#codigo_tarjeta").val($("#codigo_tarjeta_manual").val());
+    $("#tipo_comida").val($("input[name='tipo_comida']:checked").val());
      var request = $.ajax({
-        url: "<?php echo base_url(); ?>control_casino/validar_funcionario",
+        url: "<?php echo base_url(); ?>control_casino/validar_funcionario_manual",
         type: "POST",          
         dataType: "json",
-        data: { codigo_tarjeta: $('#codigo_tarjeta').val()},
+        data: { codigo_tarjeta: $('#codigo_tarjeta').val(), tipo_comida: $("input[name='tipo_comida']:checked").val()},
 
         success: function(json){
                    if(json.result){

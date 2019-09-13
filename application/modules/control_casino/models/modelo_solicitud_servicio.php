@@ -79,5 +79,49 @@ class Modelo_Solicitud_Servicio extends CI_Model {
     public function eliminar($codigo){
     	$this->db->where('id_solicitud', $codigo);
 		$this->db->delete($this->tabla);
-    }
+	}
+	
+	public function buscar_funcionario_solicitud_dia_actual($fk_servicio){
+		$fecha_actual = date('Y-m-d');
+		$fecha_inicial = date('Y-m-d', strtotime($fecha_actual));
+		$fecha_final = date('Y-m-d', strtotime($fecha_actual));
+		$this->db->select('fk_funcionario');    
+		$this->db->from('solicitud_servicio');
+		$this->db->where('fk_servicio', $fk_servicio);
+		$this->db->where('fecha_registro BETWEEN "'. $fecha_inicial. '" and "'. $fecha_final.'"');
+		$query = $this->db->get();
+		//die($this->db->last_query());
+		return $query->result();
+	}
+
+	public function buscar_funcionario_solicitud_dia_actual_boolean($fk_funcionario){
+		$fecha_actual = date('Y-m-d');
+		$fecha_inicial = date('Y-m-d', strtotime($fecha_actual));
+		$fecha_final = date('Y-m-d', strtotime($fecha_actual));
+		$this->db->select('fk_funcionario');    
+		$this->db->from('solicitud_servicio');
+		$this->db->where('fk_funcionario', $fk_funcionario);
+		$this->db->where('fecha_registro BETWEEN "'. $fecha_inicial. '" and "'. $fecha_final.'"');
+		$query = $this->db->get();
+		//die($this->db->last_query());
+		//return $query->result();
+		if($query->num_rows() == 0){
+    		return true;
+    	}else{
+    		return false;
+    	} 
+	}
+
+	public function obtener_tipocomida_funcionario_solicitud_dia_actual($fk_funcionario){
+		$fecha_actual = date('Y-m-d');
+		$fecha_inicial = date('Y-m-d', strtotime($fecha_actual));
+		$fecha_final = date('Y-m-d', strtotime($fecha_actual));
+		$this->db->select('fk_tipocomida');    
+		$this->db->from('solicitud_servicio');
+		$this->db->where('fk_funcionario', $fk_funcionario);
+		$this->db->where('fecha_registro BETWEEN "'. $fecha_inicial. '" and "'. $fecha_final.'"');
+		$query = $this->db->get();
+		//die($this->db->last_query());
+		return $query->row();
+	}
 }

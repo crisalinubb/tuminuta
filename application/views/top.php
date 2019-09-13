@@ -127,7 +127,9 @@
                 <ul class="dropdown-menu">
                     <li><a href="<?php echo base_url(); ?>control_casino/solicitud_por_servicio"><span class="fa fa-address-book" aria-hidden="true"></span>&nbsp;&nbsp;Solicitud por Servicio</a></li>
                     <li><a href="<?php echo base_url(); ?>control_casino/"><span class="fa fa-address-book" aria-hidden="true"></span>&nbsp;&nbsp;Control Casino</a></li>
+                    <li><a href="<?php echo base_url(); ?>control_casino/registro_por_servicio"><span class="fa fa-address-book" aria-hidden="true"></span>&nbsp;&nbsp;Registro por servicio</a></li>
                     <li><a href="<?php echo base_url(); ?>funcionario/"><span class="fa fa-address-book" aria-hidden="true"></span>&nbsp;&nbsp;Funcionarios</a></li>
+                    <li><a href="<?php echo base_url(); ?>tarjeta/"><span class="fa fa-address-book" aria-hidden="true"></span>&nbsp;&nbsp;Tarjetas</a></li>
                 </ul>
             </li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"></span>Configuraciones<span class="caret"></a>

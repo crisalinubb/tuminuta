@@ -31,6 +31,9 @@ class Desayuno extends CI_Controller {
 		$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
 		$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
 
+		#js
+		$this->layout->js('js/sistema/desayuno/index.js');
+
 		#filtros
 		$where = $contenido['q_f'] = '';
 		if($this->input->get('q')){
@@ -536,6 +539,25 @@ class Desayuno extends CI_Controller {
 		$contenido['desayunos'] = $this->objDesayuno->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
 
 		$this->layout->view('index', $contenido);
+	}
+
+	public function cambio_estado(){
+		$datos = $this->input->post('datos_estado');
+		$datos_estado = explode("-", $datos);
+		$codigo_desayuno = $datos_estado[0];
+		$estado = $datos_estado[1];
+		
+		//aqui se cambia el estado del desayuno
+		if($this->objDesayuno->actualizar(array("estado"=>$estado),array("id_desayuno"=>$codigo_desayuno))){	
+			$msg = "Se cambio correctamente el estado del desayuno";
+			$result = true;
+		}else{
+			$msg = "No se pudo cambiar el estado del desayuno";
+			$result = false;
+		}
+
+		echo json_encode(array("result"=>$result,"msg"=>$msg));
+		
 	}
 
 }

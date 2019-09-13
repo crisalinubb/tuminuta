@@ -1,26 +1,27 @@
 <?php if ( ! defined('BASEPATH')) exit('No puede acceder a este archivo');
 
-class Funcionario extends CI_Controller {
+class Tarjeta extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
 		if(!$this->session->userdata("usuario")) redirect(base_url());
 		$this->load->model("control_casino/modelo_funcionario", "objFuncionario");
-		$this->load->model("control_casino/modelo_tipo_contrato", "objTipoContrato");
-		$this->load->model("servicio_clinico/modelo_servicioclinico", "objServicioclinico");
-		$this->load->model("hospital/modelo_hospital", "objHospital");
+        $this->load->model("control_casino/modelo_tipo_tarjeta", "objTipoTarjeta");
+        $this->load->model("control_casino/modelo_tipo_comida", "objTipoComida");
+        $this->load->model("control_casino/modelo_tarjeta", "objTarjeta");
+        $this->load->model("hospital/modelo_hospital", "objHospital");
 		#current
-		$this->layout->current = 1;
+		//$this->layout->current = 1;
 	}
 
 	public function index($pagina = 1){
 		#Title
-		$this->layout->title('Funcionarios');
+		$this->layout->title('Tarjeta');
 
 		#Metas
-		$this->layout->setMeta('title','Funcionarios');
-		$this->layout->setMeta('description','Funcionarios');
-		$this->layout->setMeta('keywords','Funcionarios');
+		$this->layout->setMeta('title','Tarjeta');
+		$this->layout->setMeta('description','Tarjeta');
+		$this->layout->setMeta('keywords','Tarjeta');
 
 		#JS - Multiple select boxes
 		$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
@@ -32,9 +33,9 @@ class Funcionario extends CI_Controller {
 
 		$this->pagination->initialize($config);
 
-		$contenido['datos'] = $this->objFuncionario->listar(array("fk_unidad" => $this->session->userdata("usuario")->id_unidad ));
+		$contenido['datos'] = $this->objTarjeta->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
 
-		$contenido['servicios'] = $this->objServicioclinico->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+		//$contenido['servicios'] = $this->objServicioclinico->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
 
 		$this->layout->view('index', $contenido);
 	}
@@ -44,43 +45,46 @@ class Funcionario extends CI_Controller {
 		if($this->input->post()){
 
 			#validaciones
-			$this->form_validation->set_rules('nombre', 'Nombre', 'required');
-			$this->form_validation->set_rules('hospitales', 'Unidad', 'required');
-			$this->form_validation->set_rules('codigo_servicio', 'Servicio', 'required');
-			$this->form_validation->set_rules('tipo_contrato', 'Tipo de contrato', 'required');
-			$this->form_validation->set_rules('rut', 'Rut','required|min_length[9]|max_length[10]|is_unique[funcionario.rut]');
-			$this->form_validation->set_rules('nombre', 'Nombre','required|min_length[1]|max_length[50]');
-			$this->form_validation->set_rules('apellido_pat', 'apellido paterno','required|min_length[1]|max_length[50]');
-			$this->form_validation->set_rules('apellido_mat', 'apellido materno','required|min_length[1]|max_length[50]');
+			$this->form_validation->set_rules('numero_tarjeta', 'Numero tarjeta', 'required');
+			$this->form_validation->set_rules('fecha_desde', 'Fecha desde', 'required');
+			$this->form_validation->set_rules('fecha_hasta', 'Fecha hasta', 'required');
+			$this->form_validation->set_rules('codigo_funcionario', 'Funcionario', 'required');
+			$this->form_validation->set_rules('codigo_tipotarjeta', 'Tipo de tarjeta', 'required');
+			$this->form_validation->set_rules('codigo_tipocomida', 'Tipo de comida', 'required');
 
-			$this->form_validation->set_message('is_unique', '* %s ya registrado en el sistema');
-			$this->form_validation->set_message('max_length', '* %s excedido en caracteres');
-			$this->form_validation->set_message('min_length', '* %s no tiene el minimo de caracteres');
 			$this->form_validation->set_message('required', '* %s es obligatorio');
 			$this->form_validation->set_error_delimiters('<div>','</div>');
+
+			if($this->objTarjeta->obtener(array("fk_funcionario" => $this->input->post('codigo_funcionario')))){
+				echo json_encode(array("result"=>false,"msg"=>"Funcionario ya tiene tarjeta asignada"));
+				exit;
+			}
+
+			$unidad_funcionario = $this->objFuncionario->obtener(array("id_funcionario" => $this->input->post('codigo_funcionario')));
 
 			if(!$this->form_validation->run()){
 				echo json_encode(array("result"=>false,"msg"=>validation_errors()));
 				exit;
 			}
+
+			$desde = date("Y-m-d", strtotime(str_replace("/", "-", $this->input->post('fecha_desde'))));
+			$hasta = date("Y-m-d", strtotime(str_replace("/", "-", $this->input->post('fecha_hasta'))));
 			
 			$datos = array(
-				'id_funcionario' => null,
-				'rut' => $this->input->post('rut'),
-				'nombre' => $this->input->post('nombre'),
-				'apellido_pat' => $this->input->post('apellido_pat'),
-				'apellido_mat' => $this->input->post('apellido_mat'),
-				'fk_servicio' => $this->input->post('codigo_servicio'),
-				'fk_tipocontrato' => $this->input->post('tipo_contrato'),
-				'fk_unidad' => $this->input->post('hospitales'),
+				'numero_tarjeta' => $this->input->post('numero_tarjeta'),
+				'vigencia_desde' => $desde,
+				'vigencia_hasta' => $hasta,
+				'fk_funcionario' => $this->input->post('codigo_funcionario'),
+				'fk_tipotarjeta' => $this->input->post('codigo_tipotarjeta'),
+				'fk_tipocomida' => $this->input->post('codigo_tipocomida'),
 				'activo' => 0,
-				'observacion' => $this->input->post('observacion')
+				'id_unidad' => $unidad_funcionario->fk_unidad
 
 			);
 
 			//print_r($datos);die();
 			
-			if($this->objFuncionario->insertar($datos)){
+			if($this->objTarjeta->insertar($datos)){
 				echo json_encode(array("result"=>true));
 				exit;
 			}else{
@@ -89,15 +93,22 @@ class Funcionario extends CI_Controller {
 			}
 		}else{
 			#Title
-			$this->layout->title('Funcionarios');
+			$this->layout->title('Tarjeta');
 
 			#Metas
-			$this->layout->setMeta('title','Funcionarios');
-			$this->layout->setMeta('description','Funcionarios');
-			$this->layout->setMeta('keywords','Funcionarios');
+			$this->layout->setMeta('title','Tarjeta');
+			$this->layout->setMeta('description','Tarjeta');
+			$this->layout->setMeta('keywords','Tarjeta');
 
 			#js
-			$this->layout->js('js/sistema/desayuno/agregar.js');
+			$this->layout->js('js/sistema/tarjeta/agregar.js');
+
+			#JS - Datepicker
+			$this->layout->css('js/jquery/ui/1.10.4/ui-lightness/jquery-ui-1.10.4.custom.min.css');
+			$this->layout->js('js/jquery/ui/1.10.4/jquery-ui-1.10.4.custom.min.js');
+			$this->layout->js('js/jquery/ui/1.10.4/jquery.ui.datepicker-es.js');
+
+			$this->layout->js('js/jquery/jquery-redirect/jquery.redirect.js');
 
 			#JS - Multiple select boxes
 			$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
@@ -108,10 +119,11 @@ class Funcionario extends CI_Controller {
 			$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
 
 			#nav
-			$this->layout->nav(array("Funcionarios "=> "funcionario", "Agregar Funcionarios" =>"/"));
+			$this->layout->nav(array("Tarjetas "=> "tarjeta", "Agregar Tarjetas" =>"/"));
 
-			$contenido['hospitales'] = $this->objHospital->listar();
-			$contenido['tipo_contrato'] = $this->objTipoContrato->listar();
+			$contenido['tipos_tarjetas'] = $this->objTipoTarjeta->listar();
+			$contenido['funcionarios'] = $this->objFuncionario->listar(array("fk_unidad" => $this->session->userdata("usuario")->id_unidad ));
+			$contenido['tipos_comidas'] = $this->objTipoComida->listar();
 
 			$this->layout->view('agregar', $contenido);
 		}
@@ -122,17 +134,13 @@ class Funcionario extends CI_Controller {
 		if($this->input->post()){
 
 			#validaciones
-			$this->form_validation->set_rules('nombre', 'Nombre', 'required');
-			$this->form_validation->set_rules('hospitales', 'Unidad', 'required');
-			$this->form_validation->set_rules('codigo_servicio', 'Servicio', 'required');
-			$this->form_validation->set_rules('tipo_contrato', 'Tipo de contrato', 'required');
-			$this->form_validation->set_rules('rut', 'Rut','required|min_length[9]|max_length[10]');
-			$this->form_validation->set_rules('nombre', 'Nombre','required|min_length[1]|max_length[50]');
-			$this->form_validation->set_rules('apellido_pat', 'apellido paterno','required|min_length[1]|max_length[50]');
-			$this->form_validation->set_rules('apellido_mat', 'apellido materno','required|min_length[1]|max_length[50]');
+			//$this->form_validation->set_rules('numero_tarjeta', 'Numero tarjeta', 'required');
+			$this->form_validation->set_rules('fecha_desde', 'Fecha desde', 'required');
+			$this->form_validation->set_rules('fecha_hasta', 'Fecha hasta', 'required');
+			$this->form_validation->set_rules('codigo_funcionario', 'Funcionario', 'required');
+			$this->form_validation->set_rules('codigo_tipotarjeta', 'Tipo de tarjeta', 'required');
+			$this->form_validation->set_rules('codigo_tipocomida', 'Tipo de comida', 'required');
 
-			$this->form_validation->set_message('max_length', '* %s excedido en caracteres');
-			$this->form_validation->set_message('min_length', '* %s no tiene el minimo de caracteres');
 			$this->form_validation->set_message('required', '* %s es obligatorio');
 			$this->form_validation->set_error_delimiters('<div>','</div>');
 
@@ -141,19 +149,28 @@ class Funcionario extends CI_Controller {
 				exit;
 			}
 
+			//aqui agregar validacion en caso de que un funcionario ya este vinculado a otra tarjeta 
+			// if($this->objTarjeta->obtener(array("fk_funcionario" => $this->input->post('codigo_funcionario')))){
+			// 	echo json_encode(array("result"=>false,"msg"=>"Funcionario ya tiene tarjeta asignada"));
+			// 	exit;
+			// }
+
+
+			$desde = date("Y-m-d", strtotime(str_replace("/", "-", $this->input->post('fecha_desde'))));
+			$hasta = date("Y-m-d", strtotime(str_replace("/", "-", $this->input->post('fecha_hasta'))));
+
 			$datos = array(
-				'rut' => $this->input->post('rut'),
-				'nombre' => $this->input->post('nombre'),
-				'apellido_pat' => $this->input->post('apellido_pat'),
-				'apellido_mat' => $this->input->post('apellido_mat'),
-				'fk_servicio' => $this->input->post('codigo_servicio'),
-				'fk_tipocontrato' => $this->input->post('tipo_contrato'),
-				'fk_unidad' => $this->input->post('hospitales'),
-				'observacion' => $this->input->post('observacion')
+				'vigencia_desde' => $desde,
+				'vigencia_hasta' => $hasta,
+				'fk_funcionario' => $this->input->post('codigo_funcionario'),
+				'fk_tipotarjeta' => $this->input->post('codigo_tipotarjeta'),
+				'fk_tipocomida' => $this->input->post('codigo_tipocomida'),
+				'activo' => 0,
+				'id_unidad' => $unidad_funcionario->fk_unidad
 
 			);
 
-			if($this->objFuncionario->actualizar($datos,array("id_funcionario"=>$this->input->post('codigo')))){
+			if($this->objTarjeta->actualizar($datos,array("numero_tarjeta"=>$codigo))){
 				echo json_encode(array("result"=>true));
 				exit;
 			}else{
@@ -162,7 +179,7 @@ class Funcionario extends CI_Controller {
 			}
 		}else{
 
-			if(!$codigo) redirect(base_url() . "funcionario/");
+			if(!$codigo) redirect(base_url() . "tarjeta/");
 			#js
 			$this->layout->js('js/sistema/funcionario/editar.js');
 
@@ -175,23 +192,23 @@ class Funcionario extends CI_Controller {
 			$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
 
 			#Title
-			$this->layout->title('Funcionarios');
+			$this->layout->title('Editar tarjeta');
 
 			#Metas
-			$this->layout->setMeta('title','Funcionarios');
-			$this->layout->setMeta('description','Funcionarios');
-			$this->layout->setMeta('keywords','Funcionarios');
+			$this->layout->setMeta('title','Editar tarjeta');
+			$this->layout->setMeta('description','Editar tarjeta');
+			$this->layout->setMeta('keywords','Editar tarjeta');
 
 			#contenido
-			if($contenido['funcionarios'] = $this->objFuncionario->obtener(array("id_funcionario" => $codigo)));
+			if($contenido['tarjetas'] = $this->objTarjeta->obtener(array("numero_tarjeta" => $codigo)));
 			else show_error('');
 
-			$contenido['hospitales'] = $this->objHospital->listar();
-			$contenido['tipo_contrato'] = $this->objTipoContrato->listar();
-			$contenido['servicios'] = $this->objServicioclinico->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
+			$contenido['tipos_tarjetas'] = $this->objTipoTarjeta->listar();
+			$contenido['funcionarios'] = $this->objFuncionario->listar(array("fk_unidad" => $this->session->userdata("usuario")->id_unidad ));
+			$contenido['tipos_comidas'] = $this->objTipoComida->listar();
 
 			#nav
-			$this->layout->nav(array("Funcionarios "=>"funcionario", "Editar Funcionario" =>"/"));
+			$this->layout->nav(array("Tarjetas "=>"tarjeta", "Editar Tarjeta" =>"/"));
 			$this->layout->view('editar',$contenido);
 
 		}
@@ -278,6 +295,24 @@ class Funcionario extends CI_Controller {
         }  else {
             echo '<option value="0">Servicios</option>';
         }
+	}
+
+	public function cambio_activo_desactivo(){
+		$datos = $this->input->post('datos_tarjeta');
+		$datos_tarjeta = explode("-", $datos);
+		$num_tarjeta = $datos_tarjeta[0];
+		$estado = $datos_tarjeta[1];
+		//aqui se cambia el estado de la tarjeta
+		if($this->objTarjeta->actualizar(array("activo"=>$estado),array("numero_tarjeta"=>$num_tarjeta))){	
+			$msg = "Se cambio correctamente el estado de la tarjeta";
+			$result = true;
+		}else{
+			$msg = "No se pudo cambiar el estado de la tarjeta";
+			$result = false;
+		}
+
+		echo json_encode(array("result"=>$result,"msg"=>$msg));
+		
 	}
 
 }

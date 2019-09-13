@@ -44,8 +44,7 @@
     <thead>
       <tr>
         <th scope="col" style="width:50px;">Receta</th>
-        <th scope="col" style="width:50px;">Regimen</th>
-        <th scope="col" style="width:20px;">Estado</th>      
+        <th scope="col" style="width:50px;">Regimen</th>   
         <th scope="col" style="width:20px;">&nbsp;</th>
       </tr>
     </thead>
@@ -70,16 +69,10 @@
             <a href="<?php echo base_url(); ?>colacion/eliminar/<?php echo $col->id_colacion; ?>" onclick="return confirm('Esta seguro que desea eliminar este registro?');"><button title="Eliminar" type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></a>
 
             <?php if($col->estado == 0){ ?>
-           
-               <a href="<?php echo base_url(); ?>colacion/desactivar/<?php echo $col->id_colacion; ?>">
-              <button title="Editar" type="button" class="btn btn-success btn-sm">DESACTIVAR</button> 
-
-            <?php  }else{?>
-
-              <a href="<?php echo base_url(); ?>colacion/activar/<?php echo $col->id_colacion; ?>">
-              <button title="Editar" type="button" class="btn btn-success btn-sm">ACTIVAR</button>
-
-            <?php  }?>
+							<button type="button" class="btn btn-primary btn-xs estado" rel="<?php echo $col->id_colacion .'-1'; ?>" >Activo</button>
+						<?php } else{ ?>
+							<button type="button" class="btn btn-warning btn-xs estado" rel="<?php echo $col->id_colacion .'-0'; ?>">Inactivo</button>
+						<?php } ?>
 
 					</td>
 				</tr>

@@ -30,6 +30,9 @@ class Colacion extends CI_Controller {
 		$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
 		$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
 
+		#js
+		$this->layout->js('js/sistema/col_10/index.js');
+
 		#filtros
 		$where = $contenido['q_f'] = '';
 		if($this->input->get('q')){
@@ -449,6 +452,25 @@ class Colacion extends CI_Controller {
 		$contenido['colacion'] = $this->objColacion->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad ));
 
 		$this->layout->view('index', $contenido);
+	}
+
+	public function cambio_estado(){
+		$datos = $this->input->post('datos_estado');
+		$datos_estado = explode("-", $datos);
+		$codigo_colacion = $datos_estado[0];
+		$estado = $datos_estado[1];
+		
+		//aqui se cambia el estado de la colacion
+		if($this->objColacion->actualizar(array("estado"=>$estado),array("id_colacion"=>$codigo_colacion))){	
+			$msg = "Se cambio correctamente el estado de la colacion";
+			$result = true;
+		}else{
+			$msg = "No se pudo cambiar el estado de la colacion";
+			$result = false;
+		}
+
+		echo json_encode(array("result"=>$result,"msg"=>$msg));
+		
 	}
 
 }

@@ -50,4 +50,7 @@ $(function(){
        }
      }
    });
+   $("#fecha_desde").datepicker();
+   $("#fecha_hasta").datepicker();
+
 });

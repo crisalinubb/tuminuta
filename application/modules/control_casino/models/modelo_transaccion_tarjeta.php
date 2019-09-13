@@ -79,5 +79,24 @@ class Modelo_Transaccion_Tarjeta extends CI_Model {
     public function eliminar($codigo){
     	$this->db->where('id_transaccion', $codigo);
 		$this->db->delete($this->tabla);
-    }
+	}
+	
+	public function obtener_funcionario_dia_actual($codigo_tarjeta){
+		$fecha_actual = date('Y-m-d');
+		$fecha_inicial = date('Y-m-d 00:00:00', strtotime($fecha_actual));
+		$fecha_final = date('Y-m-d 23:59:59', strtotime($fecha_actual));
+		$this->db->select('fk_tarjeta');    
+		$this->db->from('transaccion_tarjeta');
+		$this->db->where('fk_tarjeta', $codigo_tarjeta);
+		$this->db->where('fecha_registro BETWEEN "'. $fecha_inicial. '" and "'. $fecha_final.'"');
+		$query = $this->db->get();
+		//die($this->db->last_query());
+		//return $query;
+		if($query->num_rows() == 0){
+    		return true;
+    	}else{
+    		return false;
+    	} 
+	}
+	
 }

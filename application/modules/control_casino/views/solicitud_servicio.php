@@ -33,6 +33,17 @@
 <div class="alert alert-success" role="alert"><?php echo $mesagge; ?></div>
 <?php } ?>
 
+<?php if ($arreglo) { ?>
+<?php $i=0; ?>
+ <div><h3 style="color: red";>ERROR!!!!, POR FAVOR REVISAR LAS SIGUIENTES SOLICITUDES DE ESTOS FUNCIONARIOS:</h3>
+  <ul class="list-group"> 
+  <?php while ( $i < sizeof($arreglo)) { ?> 
+    <li class="list-group-item list-group-item-danger" role="alert" style="color: red;"><strong><?php echo $arreglo[$i]."\r\n";?></strong></li>
+    <?php $i++;?>
+  <?php } ?>
+</ul>
+<?php } ?>
+
 <?php if($funcionarios){ ?>
 
 <form class="form-inline" method="post" action="<?php echo base_url(); ?>control_casino/agregar_solicitud">

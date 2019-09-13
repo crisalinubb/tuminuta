@@ -69,7 +69,7 @@
           <td><?php echo $serv->nombre_servicio; ?></td>
           <?php $tip_cont = $this->objTipoContrato->obtener(array("id_tipocontrato" => $fun->fk_tipocontrato )); ?>
           <td><?php echo $tip_cont->descripcion; ?></td>
-          <?php $unidad = $this->objHospital->obtener(array("id_hospital" => $fun->fk_servicio )); ?>
+          <?php $unidad = $this->objHospital->obtener(array("id_hospital" => $fun->fk_unidad )); ?>
           <td><?php echo $unidad->hos_nombre; ?></td>
           <?php if($fun->activo == 0){ ?>
             <td><?php echo "ACTIVO"; ?></td>

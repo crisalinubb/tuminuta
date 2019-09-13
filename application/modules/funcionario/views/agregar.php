@@ -7,7 +7,7 @@
     <div class="form-group">
       <label for="nombre" class="col-sm-2 control-label">Rut</label>
       <div class="col-sm-10">
-        <input type="text" id="rut" name="rut" class="form-control validate[required]" />
+        <input type="text" id="rut" name="rut" class="form-control validate[required]" placeholder="123456789-k"/>
       </div>
     </div>
 
@@ -72,7 +72,7 @@
     <div class="form-group">
       <label for="observacion" class="col-sm-2 control-label">observacion</label>
       <div class="col-sm-10">
-        <input type="text" id="observacion" name="observacion" class="form-control validate[required]" />
+        <input type="text" id="observacion" name="observacion" class="form-control" />
       </div>
     </div>
 

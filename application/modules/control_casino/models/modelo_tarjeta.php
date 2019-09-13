@@ -79,5 +79,11 @@ class Modelo_Tarjeta extends CI_Model {
     public function eliminar($codigo){
     	$this->db->where('numero_tarjeta', $codigo);
 		$this->db->delete($this->tabla);
-    }
+	}
+	
+	public function cambiar_estado($numero_tarjeta, $estado){
+		$this->db->set('activo', $estado);
+		$this->db->where('numero_tarjeta', $numero_tarjeta);
+		$this->db->update('tarjeta'); 
+	}
 }

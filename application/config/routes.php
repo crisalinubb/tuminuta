@@ -96,6 +96,7 @@ $route['paciente_general/editar/(:num)'] 				= "paciente_general/editar/$1";
 $route['desayuno/(:num)'] 								= "desayuno/index/$1";
 $route['desayuno'] 										= "desayuno";
 $route['desayuno/editar/(:num)'] 						= "desayuno/editar/$1";
+$route['desayuno/(:num)/cambio_estado'] 			    = "desayuno/cambio_estado/$1";
 
 #Almuerzo
 $route['almuerzo/(:num)'] 								= "almuerzo/index/$1";
@@ -106,6 +107,7 @@ $route['almuerzo/editar/(:num)'] 						= "almuerzo/editar/$1";
 $route['once/(:num)'] 									= "once/index/$1";
 $route['once'] 											= "once";
 $route['once/editar/(:num)'] 							= "once/editar/$1";
+$route['once/(:num)/cambio_estado'] 			        = "once/cambio_estado/$1";
 
 #Cena
 $route['cena/(:num)'] 									= "cena/index/$1";
@@ -116,6 +118,7 @@ $route['cena/editar/(:num)'] 							= "cena/editar/$1";
 $route['colacion/(:num)'] 								= "colacion/index/$1";
 $route['colacion'] 										= "colacion";
 $route['colacion/editar/(:num)'] 						= "colacion/editar/$1";
+$route['colacion/(:num)/cambio_estado'] 			    = "colacion/cambio_estado/$1";
 
 #Colacion de las 20
 $route['col_20/(:num)'] 								= "col_20/index/$1";
@@ -176,6 +179,11 @@ $route['destinos/editar/(:num)'] 						= "destinos/editar/$1";
 $route['aportes_regimen/(:num)'] 						= "aportes_regimen/index/$1";
 $route['aportes_regimen'] 								= "aportes_regimen";
 $route['aportes_regimen/editar/(:num)'] 				= "aportes_regimen/editar/$1";
+
+#Aportes por Regimen
+$route['funcionario/(:num)'] 						    = "funcionario/index/$1";
+$route['funcionario'] 							    	= "funcionario";
+$route['funcionario/editar/(:num)'] 				    = "funcionario/editar/$1";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

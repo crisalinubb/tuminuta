@@ -245,7 +245,8 @@ class Control_casino extends CI_Controller {
 								'fk_tipocomida' => $tipo_comida, 
 								'fecha_registro' => date('Y-m-d H:i:s'),  
 								'usuario_digitador' => $this->session->userdata("usuario")->id_usuario,
-								'estado' => 0
+								'estado' => 0,
+								'estado_entregado' => 0
 						);
 	
 				$this->objSolServ->insertar($datos);

@@ -48,7 +48,7 @@ class Funcionario extends CI_Controller {
 			$this->form_validation->set_rules('hospitales', 'Unidad', 'required');
 			$this->form_validation->set_rules('codigo_servicio', 'Servicio', 'required');
 			$this->form_validation->set_rules('tipo_contrato', 'Tipo de contrato', 'required');
-			$this->form_validation->set_rules('rut', 'Rut','required|min_length[9]|max_length[10]|is_unique[funcionario.rut]');
+			$this->form_validation->set_rules('rut', 'Rut','required|min_length[7]|max_length[8]|is_unique[funcionario.rut]');
 			$this->form_validation->set_rules('nombre', 'Nombre','required|min_length[1]|max_length[50]');
 			$this->form_validation->set_rules('apellido_pat', 'apellido paterno','required|min_length[1]|max_length[50]');
 			$this->form_validation->set_rules('apellido_mat', 'apellido materno','required|min_length[1]|max_length[50]');
@@ -126,7 +126,7 @@ class Funcionario extends CI_Controller {
 			$this->form_validation->set_rules('hospitales', 'Unidad', 'required');
 			$this->form_validation->set_rules('codigo_servicio', 'Servicio', 'required');
 			$this->form_validation->set_rules('tipo_contrato', 'Tipo de contrato', 'required');
-			$this->form_validation->set_rules('rut', 'Rut','required|min_length[9]|max_length[10]');
+			$this->form_validation->set_rules('rut', 'Rut','required|min_length[7]|max_length[8]');
 			$this->form_validation->set_rules('nombre', 'Nombre','required|min_length[1]|max_length[50]');
 			$this->form_validation->set_rules('apellido_pat', 'apellido paterno','required|min_length[1]|max_length[50]');
 			$this->form_validation->set_rules('apellido_mat', 'apellido materno','required|min_length[1]|max_length[50]');

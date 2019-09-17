@@ -97,7 +97,7 @@ class Funcionario extends CI_Controller {
 			$this->layout->setMeta('keywords','Funcionarios');
 
 			#js
-			$this->layout->js('js/sistema/desayuno/agregar.js');
+			$this->layout->js('js/sistema/funcionario/agregar.js');
 
 			#JS - Multiple select boxes
 			$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');

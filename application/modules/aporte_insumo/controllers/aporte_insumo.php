@@ -75,6 +75,11 @@ class Aporte_insumo extends CI_Controller {
 				echo json_encode(array("result"=>false,"msg"=>validation_errors()));
 				exit;
 			}
+
+			if(($this->objAportesInsumo->obtener(array('id_aporte' => $this->input->post('codigo_aporte'), 'id_insumo' =>$this->input->post('insumo'))))){
+				echo json_encode(array("result"=>false,"msg"=>"Este aporte ya esta en esta insumo"));
+				exit;
+			}
 			
 			$datos = array(
 				'id_aporteinsumo' => null,
@@ -88,51 +93,54 @@ class Aporte_insumo extends CI_Controller {
 			if($this->objAportesInsumo->insertar($datos)){
 				//echo json_encode(array("result"=>true));
 				//exit;
-				$insumo= $insumo_agregar;
-		#Title
-		$this->layout->title('Aportes por Insumos');
+		// 		$insumo= $insumo_agregar;
+		// #Title
+		// $this->layout->title('Aportes por Insumos');
 
-		#Metas
-		$this->layout->setMeta('title','Aportes por Insumos');
-		$this->layout->setMeta('description','Aportes por Insumos');
-		$this->layout->setMeta('keywords','Aportes por Insumos');
+		// #Metas
+		// $this->layout->setMeta('title','Aportes por Insumos');
+		// $this->layout->setMeta('description','Aportes por Insumos');
+		// $this->layout->setMeta('keywords','Aportes por Insumos');
 
-		#filtros
-		$where = $contenido['q_f'] = '';
-		if($this->input->get('q')){
-			$contenido['q_f'] = $q = $this->input->get('q');
-			$where = "nombre like '%$q%'";
-		}
+		// #filtros
+		// $where = $contenido['q_f'] = '';
+		// if($this->input->get('q')){
+		// 	$contenido['q_f'] = $q = $this->input->get('q');
+		// 	$where = "nombre like '%$q%'";
+		// }
 
-		#url
-		$url = explode('?',$_SERVER['REQUEST_URI']);
-		if(isset($url[1]))
-			$contenido['url'] = $url = '/?'.$url[1];
-		else
-			$contenido['url'] = $url = '/';
+		// #url
+		// $url = explode('?',$_SERVER['REQUEST_URI']);
+		// if(isset($url[1]))
+		// 	$contenido['url'] = $url = '/?'.$url[1];
+		// else
+		// 	$contenido['url'] = $url = '/';
 
-		#paginacion
-		$config['base_url'] = base_url() . 'aporte_insumo/';
-		$config['total_rows'] = count($this->objAportesInsumo->listar($where));
-		$config['per_page'] = 15;
-		$config['suffix'] = $url;
-		$config['first_url'] = base_url() . '/aporte_insumo'.$url;
+		// #paginacion
+		// $config['base_url'] = base_url() . 'aporte_insumo/';
+		// $config['total_rows'] = count($this->objAportesInsumo->listar($where));
+		// $config['per_page'] = 15;
+		// $config['suffix'] = $url;
+		// $config['first_url'] = base_url() . '/aporte_insumo'.$url;
 
-		$this->pagination->initialize($config);
+		// $this->pagination->initialize($config);
 
-		//$contenido['datos'] = $this->objAportesInsumo->listar($where, $pagina, $config['per_page']);
+		// //$contenido['datos'] = $this->objAportesInsumo->listar($where, $pagina, $config['per_page']);
 
-		#nav
-		$this->layout->nav(array("Insumos "=> "insumos", "Aportes por Insumo" =>"/"));
+		// #nav
+		// $this->layout->nav(array("Insumos "=> "insumos", "Aportes por Insumo" =>"/"));
 
-		$contenido['datos'] = $this->objAportesInsumo->obtener_AporteInsumo($insumo);
+		// $contenido['datos'] = $this->objAportesInsumo->obtener_AporteInsumo($insumo);
 
-		$contenido['id_insumo'] = $insumo;
+		// $contenido['id_insumo'] = $insumo;
 
-		$contenido['pagination'] = $this->pagination->create_links();
+		// $contenido['pagination'] = $this->pagination->create_links();
 
-		$this->layout->view('index', $contenido);				
+		// $this->layout->view('index', $contenido);
 
+		//redirect('aporte_insumo/index/'.$this->input->post('insumo'),$contenido);
+			echo json_encode(array("result"=>true));
+			exit;	
 			}else{
 				echo json_encode(array("result"=>false,"msg"=>"Error al guardar registro."));
 				exit;
@@ -147,7 +155,7 @@ class Aporte_insumo extends CI_Controller {
 			$this->layout->setMeta('keywords','Agregar Aporte por Insumo');
 
 			#js
-			//$this->layout->js('js/sistema/aporte_insumo/agregar.js');
+			$this->layout->js('js/sistema/aporte_insumo/agregar.js');
 
 			#JS - Multiple select boxes
 			$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
@@ -194,52 +202,54 @@ class Aporte_insumo extends CI_Controller {
 				'cantidadAporte' => $this->input->post('cantidad_aporte')
 			);
 
-			$insumo = $this->input->post('codigo_insumo');
+			//$insumo = $this->input->post('codigo_insumo');
 			if($this->objAportesInsumo->actualizar($datos,array("id_aporteinsumo"=>$this->input->post('codigo')))){
 				
-				$this->layout->title('Aportes por Insumos');
+				// echo json_encode(array("result"=>true));
+				// exit;
+				// $this->layout->title('Aportes por Insumos');
 
-				#Metas
-				$this->layout->setMeta('title','Aportes por Insumos');
-				$this->layout->setMeta('description','Aportes por Insumos');
-				$this->layout->setMeta('keywords','Aportes por Insumos');
+				// #Metas
+				// $this->layout->setMeta('title','Aportes por Insumos');
+				// $this->layout->setMeta('description','Aportes por Insumos');
+				// $this->layout->setMeta('keywords','Aportes por Insumos');
 
-				#filtros
-				$where = $contenido['q_f'] = '';
-				if($this->input->get('q')){
-					$contenido['q_f'] = $q = $this->input->get('q');
-					$where = "nombre like '%$q%'";
-				}
+				// #filtros
+				// $where = $contenido['q_f'] = '';
+				// if($this->input->get('q')){
+				// 	$contenido['q_f'] = $q = $this->input->get('q');
+				// 	$where = "nombre like '%$q%'";
+				// }
 
-				#url
-				$url = explode('?',$_SERVER['REQUEST_URI']);
-				if(isset($url[1]))
-					$contenido['url'] = $url = '/?'.$url[1];
-				else
-					$contenido['url'] = $url = '/';
+				// #url
+				// $url = explode('?',$_SERVER['REQUEST_URI']);
+				// if(isset($url[1]))
+				// 	$contenido['url'] = $url = '/?'.$url[1];
+				// else
+				// 	$contenido['url'] = $url = '/';
 
-				#paginacion
-				$config['base_url'] = base_url() . 'aporte_insumo/';
-				$config['total_rows'] = count($this->objAportesInsumo->listar($where));
-				$config['per_page'] = 15;
-				$config['suffix'] = $url;
-				$config['first_url'] = base_url() . '/aporte_insumo'.$url;
+				// #paginacion
+				// $config['base_url'] = base_url() . 'aporte_insumo/';
+				// $config['total_rows'] = count($this->objAportesInsumo->listar($where));
+				// $config['per_page'] = 15;
+				// $config['suffix'] = $url;
+				// $config['first_url'] = base_url() . '/aporte_insumo'.$url;
 
-				$this->pagination->initialize($config);
+				// $this->pagination->initialize($config);
 
-				//$contenido['datos'] = $this->objAportesInsumo->listar($where, $pagina, $config['per_page']);
+				// //$contenido['datos'] = $this->objAportesInsumo->listar($where, $pagina, $config['per_page']);
 				
-				#nav
-				$this->layout->nav(array("Insumos "=> "insumos", "Aportes por Insumo" =>"/"));
+				// #nav
+				// $this->layout->nav(array("Insumos "=> "insumos", "Aportes por Insumo" =>"/"));
 
-				$contenido['datos'] = $this->objAportesInsumo->obtener_AporteInsumo($insumo);
+				// $contenido['datos'] = $this->objAportesInsumo->obtener_AporteInsumo($insumo);
 
-				$contenido['id_insumo'] = $insumo;
+				// $contenido['id_insumo'] = $insumo;
 
-				$contenido['pagination'] = $this->pagination->create_links();
+				// $contenido['pagination'] = $this->pagination->create_links();
 
-				$this->layout->view('index', $contenido);
-
+				// $this->layout->view('index', $contenido);
+				redirect('aporte_insumo/index/'.$this->input->post('codigo_insumo'),$contenido);				
 			}else{
 				echo json_encode(array("result"=>false,"msg"=>"Error al actualizar registro."));
 				exit;

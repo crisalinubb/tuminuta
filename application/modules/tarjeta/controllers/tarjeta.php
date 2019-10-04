@@ -78,7 +78,7 @@ class Tarjeta extends CI_Controller {
 				'fk_tipotarjeta' => $this->input->post('codigo_tipotarjeta'),
 				'fk_tipocomida' => $this->input->post('codigo_tipocomida'),
 				'activo' => 0,
-				'id_unidad' => $this->session->userdata("usuario")->id_unidad
+				'id_unidad' => $unidad_funcionario->fk_unidad
 
 			);
 
@@ -122,7 +122,7 @@ class Tarjeta extends CI_Controller {
 			$this->layout->nav(array("Tarjetas "=> "tarjeta", "Agregar Tarjetas" =>"/"));
 
 			$contenido['tipos_tarjetas'] = $this->objTipoTarjeta->listar();
-			$contenido['funcionarios'] = $this->objFuncionario->listar(array("fk_unidad" => $this->session->userdata("usuario")->id_unidad ));
+			$contenido['funcionarios'] = $this->objFuncionario->listar(array("fk_unidad" => $this->session->userdata("usuario")->id_unidad, "activo" => 0));
 			$contenido['tipos_comidas'] = $this->objTipoComida->listar();
 
 			$this->layout->view('agregar', $contenido);
@@ -166,7 +166,7 @@ class Tarjeta extends CI_Controller {
 				'fk_tipotarjeta' => $this->input->post('codigo_tipotarjeta'),
 				'fk_tipocomida' => $this->input->post('codigo_tipocomida'),
 				'activo' => 0,
-				'id_unidad' => $this->session->userdata("usuario")->id_unidad
+				'id_unidad' => $unidad_funcionario->fk_unidad
 
 			);
 
@@ -181,14 +181,7 @@ class Tarjeta extends CI_Controller {
 
 			if(!$codigo) redirect(base_url() . "tarjeta/");
 			#js
-			$this->layout->js('js/sistema/tarjeta/editar.js');
-
-			#JS - Datepicker
-			$this->layout->css('js/jquery/ui/1.10.4/ui-lightness/jquery-ui-1.10.4.custom.min.css');
-			$this->layout->js('js/jquery/ui/1.10.4/jquery-ui-1.10.4.custom.min.js');
-			$this->layout->js('js/jquery/ui/1.10.4/jquery.ui.datepicker-es.js');
-
-			$this->layout->js('js/jquery/jquery-redirect/jquery.redirect.js');
+			$this->layout->js('js/sistema/funcionario/editar.js');
 
 			#JS - Multiple select boxes
 			$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
@@ -211,7 +204,7 @@ class Tarjeta extends CI_Controller {
 			else show_error('');
 
 			$contenido['tipos_tarjetas'] = $this->objTipoTarjeta->listar();
-			$contenido['funcionarios'] = $this->objFuncionario->listar(array("fk_unidad" => $this->session->userdata("usuario")->id_unidad ));
+			$contenido['funcionarios'] = $this->objFuncionario->listar(array("fk_unidad" => $this->session->userdata("usuario")->id_unidad , "activo" => 0));
 			$contenido['tipos_comidas'] = $this->objTipoComida->listar();
 
 			#nav

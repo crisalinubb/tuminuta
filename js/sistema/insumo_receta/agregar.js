@@ -31,9 +31,13 @@ $(function(){
                            killer: true
                        });
 
-                       setTimeout(function(){
-                           window.location.href = window.location.pathname.replace("/agregar/", "");
-                       }, 1000);
+                    //    setTimeout(function(){
+                    //        window.location.href = window.location.pathname.replace("/agregar/", "");
+                    //    }, 1000);
+
+                    setTimeout(function() {
+                        window.location.href = window.location.pathname.replace('/agregar/'+ $("#codigo_receta").val(), '/index/'+ $("#codigo_receta").val());
+                          }, 1000)
                    }
                    else
                    {

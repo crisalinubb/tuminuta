@@ -2,7 +2,7 @@
   <li><a href="<?php echo base_url(); ?>index/">Inicio</a></li>
   <li><a href="<?php echo base_url(); ?>recetas/">Recetas</a></li>
   <li><a href="<?php echo base_url(); ?>insumo_receta/index/<?php echo $insumos_recetas->id_receta; ?>">Insumos por Receta</a></li>
-  <li class="active">Agregar Insumos a Receta</li>
+  <li class="active">Editar Insumos a Receta</li>
 </ol>
 
 <div class="page-header">

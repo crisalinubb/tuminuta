@@ -47,7 +47,75 @@
     </div>
 
     <div class="text-box">
-      <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
+      <button type="submit" class="btn btn-primary btn-lg sbt">Guardar</button>
     </div>
   </fieldset>
 </form>
+
+<script>
+
+$(document).ready(function() {
+  $('#codigo_aporte option:not(:selected)').attr('disabled',true);
+});
+
+// $(document).ready(function() {
+//   //evento que se ejecuta cuando se hace click en el activo de la tabla tarjeta
+// $(".sbt").click(function() {  
+//       //se envio el valor del activo
+
+
+//         var request = $.ajax({
+//         url: "<?php echo base_url(); ?>aporte_insumo/editar",
+//         type: "POST",          
+//         dataType: "json",
+//         data: { codigo: $("#codigo").val(), codigo_insumo: $("#codigo_insumo").val(),codigo_aporte: $("#codigo_aporte").val(),cantidad: $("#cantidad").val(),cantidad_aporte: $("#cantidad_aporte").val()},
+        
+//         success: function(json){
+//                    if(json.result){
+//                        noty({
+//                            text: json.msg,
+//                            layout: 'topCenter',
+//                            type: 'success',
+//                            //timeout: 2000,
+//                            killer: true
+//                        });
+
+//                       //  setTimeout(function() {
+//                       //   window.location.replace('<?php echo base_url();?>aporte_insumo/index/'+$("#codigo_insumo").val())
+//                       //      }, 1000);
+//                       setTimeout(function(){
+//                            window.location.href = window.location.pathname.replace("aporte_insumo/index/"+$("#codigo_insumo").val(), "");
+//                        }, 1000);
+//                    }
+                    
+  
+//                    }
+//                    else
+//                    {
+//                        noty({
+//                            text: json.msg,
+//                            layout: 'topCenter',
+//                            type: 'error',
+//                            timeout: 2000,
+//                            killer: true
+//                        });
+
+//                    }
+//         }
+//       });
+
+//         // request.done(function(data) {
+
+
+//         //   window.location.replace('<?php echo base_url();?>tarjeta/');
+                
+//         // });
+
+//         // request.fail(function(jqXHR, textStatus) {
+//         //   alert( "Peticion Fallida: " + textStatus );
+//         // }); 
+      
+
+//   });
+// });
+</script>

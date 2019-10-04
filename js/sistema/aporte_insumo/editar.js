@@ -17,6 +17,9 @@ $(function(){
                fondo: '<div id="fondo" style=" position: fixed; top:0; height: 100%; width:100%; background-color: rgba(60, 56, 56, 0.38); display:block;z-index: 9999;"></div>'
            });
 
+        //    var link = location.origin+base_url()+'/aporte_insumo/index/'+$("#codigo_insumo").val();
+        //    console.log(link);
+
            $.ajax({
                url: window.location.pathname,
                type: 'post',
@@ -28,12 +31,21 @@ $(function(){
                            text: "Registro actualizado con éxito.",
                            layout: 'topCenter',
                            type: 'success',
+                           timeout: 2000,
                            killer: true
                        });
 
-                       setTimeout(function(){
-                           window.location.href = window.location.pathname.replace("/editar/" + $("#codigo").val(), "");
-                       }, 1000);
+                    //    setTimeout(function() {
+                    //     window.location.replace(link);
+                    //        }, 1000)
+
+                    // setTimeout(function(){
+                    //     window.location.href= window.location.replace(link);
+                    // }, 1000)
+                    setTimeout(function() {
+                        window.location.href = window.location.pathname.replace('/editar /'+ $("#insumo").val(), '/index/'+ $("#insumo").val());
+                          }, 1000)
+
                    }
                    else
                    {

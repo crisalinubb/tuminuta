@@ -11,6 +11,7 @@
   <h1>Solicitud</h1>
 </div>
 <form action="<?php echo base_url(); ?>index/enviar_solicitud" method="post" class="form-horizontal">
+<!-- <form id="form-agregar" name="form-agregar" method="post" class="form-horizontal"> -->
   <div>
     <div class="form-group">
       <label for="rut" class="col-sm-2 control-label">Rut:</label>
@@ -304,6 +305,7 @@
       <!--
       <input type="submit" name="boton2" class="btn btn-info btn-lg" value="Calculo Informacion Nutricional">-->
       <input type="submit" name="boton3" class="btn btn-warning btn-lg" value="Limpiar">
+      <!-- <button type="reset" class="btn btn-warning btn-lg" value="Limpiar">Limpiar</button> -->
       <button type="button" class="btn btn-secondary btn-lg" data-toggle="collapse" data-target="#demo"> + Agregar Formula</button>
     </div>  
 
@@ -997,6 +999,11 @@ $("#frecuencia, #volumen").change(function() {
       }); 
 
   });
+});
+
+//se agregan los datos de la solicitud clinica
+$(document).ready(function() {
+
 });
 
 });

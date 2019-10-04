@@ -46,6 +46,10 @@ class Control_casino extends CI_Controller {
 		if (!$validador_tarjeta) {
 			$msg = "tarjeta ingresada de forma incorrecta/ No se encuentra en el registro de tarjetas";
 			$result= false;
+		//validar si la tarjeta esta desactivada
+		}elseif ($validador_tarjeta == 1) {
+			$msg = "La tarjeta esta desactivada";
+			$result= false;
 		//validar si la tarjeta tiene vigencia el dia de hoy
 		}elseif (!($dia_actual >= $validador_vigencia_tarjeta->vigencia_desde && $dia_actual <= $validador_vigencia_tarjeta->vigencia_hasta)) {
 			$msg = "La tarjeta actualmente no esta vigente";
@@ -102,6 +106,10 @@ class Control_casino extends CI_Controller {
 		//validar si la tarjeta existe
 		if (!$validador_tarjeta) {
 			$msg = "tarjeta ingresada de forma incorrecta/ No se encuentra en el registro de tarjetas";
+			$result= false;
+		//validar si la tarjeta esta desactivada
+		}elseif ($validador_tarjeta == 1) {
+			$msg = "La tarjeta esta desactivada";
 			$result= false;
 		//validar si la tarjeta tiene vigencia el dia de hoy
 		}elseif (!($dia_actual >= $validador_vigencia_tarjeta->vigencia_desde && $dia_actual <= $validador_vigencia_tarjeta->vigencia_hasta)) {
@@ -245,8 +253,7 @@ class Control_casino extends CI_Controller {
 								'fk_tipocomida' => $tipo_comida, 
 								'fecha_registro' => date('Y-m-d H:i:s'),  
 								'usuario_digitador' => $this->session->userdata("usuario")->id_usuario,
-								'estado' => 0,
-								'estado_entregado' => 0
+								'estado' => 0
 						);
 	
 				$this->objSolServ->insertar($datos);

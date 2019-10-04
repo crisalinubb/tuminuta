@@ -91,6 +91,11 @@ class Insumo_receta extends CI_Controller {
 				echo json_encode(array("result"=>false,"msg"=>validation_errors()));
 				exit;
 			}
+
+			if(($this->objInsumoreceta->obtener(array('id_insumo' => $this->input->post('codigo_insumo'), 'id_receta' =>$this->input->post('codigo_receta'))))){
+				echo json_encode(array("result"=>false,"msg"=>"Este insumo ya esta en esta receta"));
+				exit;
+			}
 			
 			$datos = array(
 				'id_insumo_receta' => null,
@@ -102,60 +107,63 @@ class Insumo_receta extends CI_Controller {
 			$id_receta = $this->input->post('codigo_receta');
 			if($this->objInsumoreceta->insertar($datos)){
 						
-				#Title
-				$this->layout->title('Insumo por Recetas');
+				// #Title
+				// $this->layout->title('Insumo por Recetas');
 
-				#Metas
-				$this->layout->setMeta('title','Insumo por Recetas');
-				$this->layout->setMeta('description','Insumo por Recetas');
-				$this->layout->setMeta('keywords','Insumo por Recetas');
+				// #Metas
+				// $this->layout->setMeta('title','Insumo por Recetas');
+				// $this->layout->setMeta('description','Insumo por Recetas');
+				// $this->layout->setMeta('keywords','Insumo por Recetas');
 
-				#JS - Multiple select boxes
-				$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
-				$this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
+				// #JS - Multiple select boxes
+				// $this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
+				// $this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
 
-				#JS - Ajax multi select
-				$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
-				$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
+				// #JS - Ajax multi select
+				// $this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
+				// $this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
 
-				#filtros
-				$where = $contenido['q_f'] = '';
-				if($this->input->get('q')){
-					$contenido['q_f'] = $q = $this->input->get('q');
-					$where = "nombre like '%$q%'";
-				}
+				// #filtros
+				// $where = $contenido['q_f'] = '';
+				// if($this->input->get('q')){
+				// 	$contenido['q_f'] = $q = $this->input->get('q');
+				// 	$where = "nombre like '%$q%'";
+				// }
 
-				#url
-				$url = explode('?',$_SERVER['REQUEST_URI']);
-				if(isset($url[1]))
-					$contenido['url'] = $url = '/?'.$url[1];
-				else
-					$contenido['url'] = $url = '/';
+				// #url
+				// $url = explode('?',$_SERVER['REQUEST_URI']);
+				// if(isset($url[1]))
+				// 	$contenido['url'] = $url = '/?'.$url[1];
+				// else
+				// 	$contenido['url'] = $url = '/';
 
-				#paginacion
-				$config['base_url'] = base_url() . 'insumo_receta/';
-				$config['total_rows'] = count($this->objInsumoreceta->listar($where));
-				$config['per_page'] = 15;
-				$config['suffix'] = $url;
-				$config['first_url'] = base_url() . '/insumo_receta'.$url;
+				// #paginacion
+				// $config['base_url'] = base_url() . 'insumo_receta/';
+				// $config['total_rows'] = count($this->objInsumoreceta->listar($where));
+				// $config['per_page'] = 15;
+				// $config['suffix'] = $url;
+				// $config['first_url'] = base_url() . '/insumo_receta'.$url;
 
-				$this->pagination->initialize($config);
+				// $this->pagination->initialize($config);
 
-				//$contenido['datos'] = $this->objInsumoreceta->listar($where, $pagina, $config['per_page']);
+				// //$contenido['datos'] = $this->objInsumoreceta->listar($where, $pagina, $config['per_page']);
 
-				$contenido['id_receta'] = $id_receta;
+				// $contenido['id_receta'] = $id_receta;
 
-				$contenido['datos'] = $this->objInsumoreceta->obtener_InsumoReceta($id_receta);
+				// $contenido['datos'] = $this->objInsumoreceta->obtener_InsumoReceta($id_receta);
 
-				$contenido['pagination'] = $this->pagination->create_links();
+				// $contenido['pagination'] = $this->pagination->create_links();
 
-				$contenido['insumos_aporte'] = $this->objInsumoreceta->join_insumo_receta($this->input->post('codigo_receta'));
+				// $contenido['insumos_aporte'] = $this->objInsumoreceta->join_insumo_receta($this->input->post('codigo_receta'));
 
-				$contenido['costo_receta'] = $this->objInsumoreceta->costo_receta($id_receta);
+				// $contenido['costo_receta'] = $this->objInsumoreceta->costo_receta($id_receta);
 
-				$contenido['rubros'] = $this->objRubro->listar();
+				// $contenido['rubros'] = $this->objRubro->listar();
 
-				$this->layout->view('index', $contenido);
+				// $this->layout->view('index', $contenido);
+				// redirect('insumo_receta/index/'.$this->input->post('codigo_receta'),$contenido);
+				echo json_encode(array("result"=>true));
+				exit;
 
 			}else{
 				echo json_encode(array("result"=>false,"msg"=>"Error al guardar registro."));
@@ -209,6 +217,11 @@ class Insumo_receta extends CI_Controller {
 				exit;
 			}
 
+			// if(($this->objInsumoreceta->obtener(array('id_insumo' => $this->input->post('codigo_insumo'), 'id_receta' =>$this->input->post('codigo_receta'))))){
+			// 	echo json_encode(array("result"=>false,"msg"=>"Este insumo ya esta en esta receta"));
+			// 	exit;
+			// }
+
 			$datos = array(
 				'id_receta' => $this->input->post('codigo_receta'),
 				'id_insumo' => $this->input->post('codigo_insumo'),
@@ -218,60 +231,63 @@ class Insumo_receta extends CI_Controller {
 			$receta = $this->input->post('codigo_receta');
 			if($this->objInsumoreceta->actualizar($datos,array("id_insumo_receta"=>$this->input->post('codigo')))){
 				
-					#Title
-					$this->layout->title('Insumo por Recetas');
+					// #Title
+					// $this->layout->title('Insumo por Recetas');
 
-					#Metas
-					$this->layout->setMeta('title','Insumo por Recetas');
-					$this->layout->setMeta('description','Insumo por Recetas');
-					$this->layout->setMeta('keywords','Insumo por Recetas');
+					// #Metas
+					// $this->layout->setMeta('title','Insumo por Recetas');
+					// $this->layout->setMeta('description','Insumo por Recetas');
+					// $this->layout->setMeta('keywords','Insumo por Recetas');
 
-					#JS - Multiple select boxes
-					$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
-					$this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
+					// #JS - Multiple select boxes
+					// $this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
+					// $this->layout->js('js/jquery/bootstrap-multi-select/js/bootstrap-select.js');
 
-					#JS - Ajax multi select
-					$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
-					$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
+					// #JS - Ajax multi select
+					// $this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
+					// $this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
 
-					#filtros
-					$where = $contenido['q_f'] = '';
-					if($this->input->get('q')){
-						$contenido['q_f'] = $q = $this->input->get('q');
-						$where = "nombre like '%$q%'";
-					}
+					// #filtros
+					// $where = $contenido['q_f'] = '';
+					// if($this->input->get('q')){
+					// 	$contenido['q_f'] = $q = $this->input->get('q');
+					// 	$where = "nombre like '%$q%'";
+					// }
 
-					#url
-					$url = explode('?',$_SERVER['REQUEST_URI']);
-					if(isset($url[1]))
-						$contenido['url'] = $url = '/?'.$url[1];
-					else
-						$contenido['url'] = $url = '/';
+					// #url
+					// $url = explode('?',$_SERVER['REQUEST_URI']);
+					// if(isset($url[1]))
+					// 	$contenido['url'] = $url = '/?'.$url[1];
+					// else
+					// 	$contenido['url'] = $url = '/';
 
-					#paginacion
-					$config['base_url'] = base_url() . 'insumo_receta/';
-					$config['total_rows'] = count($this->objInsumoreceta->listar($where));
-					$config['per_page'] = 15;
-					$config['suffix'] = $url;
-					$config['first_url'] = base_url() . '/insumo_receta'.$url;
+					// #paginacion
+					// $config['base_url'] = base_url() . 'insumo_receta/';
+					// $config['total_rows'] = count($this->objInsumoreceta->listar($where));
+					// $config['per_page'] = 15;
+					// $config['suffix'] = $url;
+					// $config['first_url'] = base_url() . '/insumo_receta'.$url;
 
-					$this->pagination->initialize($config);
+					// $this->pagination->initialize($config);
 
-					//$contenido['datos'] = $this->objInsumoreceta->listar($where, $pagina, $config['per_page']);
+					// //$contenido['datos'] = $this->objInsumoreceta->listar($where, $pagina, $config['per_page']);
 
-					$contenido['id_receta'] = $receta;
+					// $contenido['id_receta'] = $receta;
 
-					$contenido['datos'] = $this->objInsumoreceta->obtener_InsumoReceta($receta);
+					// $contenido['datos'] = $this->objInsumoreceta->obtener_InsumoReceta($receta);
 
-					$contenido['insumos_aporte'] = $this->objInsumoreceta->join_insumo_receta($this->input->post('codigo_receta'));
+					// $contenido['insumos_aporte'] = $this->objInsumoreceta->join_insumo_receta($this->input->post('codigo_receta'));
 
-					$contenido['pagination'] = $this->pagination->create_links();
+					// $contenido['pagination'] = $this->pagination->create_links();
 
-					$contenido['costo_receta'] = $this->objInsumoreceta->costo_receta($receta);
+					// $contenido['costo_receta'] = $this->objInsumoreceta->costo_receta($receta);
 
-					$contenido['rubros'] = $this->objRubro->listar();
+					// $contenido['rubros'] = $this->objRubro->listar();
 
-					$this->layout->view('index', $contenido);
+					// $this->layout->view('index', $contenido);
+					// redirect('insumo_receta/index/'.$this->input->post('codigo_receta'),$contenido);
+				echo json_encode(array("result"=>true));
+				exit;
 
 			}else{
 				echo json_encode(array("result"=>false,"msg"=>"Error al actualizar registro."));

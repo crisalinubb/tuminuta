@@ -29,6 +29,9 @@ class Funcionario extends CI_Controller {
 		#JS - Ajax multi select
 		$this->layout->js('js/jquery/ajax-bootstrap-select-master/dist/js/ajax-bootstrap-select.js');
 		$this->layout->css('js/jquery/ajax-bootstrap-select-master/dist/css/ajax-bootstrap-select.css');
+		
+		#js
+		$this->layout->js('js/sistema/funcionario/index.js');
 
 		$this->pagination->initialize($config);
 
@@ -97,7 +100,7 @@ class Funcionario extends CI_Controller {
 			$this->layout->setMeta('keywords','Funcionarios');
 
 			#js
-			$this->layout->js('js/sistema/funcionario/agregar.js');
+			$this->layout->js('js/sistema/desayuno/agregar.js');
 
 			#JS - Multiple select boxes
 			$this->layout->css('js/jquery/bootstrap-multi-select/dist/css/bootstrap-select.css');
@@ -278,6 +281,25 @@ class Funcionario extends CI_Controller {
         }  else {
             echo '<option value="0">Servicios</option>';
         }
+	}
+
+	public function cambio_estado(){
+		$datos = $this->input->post('datos_estado');
+		$datos_estado = explode("-", $datos);
+		$codigo_funcionario = $datos_estado[0];
+		$estado = $datos_estado[1];
+		
+		//aqui se cambia el estado del funcionario
+		if($this->objFuncionario->actualizar(array("activo"=>$estado),array("id_funcionario"=>$codigo_funcionario))){	
+			$msg = "Se cambio correctamente el estado del funcionario";
+			$result = true;
+		}else{
+			$msg = "No se pudo cambiar el estado del funcionario";
+			$result = false;
+		}
+
+		echo json_encode(array("result"=>$result,"msg"=>$msg));
+		
 	}
 
 }

@@ -1,5 +1,7 @@
 $(function(){
-
+    //insumo = $('#insumo').val();
+    var insumo = document.getElementById("insumo").value;
+    console.log(window.location.pathname);
    $("#form-agregar").validationEngine('attach', {
                promptPosition:'topLeft',
        validationEventTrigger:false,
@@ -31,9 +33,13 @@ $(function(){
                            killer: true
                        });
 
-                       setTimeout(function(){
-                           window.location.href = window.location.pathname.replace("/agregar?insumo="+ $("#insumo").val(), "/index?insumo="+ $("#insumo").val());
-                       }, 1000);
+                    //    setTimeout(function(){
+                    //        //window.location.href = window.location.replace("/agregar/"+ $("#insumo").val(), "/index/"+ $("#insumo").val());
+                    //        window.location.href = window.location.replace("/agregar/"+ insumo, "/index/"+ insumo)
+                    //    }, 1000);
+                        setTimeout(function() {
+                            window.location.href = window.location.pathname.replace('/agregar/'+ $("#insumo").val(), '/index/'+ $("#insumo").val());
+                              }, 1000)
                    }
                    else
                    {

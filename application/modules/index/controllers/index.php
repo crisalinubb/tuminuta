@@ -172,7 +172,8 @@ class Index extends CI_Controller {
 
 		$contenido['mesagge'] = $paciente->nombre." ".$paciente->apellido_paterno." ".$paciente->apellido_materno." dado de alta";
 
-		$this->layout->view('paciente_egresado', $contenido);
+		//$this->layout->view('paciente_egresado', $contenido);
+		redirect('index/ver_camas/'.$this->input->post('codigo_sala'),$contenido);
 	}
 
 	public function solicitud_clinica($codigo = false){

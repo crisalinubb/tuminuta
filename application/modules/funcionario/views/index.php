@@ -46,7 +46,7 @@
 <?php } ?>
 
 <div class="thumbnail table-responsive all-responsive" id="multiselectForm">
-  <table border="0" cellspacing="0" cellpadding="0" class="table" style="margin-bottom:0;">
+  <table  class="table table-bordered" border="0" cellspacing="0" cellpadding="0" class="table" style="margin-bottom:0;">
     <thead>
       <tr>
         <th scope="col" style="width:50px;">Nombre Completo</th>
@@ -54,7 +54,6 @@
         <th scope="col" style="width:20px;">Servicio</th>
         <th scope="col" style="width:20px;">Tipo Contrato</th> 
         <th scope="col" style="width:20px;">Unidad</th>
-        <th scope="col" style="width:20px;">Estado</th>
         <th scope="col" style="width:20px;">Observacion</th>   
         <th scope="col" style="width:20px;">&nbsp;</th>
       </tr>
@@ -71,16 +70,18 @@
           <td><?php echo $tip_cont->descripcion; ?></td>
           <?php $unidad = $this->objHospital->obtener(array("id_hospital" => $fun->fk_unidad )); ?>
           <td><?php echo $unidad->hos_nombre; ?></td>
-          <?php if($fun->activo == 0){ ?>
-            <td><?php echo "ACTIVO"; ?></td>
-          <?php }else{?>
-            <td><?php echo "INACTIVO"; ?></td>
-          <?php  }?>
           <td><?php echo $fun->observacion; ?></td>
           <td class="editar">
             <a href="<?php echo base_url(); ?>funcionario/editar/<?php echo $fun->id_funcionario; ?>">
               <button title="Editar" type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
             </a>
+
+            <?php if($fun->activo == 0){ ?>
+							<button type="button" class="btn btn-primary btn-xs estado" rel="<?php echo $fun->id_funcionario .'-1'; ?>" >Activo</button>
+						<?php } else{ ?>
+							<button type="button" class="btn btn-warning btn-xs estado" rel="<?php echo $fun->id_funcionario .'-0'; ?>">Inactivo</button>
+						<?php } ?>
+            
           </td>
 				</tr>
 			<?php endforeach;?>

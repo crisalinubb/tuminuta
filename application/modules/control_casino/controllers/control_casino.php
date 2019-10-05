@@ -47,7 +47,7 @@ class Control_casino extends CI_Controller {
 			$msg = "tarjeta ingresada de forma incorrecta/ No se encuentra en el registro de tarjetas";
 			$result= false;
 		//validar si la tarjeta esta desactivada
-		}elseif ($validador_tarjeta == 1) {
+		}elseif ($validador_tarjeta->activo == 1) {
 			$msg = "La tarjeta esta desactivada";
 			$result= false;
 		//validar si la tarjeta tiene vigencia el dia de hoy
@@ -108,7 +108,7 @@ class Control_casino extends CI_Controller {
 			$msg = "tarjeta ingresada de forma incorrecta/ No se encuentra en el registro de tarjetas";
 			$result= false;
 		//validar si la tarjeta esta desactivada
-		}elseif ($validador_tarjeta == 1) {
+		}elseif ($validador_tarjeta->activo == 1) {
 			$msg = "La tarjeta esta desactivada";
 			$result= false;
 		//validar si la tarjeta tiene vigencia el dia de hoy

@@ -2372,7 +2372,8 @@ class Index extends CI_Controller {
 
 		$contenido['hospitalizados'] = $this->objPaciente->listar(array("id_unidad" => $this->session->userdata("usuario")->id_unidad));
 
-		$this->layout->view('camas',$contenido);
+		//$this->layout->view('camas',$contenido);
+		redirect('index/ver_camas/'.$this->input->post('codigo_sala'),$contenido);
 	}
 	}
 

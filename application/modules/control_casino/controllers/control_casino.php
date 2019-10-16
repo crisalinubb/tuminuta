@@ -420,4 +420,58 @@ class Control_casino extends CI_Controller {
 		$this->layout->view('registro_servicio', $contenido);
 	}
 
+	public function vista_informe_control_casino(){
+		#Title
+		$this->layout->title('Informe Costos Control Casino');
+
+		#Metas
+		$this->layout->setMeta('title','Informe Costos Control Casino');
+		$this->layout->setMeta('description','Informe Costos Control Casino');
+		$this->layout->setMeta('keywords','Informe Costos Control Casino');
+
+		#JS - Datepicker
+		$this->layout->css('js/jquery/ui/1.10.4/ui-lightness/jquery-ui-1.10.4.custom.min.css');
+		$this->layout->js('js/jquery/ui/1.10.4/jquery-ui-1.10.4.custom.min.js');
+		$this->layout->js('js/jquery/ui/1.10.4/jquery.ui.datepicker-es.js');
+
+		$this->layout->js('js/jquery/jquery-redirect/jquery.redirect.js');
+
+		$this->layout->view('vista_informe_control_casino');
+	}
+
+	public function informe_control_casino(){
+		$fecha = $this->input->post('fecha');
+		#Title
+		$this->layout->title('Informe Costos Control Casino');
+
+		#Metas
+		$this->layout->setMeta('title','Informe Costos Control Casino');
+		$this->layout->setMeta('description','Informe Costos Control Casino');
+		$this->layout->setMeta('keywords','Informe Costos Control Casino');
+
+		$fecha_busqueda = date("Y-m-d", strtotime(str_replace("/", "-", $this->input->post('fecha'))));
+
+		$datos['fecha_busqueda'] = $fecha_busqueda;
+
+		$datos['transacciones_almuerzo'] = $this->objTransTarjeta->obtener_todas_transacciones($fecha_busqueda,$this->session->userdata("usuario")->id_unidad, 1);
+
+		$datos['transacciones_des_alm'] = $this->objTransTarjeta->obtener_todas_transacciones($fecha_busqueda,$this->session->userdata("usuario")->id_unidad, 2);
+
+		$datos['transacciones_alm_once'] = $this->objTransTarjeta->obtener_todas_transacciones($fecha_busqueda, $this->session->userdata("usuario")->id_unidad, 3);
+
+		$datos ['planificacion_casino_alm'] = $this->objTransTarjeta->obtener_planficacion_casino($fecha_busqueda, $this->session->userdata("usuario")->id_unidad, 2);
+
+		$datos ['planificacion_casino_des'] = $this->objTransTarjeta->obtener_planficacion_casino($fecha_busqueda, $this->session->userdata("usuario")->id_unidad, 1);
+
+		$datos ['planificacion_casino_once'] = $this->objTransTarjeta->obtener_planficacion_casino($fecha_busqueda, $this->session->userdata("usuario")->id_unidad,16);
+
+		$datos ['planificacion_cas_alm'] = $this->objTransTarjeta->obtener_planficacion_cas($fecha_busqueda, $this->session->userdata("usuario")->id_unidad, 2);
+
+		$datos ['planificacion_cas_des'] = $this->objTransTarjeta->obtener_planficacion_cas($fecha_busqueda, $this->session->userdata("usuario")->id_unidad, 1);
+
+		$datos ['planificacion_cas_onc'] = $this->objTransTarjeta->obtener_planficacion_cas($fecha_busqueda, $this->session->userdata("usuario")->id_unidad,16);
+
+		$this->layout->view('costos_control_casino', $datos);
+	}
+
 }

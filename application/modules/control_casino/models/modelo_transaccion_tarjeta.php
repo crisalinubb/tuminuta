@@ -98,5 +98,48 @@ class Modelo_Transaccion_Tarjeta extends CI_Model {
     		return false;
     	} 
 	}
+
+	public function obtener_todas_transacciones($fecha, $id_unidad, $id_tipocomida){
+		$fecha_inicial = date('Y-m-d 00:00:00', strtotime($fecha));
+		$fecha_final = date('Y-m-d 23:59:59', strtotime($fecha));
+		$this->db->select('COUNT(1) as Total');    
+		$this->db->from('transaccion_tarjeta');
+		$this->db->where('fecha_registro BETWEEN "'. $fecha_inicial. '" and "'. $fecha_final.'"');
+		$this->db->where('id_unidad', $id_unidad);
+		$this->db->where('fk_tipocomida', $id_tipocomida);
+		$this->db->group_by('fk_tipocomida');
+		$query = $this->db->get();
+		//die($this->db->last_query());
+		return $query->row();
+		
+	}
+
+	public function obtener_planficacion_casino($fecha, $id_unidad, $id_servalimentacion){
+		$fecha_inicio = date("Y-m-d 00:00:00", strtotime($fecha));
+		$fecha_fin = date("Y-m-d 23:59:59", strtotime($fecha));	
+    	$this->db->select('id_receta');    
+		$this->db->from('planificacion');
+		$this->db->where('id_destino',6);
+		$this->db->where('id_servicio_alimentacion',$id_servalimentacion);
+		$this->db->where('id_unidad',$id_unidad);
+		$this->db->where('fecha BETWEEN "'. $fecha_inicio. '" and "'. $fecha_fin.'"');
+		$query = $this->db->get();
+		//die($this->db->last_query());
+		return $query->row();
+    }
+
+    public function obtener_planficacion_cas($fecha, $id_unidad, $id_servalimentacion){
+		$fecha_inicio = date("Y-m-d 00:00:00", strtotime($fecha));
+		$fecha_fin = date("Y-m-d 23:59:59", strtotime($fecha));	
+    	$this->db->select('id_receta');    
+		$this->db->from('planificacion');
+		$this->db->where('id_destino',6);
+		$this->db->where('id_servicio_alimentacion',$id_servalimentacion);
+		$this->db->where('id_unidad',$id_unidad);
+		$this->db->where('fecha BETWEEN "'. $fecha_inicio. '" and "'. $fecha_fin.'"');
+		$query = $this->db->get();
+		//die($this->db->last_query());
+		return $query->result();
+    }
 	
 }

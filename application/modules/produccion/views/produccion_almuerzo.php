@@ -28,11 +28,15 @@
   <?php if($datos_planificacion){ ?>
 
   <?php foreach($datos_planificacion as $planificacion): ?>
+    <?php $costo_receta = $this->objInsumoreceta->costo_receta($planificacion->id_receta); ?>
+    <?php $costo_total_receta = $costo_receta->SubTotal*$planificacion->volumen;
+      $costo_total = $costo_total+$costo_total_receta;  ?>
 
     <h4><center><strong><?php echo $planificacion->nombre; ?></strong></center></h4>
     <p align="right">Volumen: <?php echo $planificacion->total; ?></p>
     <p align="right">Volumen Extra: <?php echo $planificacion->volumen_produccion; ?></p>
     <p align="right">Total: <?php echo $planificacion->volumen; ?></p>
+    <p align="right">Valor Total Receta: $<?php echo number_format($costo_total_receta, 2, ',', '');?></p>
 
   <table border="1" cellspacing="0" cellpadding="0" class="table" style="margin-bottom:0;">
     <thead>
@@ -74,12 +78,22 @@
     </tbody>
   </table>
 <?php endforeach;?>
+<?php }else{ ?>
+<div class="alert alert-danger" role="alert"><?php echo 'No se registra planificación del dia seleccionado de almuerzos'; ?></div>
 <?php } ?>
   <?php endforeach;?>
 
 </div>
 
+<?php }else{ ?>
+
+<div class="alert alert-danger" role="alert"><?php echo 'No se registran solicitudes del dia seleccionado de almuerzos'; ?></div>
+
 <?php } ?>
+
+<div>
+   <p align="center"><strong>Costo Total: $<?php echo number_format($costo_total, 2, ',', '');?></strong></p>
+</div>
 
 <script>
 function myFunction() {

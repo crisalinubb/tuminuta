@@ -13,6 +13,11 @@ class Control_casino extends CI_Controller {
 		$this->load->model("modelo_tipo_tarjeta", "objTipoTarjeta");
 		$this->load->model("modelo_transaccion_tarjeta", "objTransTarjeta");
 		$this->load->model("servicio_clinico/modelo_servicioclinico", "objServicioClinico");
+
+		$this->load->model("recetas/modelo_recetas", "objReceta");
+		$this->load->model("insumos/modelo_insumos", "objInsumo");
+		$this->load->model("produccion/modelo_produccion", "objProduccion");
+		$this->load->model("insumo_receta/modelo_insumoreceta", "objInsumoreceta");
 		#current
 		//$this->layout->current = 1;
 	}
@@ -77,7 +82,8 @@ class Control_casino extends CI_Controller {
 										'fk_tipocomida' => $tipo_comida,  
 										'fk_rutcontrol' => $this->session->userdata("usuario")->id_usuario,
 										'estado' => 1, //1: activo 
-										'tipo_transaccion' => 1 //1: transaccion individual(no por servicio)
+										'tipo_transaccion' => 1, //1: transaccion individual(no por servicio)
+										'id_unidad' => $this->session->userdata("usuario")->id_unidad
 								);
 
 			$this->objTransTarjeta->insertar($datos_transaccion);
@@ -138,7 +144,8 @@ class Control_casino extends CI_Controller {
 										'fk_tipocomida' => $tipo_comida,  
 										'fk_rutcontrol' => $this->session->userdata("usuario")->id_usuario,
 										'estado' => 1, //1: activo 
-										'tipo_transaccion' => 1 //1: transaccion individual(no por servicio)
+										'tipo_transaccion' => 1, //1: transaccion individual(no por servicio)
+										'id_unidad' => $this->session->userdata("usuario")->id_unidad
 								);
 
 			$this->objTransTarjeta->insertar($datos_transaccion);
@@ -380,7 +387,8 @@ class Control_casino extends CI_Controller {
 										   'fk_tipocomida' => $datos_solicitud_funcionario->fk_tipocomida,
 										   'fk_rutcontrol' => $this->session->userdata("usuario")->id_usuario,
 										   'estado' => 1, //1: activo
-										   'tipo_transaccion' => 2 //2: transaccion por servicio
+										   'tipo_transaccion' => 2, //2: transaccion por servicio
+										   'id_unidad' => $this->session->userdata("usuario")->id_unidad
 									 );
 
 			$this->objTransTarjeta->insertar($datos_transaccion);
